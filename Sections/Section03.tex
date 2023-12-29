@@ -1,0 +1,402 @@
+\newpage
+
+\section{Concentration for an Operator Sum}
+Here, I will write why concentration inequalities for one-dimensional random variables do not generalize easily. The reason is that in the one-dimensional case, for a sum of independent random variables \( X_1,\dots,X_n \) we can use the Markov inequality with the exponential function to obtain
+\[ \mathbb{E}\left[e^{\sum_{k=1}^{n} X_k}\right]= \prod_{k=1}^{n} \mathbb{E}\left[e^{X_k}\right] .\]
+
+This equality only works if we have commutativity of \( X_1,\dots,X_n \). For non-commutative groups, we need to introduce some technical results. The approach in order to generalize such claims as shown in \cite{tropp2011user}, \cite{tropp2015introduction}, \cite{huang2020matrix} suggests that we need to find some rather advanced result from functional analysis to overcome the problem of non-commutativity. With this result the usual concentration inequalities are shown in a similar way as in the commutative setting.
+
+
+\subsection{Lieb's theorem}
+
+An important tool in the one-dimensional case for sums of random variables is Markov's inequality. As it is important for sums of operators as well, we will present it as well.
+
+\begin{thm}[Markov's inequality]
+    Let \( X \) be a real-valued random variable, \( \phi: \mathbb{R} \to [0,\infty) \) be increasing and \( t > 0 \). Assume \( \phi(t)>0 \). Then,
+    \[ \mathbb{P}(X \geq t)  \leq \frac{1}{\phi(t)} \mathbb{E}[\phi(X)].\]
+\end{thm}
+
+\begin{proof}
+    Since \( \phi \) is increasing, \( \left\{X \geq t\right\}\subseteq \left\{\phi(X) \geq \phi(t)\right\}\). Thus, \( \mathbb{P}(X\geq t) \leq \mathbb{P}(\phi(X) \geq \phi(t)) \). We also have
+    \[ \mathbb{E}[\phi(X)]  \geq \mathbb{E}[\phi(X) \mathbbm{1}[X \geq t]] \geq \mathbb{E}[\phi(t)\mathbbm{1}[X \geq t]] = \phi(t) \mathbb{P}(X\geq t).\]
+\end{proof}
+
+
+\begin{thm}[Markov's inequality for traces]
+    Let \( \bm{X} \) be a random self-adjoint operator on \( \mathcal{S}_1 (\mathcal{H})\), let \( \psi: \mathbb{R} \to [0,\infty) \) be an increasing function. Then, for \( t>0 \)
+    \[ \mathbb{P}(\lambda_{\text{max}}(\bm{X}) \geq t) \leq  \frac{1}{\psi(t)} \mathbb{E}[\operatorname{tr} \psi(\bm{X})].\]
+\end{thm}
+
+\begin{proof}
+    Since \( \bm{X} \) is self-adjoint, \( \phi(\bm{X}) \geq 0 \) is well-defined. By spectral mapping and Lidskii's theorem
+    \[ \phi( \lambda_{\text{max}}(\bm{X})) = \lambda_{\text{max}}(\phi(\bm{X})) \leq \sum_{\lambda \in \sigma_{\text{p}}(\phi(X))} \lambda = \operatorname{tr} \phi(X).\]
+It follows 
+\[ \mathbb{P}(\lambda_{\text{max}}(\bm{X}) \geq t ) \leq \mathbb{P}(\lambda_{\text{max}}(\phi(\bm{X}))\geq \phi(t)) \leq \mathbb{P}(\operatorname{tr}\phi(\bm{X}) \geq \phi(t))  \leq \frac{1}{\phi(t)} \mathbb{E}[\operatorname{tr}\phi(X)].\]
+\end{proof}
+
+\begin{lem}[Finiteness of trace exponential]
+  \label{finitetrexp}
+    Let \( \bm{S} \in \mathcal{S}_1(\mathcal{H}) \). Then,
+    \[ \operatorname{tr} \left[\abs{\operatorname{exp} (\bm{S})-1 }\right] < \infty .\]
+\end{lem}
+
+\begin{proof}
+    Notice that for \( x \geq 0 \), we have 
+    \begin{align*}
+      e^{x}-1 = &\sum_{n=1}^{\infty} \frac{1}{n!}x^{n} \\
+                &\leq \sum_{n=0}^{\infty} \frac{1}{n!} x^{n+1} \\
+                &= x \cdot e^{x}
+    \end{align*}
+    Therefore, 
+    \begin{align*}
+      \operatorname{tr}\left[\abs{\operatorname{exp}\left(\bm{S}\right)-1}\right] &= \sum_{k=1}^{\infty} \abs{e^{\lambda_k} -1} \\
+      \leq &\sum_{k=1}^{\infty} \abs{\lambda_k} \cdot e^{\abs{\lambda_k}} \\ 
+      \leq &\operatorname{tr} \abs{\bm{S}} \cdot e^{\norm{\bm{S}}_{}}.
+    \end{align*}
+    using spectral theory.
+\end{proof}
+
+
+\begin{thm}[Golden-Thompson, \cite{golden1965ineq}, \cite{thompson1965ineq}]
+    Let \( \bm{S},\bm{T} \) be self-adjoint operators such that \( e^{\bm{S}},e^{\bm{T}} \in \mathcal{S}_1(\mathcal{H}) \). Then,
+    \[  \operatorname{tr} \operatorname{exp}(\bm{S}+\bm{T}) \leq \operatorname{tr}(\operatorname{exp}(\bm{S})\cdot \operatorname{exp}(\bm{S})) .\]
+\end{thm}
+
+
+\begin{thm}[Lieb's Theorem, \cite{lieb1973concav}]
+    Let \( \bm{T} \) be a self-adjoint operator such that \( e^{\bm{T}} \in \mathcal{S}_1 \). Then, the function
+    \[ \curled*{\bm{S} \in \mathcal{S}_1(\mathcal{H}); e^{\bm{S}} \in \mathcal{S}_1(\mathcal{H})}\to \mathbb{R}, \, \bm{S} \mapsto \operatorname{tr} \operatorname{exp}(\bm{S}+ \operatorname{ln}(\bm{T})) \]
+    is concave.
+\end{thm}
+
+In the following when we refer to Lieb's inequality we will not write down the assumption that \( e^{T} \in \mathcal{S}_1(\mathcal{H}) \) for \( T \in \mathcal{S}_1(\mathcal{H}) \). If it does not hold, both sides of the inequality are infinite, and the result holds regardless.
+
+\begin{corl}[Lieb's Theorem for random matrices]
+    Let \( \bm{S} \) be a self-adjoint trace-class operator, and let \( \bm{X} \) be a random self-adjoint trace-class operator. Then,
+    \[ \mathbb{E}[\operatorname{tr} \operatorname{exp} (\bm{S}+\bm{X})]  \leq \operatorname{tr} \operatorname{exp}(\bm{S} + \operatorname{ln} \mathbb{E}[\operatorname{exp}(\bm{X})]).\]
+\end{corl}
+
+
+\subsection{Self-Adjoint Dilation}
+In this chapter, we will derive concentration results for the maximum eigenvalues of sums of random self-adjoint operators. In many applications, one might be interested to derive results for random operators that are not self-adjoint. In that case concentration results about the operator norm can be useful as the eigenvalues are not necessarily real. A technique called \emph{self-adjoint dilation} can be employed to use concentration for self-adjoint operators to derive these without having to find new proofs. 
+
+\begin{defn}[Self-adjoint dilation]
+    Let \( \bm{S}\in \mathcal{L}(\mathcal{H}) \). We define the \emph{self-adjoint dilation} of \( \bm{S} \) as 
+    \[ \mathfrak{S}(\bm{S} ) = 
+      \begin{bmatrix}
+        \bm{0} & \bm{S} \\
+        \bm{S}^{*} & \bm{0}
+    \end{bmatrix}
+    .\]
+\end{defn}
+
+
+If we consider \( \mathfrak{S}(\bm{S} )\) as an operator on \( \mathcal{L}(\mathcal{H}^{2}) \), it can be shown readily that \( \mathfrak{S}\left(\bm{S}\right) \) is self-adjoint considering the scalar product \( \angled*{\, \cdot \,; \, \cdot \,}_{\mathcal{H}^{2}} \) defined by the relation 
+\[ \angled*{ \begin{bmatrix} \bm{u} \\ \bm{v} \end{bmatrix}; \begin{bmatrix} \bm{w} \\ \bm{x}\end{bmatrix}}_{\mathcal{H}^{2}} = \angled*{ \bm{u}; \bm{w}} + \angled*{\bm{v};\bm{x}} \]
+
+
+
+\subsection{Intrinsic Dimension Lemma}
+Here, I will write why the intrinsic dimension is useful to provide results for matrices of large dimension or even compact operators on separable possibly infinite-dimensional Hilbert spaces. 
+\begin{defn}[Intrinsic dimension]
+   Let \( \bm{S} \) be an operator in \( \mathcal{S}_1(\mathcal{H}) \). Then, we define the \emph{intrinsic dimension} of \( \bm{S} \) as 
+   \( \operatorname{int\, dim}\left(\bm{S}\right)= \frac{\operatorname{tr} \abs{\bm{S}}}{\norm{\bm{S}}_{}}. \)
+\end{defn}
+
+Notice that for a self-adjoint matrix \( \bm{S} \) of size \( d\times d \), we have that the maximum of the modulus of eigenvalues is equal to the largest singular value. Since the trace is the sum of the modulus of singular values, we have that 
+\[ \operatorname{int\, dim}(\bm{S})= \frac{\operatorname{tr}\abs{\bm{S}}}{\norm{\bm{S}}_{}} \leq d.\]
+
+The intrinsic dimension can be interpreted as a metric for the point spectrum: The higher the intrinsic value is the closer each of the modulus of the eigenvalues are to the maximum of this set.
+In that sense it is not surprising that the intrinsic dimension offers a way to circumvent the dimension of the Hilbert space. This is useful to provide results that generalize for more general settings. However, it may be difficult to provide information about the intrinsic dimension of the bound for the random operator if the Hilbert space is infinite-dimensional.
+
+
+\begin{lem}[Intrinsic dimension lemma, \cite{tropp2015introduction}]
+    Let \( \psi: [0,\infty) \to [0,\infty ) \) be a convex function such that \( \psi(0)=0 \). Let \( \bm{A} \) be a positive operator. Then,
+    \[ \operatorname{tr}\left( \psi(\bm{A})\right) \leq \operatorname{int\, dim}\left(\bm{A}\right) \cdot \psi(\bm{A}) .\]
+\end{lem}
+
+\begin{proof}
+  The result is shown in \cite{tropp2015introduction} for matrices. The same proof holds for trace-class, hence compact, operators as well using an approximation result.
+\end{proof}
+
+
+
+\subsubsection{Intrinsic Chernoff Inequality}
+We first present the result for matrices as in \cite{tropp2015introduction}. Then, we use an approximation argument to achieve the result for compact operators.
+
+
+
+\begin{thm}[Matrix Chernoff lemma]
+      Let \( \bm{0} \leq \bm{X} \leq \bm{1} \) for some random, self-adjoint matrix. Then, for \( n \in \mathbb{N} \) and \( \theta >0 \)
+      \[ \mathbb{E}\left[\operatorname{exp}\left(n\theta \bm{X}\right)-1\right] \leq \frac{e^{n\theta}-1}{n} \mathbb{E}\left[\bm{X}\right]\]
+\end{thm}
+
+\begin{proof}
+    The result follows from spectral theory and the inequalities for real-valued functions.
+\end{proof}
+
+
+This lemma is used by \cite{tropp2015introduction} to show the following theorem for matrices.
+\begin{thm}[Intrinsic Matrix Chernoff, \cite{tropp2015introduction}]
+    Let \( \bm{X}_1,\dots, \bm{X}_n \) be independent, random, self-adjoint matrices of size \(  d \times d \) such that 
+    \[ \bm{0} \preceq\bm{X}_k \preceq\bm{1} \quad \text{almost surely for all \( k \leq n \)}.\]
+    Assume there is a matrix \( \bm{M} \geq \mathbb{E}\left[\sum_{k=1}^{n}\bm{X}_k\right] \) and define \( \mu_{\text{max}}= \lambda_{\text{max}}\left(\bm{M}\right) \). Then,
+    \[ \mathbb{P}\left(\lambda_{\text{max}} \left(\sum_{k=1}^{n}\bm{X}_k\right) \geq (1+\epsilon)\mu_{\text{max}}\right) \leq 2\operatorname{int\, dim}\left(\bm{M}\right) \cdot \left(\frac{e^{\epsilon}}{\left(1+\epsilon\right)^{1+\epsilon}}\right)^{\mu_{\text{max}}} \quad \text{for \( \epsilon \geq 1/\mu_{\text{max}} \)}.\]
+\end{thm}
+
+Since \( \bm{X} \) does not appear evaluated at an nonlinear function it is straightforward to generalize this result for compact operators on a separable Hilbert space. 
+
+\begin{corl}[Intrinsic Operator Chernoff]
+    Let \( \mathcal{H} \) be a separable Hilbert space. Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent, random, self-adjoint operators on \( \mathcal{S}_1(\mathcal{H}) \). Assume that
+    \begin{enumerate}[1)]
+      \item \( \bm{0} \preceq \bm{X}_k \preceq \bm{1} \) almost surely;
+      \item there is a self-adjoint trace-class operator \( \bm{M} \succeq \mathbb{E}\left[\sum_{k=1}^{n}X_k\right]. \)
+    \end{enumerate}
+    Then, for \( \epsilon \geq 1/\mu_{\text{max}} \)
+    \[\mathbb{P}\left(\lambda_{\text{max}} \left(\sum_{k=1}^{n}\bm{X}_k\right) \geq (1+\epsilon)\mu_{\text{max}}\right) \leq 2\operatorname{int\, dim}\left(\bm{M}\right) \cdot \left(\frac{e^{\epsilon}}{\left(1+\epsilon\right)^{1+\epsilon}}\right)^{\mu_{\text{max}}}.\]
+
+\end{corl}
+
+\begin{proof}
+  \( \bm{M} \) is positive and \( \bm{X}^{N}_k \) is positive almost surely, therefore we have that \( \bm{M}  \) is a boundary for \( \mathbb{E}\left[\sum_{k=1}^{n}\bm{X}_k^{N}\right] \) as well. By construction, we have \( \lim_{N \to \infty} \operatorname{tr} \abs{ \bm{X}^{N}-\bm{X}}=0 \). Therefore, we have  \( \lim_{N \to \infty} \lambda_{\text{max}}\left(\bm{X}^{N}\right) = \lambda_{\text{max}}\left(\bm{X}\right) \). We also have \( \lambda_{\text{max}}(\bm{X}^{N}) \leq \lambda_{\text{max}}\left(\bm{X}\right) \) since \( \bm{X}^{N}=\bm{P}_N\bm{X}\bm{P}_N \). Thus,
+  \[ \{\lambda_{\text{max}}(\bm{X}^{N}) > t \} \nearrow \{ \lambda_{\text{max}}\left(\bm{X}\right) >t\} .\]
+  Therefore, 
+  \begin{align*}
+     \lim_{N \to \infty} \mathbb{P}\left(\lambda_{\text{max}} \left(\sum_{k=1}^{n}\bm{X}^{N}\right) \leq t \right) = \mathbb{P}\left(\lambda_{\text{max}} \left(\sum_{k=1}^{n} \bm{X}_k^{N}\right) \geq t\right)   \end{align*}
+  
+\end{proof}
+
+The intrinsic matrix Chernoff concentation inequality was shown by \cite{tropp2015introduction}. They mention the curiosity that their approach does not work for the minimum eigenvalue. In the one-dimensional case there is such a lower bound. Considering the situation in an infinite-dimensional Hilbert space, this becomes clear. Compact operators attain an eigenvalue at zero or they have an accumulation point of eigenvalues at zero. As a result there cannot exist such a lower bound for the minimum eigenvalue. In the case of an infinite-dimensional Hilbert space, we also cannot consider \( \sum_{k=1}^{n}(\bm{X}_k-\bm{1}) \). While \( \bm{X}_k-\bm{1} \) satisfies independence, self-adjointness and is bounded by \( \bm{0} \) and \( \bm{1} \), it is not a trace-class operator and thus not bounded by one. 
+
+
+\subsubsection{Intrinsic Bernstein Inequality: Bounded Case}
+Here I will write about: Utility of the Bernstein inequality. What are its advantages: If the variance of the random operators is low it offers better bounds for the tail probability.
+
+
+\begin{thm}[Intrinsic operator Bernstein inequality for bounded operators]
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be random, independent, centered operators. Assume there exists \( L >0  \) such that 
+    \[ \norm{\bm{X}_k}_{} \leq \bm{L} \quad \text{almost surely for all \( k \leq n \)}. \] 
+  Furthermore, let \( \bm{V}_1^{2},\bm{V}_2^{2} \in \mathcal{S}_1(\mathcal{H})\) satisfy 
+    \begin{align*}
+      \bm{V}_1^{2} & \geq \sum_{k=1}^{n} \mathbb{E}\left[\bm{X}_k\bm{X}_k^{*}\right]\\
+      \bm{V}_2^{2} & \geq \sum_{k=1}^{n} \mathbb{E}\left[\bm{X}_k^{*}\bm{X}_k\right].
+    \end{align*}
+    Define 
+    \[ d = \operatorname{int\, dim} \begin{bmatrix}
+\bm{V}_1 & \bm{0} \\
+\bm{0} & \bm{V}_2
+\end{bmatrix} \quad \text{and} \quad v= \max_{} \{\norm{\bm{V}_1}_{}, \norm{\bm{V}_2}_{}\}. \]
+Then, 
+\[ \mathbb{P}\left(\norm{ \sum_{k=1}^{n} \bm{X}_k}_{} \geq t\right) \leq 4d\cdot \operatorname{exp}\left( \frac{-t^{2}/2}{v+Lt/3}\right).\]
+\end{thm}
+This result has been proven for finite-dimensional matrices in \cite{tropp2015introduction}. We want to give the generalization for trace-class operators.
+
+\begin{proof}
+   The approach to the proof is identical to the generalization of the matrix Chernoff inequality.  
+\end{proof}
+
+
+
+
+\subsubsection{Intrinsic Hoeffding Inequality: Sub-Gaussian Case}
+Here I will write about: The Hoeffding inequality for sub-Gaussians is based on the Hoeffding lemma which caracterizes sub-Gaussian random variables and gives a bound for the moment generating function. In the matrix case, we have to introduce a similar lemma. (!!! What is even the definition for sub-Gaussian matrices which resembles the original definition of sub-Gaussian random variables).
+
+We first establish the Hoeffding inequality for a sum of sub-Gaussian matrices with the intrinsic dimension. Then, we use an approximation argument to generalize the result for compact operators.
+
+\begin{thm}[Intrinsic operator Hoeffding: Sub-Gaussian Case]
+    Let \( X_1, \dots, X_n \) be random, centered, independent, self-adjoint operators almost surely in \( \mathcal{S}_1(\mathcal{H}) \) such that 
+    \[ \mathbb{E}[\operatorname{exp}(\theta X_k)] \leq \operatorname{exp}(\frac{1}{2} \theta^{2}V_k^{2}) \] for some fixed positive operators \( V_k^{2} \in \mathcal{S}_1(\mathcal{H}) \) and all \( \theta \in \mathbb{R} \). Then, for \( t >0 \)
+    \[ \mathbb{P}(\lambda_{\text{max}}(\sum_k X_k) \geq t) \leq 2 \operatorname{int\, dim}\left(\sum_{k=1}^{n}V_k^{2}\right)\operatorname{exp}\left(- \frac{t^{2}}{2 \norm{\sum_{k=1}^{n}V_k^{2}}_{}}\right).\]
+\end{thm}
+
+\begin{proof}
+    By Markov inequality, we have 
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \frac{1}{\phi(t)} \mathbb{E}\left[\operatorname{tr}\left(\phi(\sum_{k=1}^{n}X_k)\right)\right] \]
+    for \( \phi(t) = e^{\theta t}-1\). To apply Lieb's theorem, notice that
+    \begin{align*}
+      \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n} X_k\right)-1\right)\right] &= \mathbb{E}\left[ \mathbb{E}\squared*{\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n-1}X_k+\theta X_n\right)-1)\right);\mathcal{F}_{n-1}}\right] \\
+                                                                                                                      & \leq \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n}X_k+ \operatorname{ln} \mathbb{E}\left[\operatorname{exp}\left(\theta X_k\right)\right]\right)-1\right)\right] \\
+                      & \leq \dots \\
+                      & \leq \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\sum_{k=1}^{n} \operatorname{ln}\left(\mathbb{E}\left[\operatorname{exp}\left(\theta X_k)\right)\right]\right)\right)-1\right)\right] \\
+                      & \leq \operatorname{tr}\left(\operatorname{exp}\left(\frac{1}{2}\theta^{2}\sum_{k=1}^{n}V_k^{2}\right)-1\right).
+    \end{align*}
+    \( \phi \) is convex and satisfies \( \phi(0)=0 \). Notice that the last term is finite by Lemma \ref{finitetrexp}. Therefore, the intrinsic dimension lemma is applicable and we obtain
+    \[ \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\frac{1}{2}\theta^{2}\sum_{k=1}^{n}V_k^{2}\right)-1\right)\right] \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}V_k^{2}\right) \cdot e^{\frac{1}{2} \theta^{2 \norm{\sum_{k=1}^{n}V_k^{2}}_{}}} \] 
+    Using our results earlier, we get
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}V_k^{2}\right) \cdot \frac{1}{e^{\theta t}-1} e^{\frac{1}{2}\theta^{2}\norm{\sum_{k=1}^{n}V_k^{2}}_{}} \]
+    Notice that 
+    \[ \frac{1}{e^{\theta t}-1} e^{\frac{1}{2} \theta^{2} \norm{\sum_{k=1}^{n}V_k^{2}}_{}} = \frac{e^{\theta t}}{e^{\theta t}-1} e^{-\theta t+ \frac{1}{2}\theta^{2} \norm{\sum_{k=1}^{n}V_k^{2}}_{}} \]
+    We have \( \frac{e^{\theta t}}{e^{\theta t }-1}=1+ \frac{1}{e^{\theta t}-1} \leq 1+ \frac{1}{\theta t} \) as \( 1+x \leq e^{x} \) for \( x \in \mathbb{R} \). We also have that \( \psi(\theta) = - \theta t + \frac{1}{2} \theta^{2} \norm{\sum_{k=1}^{n}V_k^{2}}_{} \) is minimized at \( \theta^{*}= \frac{t}{\norm{\sum_{k=1}^{n}V_k^{2}}} \) and \( \psi(\theta^{*})= -\frac{t^{2}}{2 \norm{\sum_{k=1}^{n}V_k^{2}}} \). Thus,
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n} V_k^{2}\right) \left(1+ \frac{\norm{\sum_{k=1}^{n}V_k^{2}}_{}}{t^{2}}\right) e^{-\frac{t^{2}}{2 \norm{ \sum_{k=1}^{n}V_k^{2}}_{}}} \]
+    If  \( t \geq \norm{\sum_{k=1}^{n}V_k^{2}}_{} \), we have \( \left(1+\frac{\norm{\sum_{k=1}^{n}V_k^{2}}_{}}{t^{2}}\right) \leq 2 \). If \( t^{2} < \norm{\sum_{k=1}^{n}V_k^{2}}_{} \), we have that 
+    \[ \left(1+\frac{\norm{\sum_{k=1}^{n}V_k^{2}}_{}}{t^{2}}\right) e^{-\frac{t^{2}}{2 \norm{\sum_{k=1}^{n}V_k^{2}}_{}}} \geq 2 e^{-\frac{1}{2}} \geq 1 \]
+    In this case we have that 
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq 1 \leq 2 \operatorname{int\, dim}\left(\sum_{k=1}^{n}V_k^{2}\right) e^{- \frac{t^{2}}{2 \norm{\sum_{k=1}^{n}V_k^{2}}_{}}} \]
+    Thus in both cases we achieve the desired result.
+\end{proof}
+Notice that using a boundary \( \sum_{k=1}^{n} V_k^{2}  \) instead of \( \sum_{k=1}^{n} V_k \) is purely symbolical and is related to the variance of the sum \( \sum_{k=1}^{n}X_k \). 
+
+\subsubsection{Intrinsic Bernstein Inequality: Sub-Exponential Case}
+Similarly to the sum of sub-Gaussian concentration result, we first state the result for matrices and then generalize the assertion with a similar approximation result.
+More elaboration (!!!: Similarly to sub-Gaussian case, can we find a matrix equivalence lemma as in real-value case?)
+
+
+\begin{thm}[Intrinsic operator Bernstein: sub-Gaussian case]
+      Let \( X_1, \dots, X_n \) be random, centered, independent, self-adjoint operators almost surely in \( \mathcal{S}_1(\mathcal{H}) \) such that for some fixed self-adjoint matrices \( V_k \in \mathcal{S}_1(\mathcal{H})\) and all \( \abs{\theta} \leq \frac{1}{b_k} \)
+    \[ \mathbb{E}[\operatorname{exp}(\theta X_k)] \leq \operatorname{exp}(\frac{1}{2} \theta^{2}V_k^{2}) \]. Then, for \( a_1,\dots, a_n\in \mathbb{R} \) and \( t >0 \)
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}a_kX_k) \geq t) \leq 2\operatorname{int\, dim}\left(\sum_{k=1}^{n}a_k^{2}V_k^{2}\right) \operatorname{exp}\left(-\min_{}\curled*{\frac{t^{2}}{2\norm{\sum_{k=1}^{n}a_k^{2}V_k^2}_{}}, \frac{t}{2\max_{k}\abs{a_kb_k}}}\right). \]
+\end{thm}
+
+\begin{proof}
+    Assume without loss of generality that \( a_k >0 \).
+    By Markov inequality, we have 
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}a_kX_k) \geq t) \leq \frac{1}{\phi(t)} \mathbb{E}\left[\operatorname{tr}\left(\phi(\sum_{k=1}^{n}a_kX_k)\right)\right] \]
+    for \( \phi(t) = e^{\theta t}-1\) where \( \abs{\theta} \leq \frac{1}{\max_{k} a_kb_k} \).  
+
+    To apply Lieb's theorem, notice that for \( \abs{\theta} \leq \frac{1}{\max_{k}a_kb_k} \)
+    \begin{align*}
+      \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n}a_k X_k\right)-1\right)\right] &= \mathbb{E}\left[ \mathbb{E}\squared*{\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n-1}a_kX_k+\theta a_nX_n\right)-1)\right);\mathcal{F}_{n-1}}\right] \\
+                                                                                                                      & \leq \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n}a_kX_k+ \operatorname{ln} \mathbb{E}\left[\operatorname{exp}\left(\theta a_kX_k\right)\right]\right)-1\right)\right] \\
+                      & \leq \dots \\
+                      & \leq \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n} a_kX_k\operatorname{ln}\left(\mathbb{E}\left[\operatorname{exp}\left(\theta a_k X_k)\right)\right]\right)\right)-1\right)\right] \\
+                      & \leq \operatorname{tr}\left(\operatorname{exp}\left(\frac{1}{2}\theta^{2}\sum_{k=1}^{n}a_k^{2}V_k^{2}\right)-1\right).
+    \end{align*}
+    \( \phi \) is convex and satisfies \( \phi(0)=0 \). Notice that the last term is finite by Lemma \ref{finitetrexp}. Therefore, the intrinsic dimension lemma is applicable and we obtain for \( \abs{\theta} \leq \frac{1}{\max_{k}a_kb_k} \)
+    \[ \mathbb{E}\operatorname{tr}\left(\operatorname{exp}\left(\frac{1}{2}\theta^{2}\sum_{k=1}^{n}a_k^{2}V_k^{2}\right)-1\right)\leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}a_k^{2}V_k^{2}\right) \cdot e^{\frac{1}{2} \theta^{2 \norm{\sum_{k=1}^{n}a_k^{2}V_k^{2}}_{}}} \] 
+    Using our results earlier, we get
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}a_kX_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}a_k^{2}V_k^{2}\right) \cdot \frac{1}{e^{\theta t}-1} e^{\frac{1}{2}\theta^{2}\norm{\sum_{k=1}^{n}a_k^{2}V_k^{2}}_{}} \]
+    Notice that 
+    \[ \frac{1}{e^{\theta t}-1} e^{\frac{1}{2} \theta^{2} \norm{\sum_{k=1}^{n}a_k^{2}V_k^{2}}_{}} = \frac{e^{\theta t}}{e^{\theta t}-1} e^{-\theta t+ \frac{1}{2}\theta^{2} \norm{\sum_{k=1}^{n}a_k^{2}V_k^{2}}_{}} \]
+    We have \( \frac{e^{\theta t}}{e^{\theta t }-1}=1+ \frac{1}{e^{\theta t}-1} \leq 1+ \frac{1}{\theta t} \) as \( 1+x \leq e^{x} \) for \( x \in \mathbb{R} \). We also have that \( \psi(\theta) = - \theta t + \frac{1}{2} \theta^{2} \norm{\sum_{k=1}^{n}a_k^{2}V_k^{2}}_{} \) is minimized at \(\theta^{*}= \min_{} \left\{\frac{t}{\norm{\sum_{k=1}^{n}a_k^{2}V_k^{2}}}, \frac{1}{\max_{k}a_kb_k} \right\} \). 
+    Thus,
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}a_kX_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n} a_k^{2}V_k^{2}\right) \left(1+ \frac{1}{\theta^{*}t}\right) e^{-\frac{\theta^{*}t}{2}} \]
+    If  \( t \geq \frac{1}{\theta^{*}}\), we have \( \left(1+\frac{1}{\theta^{*}t}\right) \leq 2 \). If \( t < \frac{1}{\theta^{*}} \), we have that 
+    \[ \left(1+\frac{1}{\theta^{*}t}\right) e^{-\frac{\theta^{*}t}{2}} \geq 1 \]
+    In this case we have that 
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}a_kX_k) \geq t) \leq 1 \leq 2 \operatorname{int\, dim}\left(\sum_{k=1}^{n}a_k^{2}V_k^{2}\right) e^{- \frac{\theta^{*}t}{2}} \]
+    Thus in both cases we achieve the desired result.
+\end{proof}
+(!!! should we shorten the proof using better notation \( V_a^{2}= \sum_{k}^{}a_k^{2}V_k^{2} \). The proof is almost identical to the sub-Gaussian case. Can we extract arguments and introduce them earlier as lemmas?
+
+
+\subsubsection{Intrinsic Azuma inequality}
+Here I will write about symmetrization.
+In the one-dimensional case, we have some lemma to symmetrize the random variables such that we can conduct the proof as shown in !!! Here I insert some literature.
+
+\begin{lem}[Rademacher lemma]
+    Let \( A \) be a self-adjoint operator, \( \epsilon \) be a Rademacher random variable. Then,
+    \[ \mathbb{E}\left[e^{\epsilon \theta A}\right] \leq  e^{\frac{1}{2}\theta^{2} A^{2}} \]
+\end{lem}
+
+\begin{proof}
+    We have that for \( x \in \mathbb{R} \), \( \frac{1}{2}e^{x} + \frac{1}{2}e^{-x} \leq e^{\frac{1}{2}x^{2}} \). By spectral theory,
+    \[ \mathbb{E}\left[e^{\epsilon A}\right] = \frac{1}{2}e^{-A} + \frac{1}{2}e^{A} \leq e^{\frac{1}{2}A^{2}} \]
+\end{proof}
+
+\begin{lem}[Symmetrization]
+    Let \( X \) be a random self-adjoint matrix, \( A  \) be a fixed self-adjoint matrix. Assume \( X^2 \leq A^{2} \). Let \( \epsilon \) be an independent Rademacher variable. Then,
+    \[ \operatorname{ln} \mathbb{E}\squared*{e^{2\epsilon \theta X};X} \leq 2 \theta^{2} A^{2}\]
+\end{lem}
+
+\begin{proof}
+    We have 
+    \[ \mathbb{E}\squared*{e^{2\epsilon \theta X};X} \leq e^{2 \theta^{2}X^{2}} \]
+\end{proof}
+
+Here, we do not need equivalent statements for operators, since we will use the matrix-version´of Azuma's inequality to deduce the operator-version.
+
+Some text about "cost of symmetrization". Mention, that for symmetrically-distributed random matrices, we have sharper bounds.
+
+\begin{thm}[Intrinsic operator Azuma]
+    Let \( X_,1 \dots, X_n \) be random self-adjoint operators almost surely in \( \mathcal{S}_1(\mathcal{H}) \) such that 
+    \begin{enumerate}[1)]
+      \item \(\mathbb{E}\squared*{X_{k+1};\mathcal{F}_k} =0\);
+      \item \( X_k^{2} \leq A_k^{2} \) almost surely for some positive operators in \( A_k^{2} \in \mathcal{S}_1(\mathcal{H}) \). Define \( \sigma^{2}:= \norm{\sum_{k=1}^{n}A_k^{2}}_{} \).
+    \end{enumerate}
+    Then,
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}A_k^{2}\right) \cdot \operatorname{exp}\left(- \frac{t^2}{8 \sigma^{2}}\right) \]
+\end{thm}
+
+\begin{proof}
+    By Markov inequality, we have 
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \frac{1}{\phi(t)} \mathbb{E}\left[\operatorname{tr}\left(\phi(\sum_{k=1}^{n}X_k)\right)\right] \]
+    for \( \phi(t) = e^{\theta t}-1\). To apply Lieb's theorem, notice that
+    \begin{align*}
+      \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n} X_k\right)-1\right)\right] &= \mathbb{E}\left[ \mathbb{E}\squared*{\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n-1}X_k+\theta X_n\right)-1)\right);\mathcal{F}_{n-1}}\right] \\
+      &\leq \mathbb{E}\left[ \mathbb{E}\squared*{\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n-1}X_k+2 \epsilon \theta X_n\right)-1)\right);\mathcal{F}_{n-1}}\right] \\                                      & \leq \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\theta \sum_{k=1}^{n}X_k+ \operatorname{ln} \mathbb{E}\left[\operatorname{exp}\left(2 \epsilon\theta X_k\right)\right]\right)-1\right)\right] \\
+                      & \leq \dots \\
+                      & \leq \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left(\sum_{k=1}^{n} \operatorname{ln}\left(\mathbb{E}\left[\operatorname{exp}\left(2 \epsilon\theta X_k)\right)\right]\right)\right)-1\right)\right] \\
+                      & \leq \operatorname{tr}\left(\operatorname{exp}\left({2}\theta^{2}\sum_{k=1}^{n}A_k^{2}\right)-1\right)
+    \end{align*}
+    \( \phi \) is convex and satisfies \( \phi(0)=0 \). Notice that the last term is finite by Lemma \ref{finitetrexp}. Therefore, the intrinsic dimension lemma is applicable and we obtain
+  \[ \mathbb{E}\left[\operatorname{tr}\left(\operatorname{exp}\left({2}\theta^{2}\sum_{k=1}^{n}A_k^{2}\right)-1\right)\right] \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}A_k^{2}\right) \cdot e^{{2} \theta^{2 }\norm{\sum_{k=1}^{n}A_k^{2}}_{}} \] 
+    Using our results earlier, we get
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}A_k^{2}\right) \cdot \frac{1}{e^{\theta t}-1} e^{{2}\theta^{2}\norm{\sum_{k=1}^{n}A_k^{2}}_{}} \]
+    Notice that 
+    \[ \frac{1}{e^{\theta t}-1} e^{{2}\theta^{2} \norm{\sum_{k=1}^{n}A_k^{2}}_{}} = \frac{e^{\theta t}}{e^{\theta t}-1} e^{-\theta t+{2}\theta^{2} \norm{\sum_{k=1}^{n}A_k^{2}}_{}} \]
+    We have \( \frac{e^{\theta t}}{e^{\theta t }-1}=1+ \frac{1}{e^{\theta t}-1} \leq 1+ \frac{1}{\theta t} \) as \( 1+x \leq e^{x} \) for \( x \in \mathbb{R} \). We also have that \( \psi(\theta) = - \theta t + {2} \theta^{2} \norm{\sum_{k=1}^{n}A_k^{2}}_{} \) is minimized at \( \theta^{*}= \frac{t}{\norm{4\sum_{k=1}^{n}A_k^{2}}} \) and \( \psi(\theta^{*})= -\frac{t^{2}}{8 \norm{\sum_{k=1}^{n}A_k^{2}}} \). Thus,
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n} A_k^{2}\right) \left(1+ \frac{4\norm{\sum_{k=1}^{n}A_k^{2}}_{}}{t^{2}}\right) e^{-\frac{t^{2}}{8 \norm{ \sum_{k=1}^{n}A_k^{2}}_{}}} \]
+    If  \( t \geq 4\norm{\sum_{k=1}^{n}A_k^{2}}_{} \), we have \( \left(1+\frac{4\norm{\sum_{k=1}^{n}A_k^{2}}_{}}{t^{2}}\right) \leq 2 \). If \( t^{2} < 4\norm{\sum_{k=1}^{n}A_k^{2}}_{} \), we have that 
+    \[ \left(1+\frac{4\norm{\sum_{k=1}^{n}A_k^{2}}_{}}{t^{2}}\right) e^{-\frac{t^{2}}{8 \norm{\sum_{k=1}^{n}A_k^{2}}_{}}} \geq 2 e^{-\frac{1}{2}} \geq 1 \]
+    In this case we have that 
+    \[ \mathbb{P}(\lambda_{\text{max}} (\sum_{k=1}^{n}X_k) \geq t) \leq 1 \leq 2 \operatorname{int\, dim}\left(\sum_{k=1}^{n}A_k^{2}\right) \exp({- \frac{t^{2}}{8 \norm{\sum_{k=1}^{n}A_k^{2}}_{}}} )\]
+    Thus in both cases we achieve the desired result.
+\end{proof}
+
+One of the most immediate applications from Azuma's inequality in the one-dimensional case is McDiarmid's inequality (!!! Reference), also known as the bounded differences inequality. A similar corollary holds for operators as well.
+
+
+\begin{corl}[Intrinsic operator McDiarmid]
+    Let \( Z_1,\dots, Z_n \) be real-valued indepedenent random variables. Let 
+    \[ H: \mathbb{R}^{n} \to \mathcal{S}_1(\mathcal{H})\cap \mathcal{L}_s(\mathcal{H}) \]
+    be a map such that there exists \( A_k \) such that for all \( z_1,\dots,z_n,z_k' \), we have 
+    \[ \left(H(z_1,\dots,z_k,\dots,z_n)- H(z_1,\dots,z_k',\dots,z_n)\right)^2 \leq A_k^{2} \]
+    Define \( \sigma^{2}:= \sum_{k=1}^{n}A_k^{2} \). Then, for \( t>0 \), we have
+    \[ \mathbb{P}\left(\lambda_{\text{max}} \left(H(z)-\mathbb{E}[H(z)]\right) \geq t\right) \leq \operatorname{int\, dim}\left(\sum_{k=1}^{n}A_k^{2}\right) \cdot e^{-\frac{t^{2}}{8 \sigma^{2}}} \]
+    where \( z=(Z_1,\dots,Z_n) \).
+\end{corl}
+
+
+\begin{proof}
+  We use the argument as in \cite{tropp2011user}. Their proof holds similarly as in the finite-dimensional case, only that we need the validity of Azuma's operator inequality. For the sake of completeness, we present the proof.
+    Let \( \mathbb{E}_{Z} \) denote the expectation with respect to \( Z \), holding the other random variables fixed. Define 
+    \[ Y_k=\mathbb{E}\squared*{H(z);\underbrace{Z_1,\dots,Z_k}_{\sigma(\mathcal{F}_k)}} = \mathbb{E}_{Z_{k-1}}\dots \mathbb{E}_{Z_n} \left[H(z)\right]\]
+and \( X_k = Y_k-Y_{k-1} \). Then \( X_k \) satisfies the following:
+\begin{enumerate}[1)]
+  \item \( X_k \) is self-adjoint random operator;
+  \item \( \mathbb{E}\squared*{X_{k+1};\mathcal{F}_k}=0 \);
+  \item \( X_k^{2}\leq A_k^2 \).
+\end{enumerate}
+Self-adjointness is clear, as the space of self-adjoint operators is linear. The martingale property is clear as
+\[ \mathbb{E}\squared*{\mathbb{E}\squared*{H(z);\mathcal{F}_{k+1}}- \mathbb{E}\squared*{H(z);\mathcal{F}_k};\mathcal{F}_k}=0 \]
+using the tower property of conditional expectations. We now show the bound for the differences: Let \( Z_k'  \) be an independent copy of \( Z_k \), define \( z'=(Z_1,\dots,Z_k',\dots,Z_n)\). Then, \( \mathbb{E}_{Z_{k}}\left[H(z)\right] = \mathbb{E}_{Z_{k'}}\mathbb{E}\left[H(z')\right] \). Then we have
+\begin{itemize}
+  \item \( X_k=\mathbb{E}_{Z_{k+1}} \mathbb{E}_{Z_{n}} \mathbb{E}_{Z_{k}'}\left[H(z)-H(z')\right] \) since \( H(z) \) is independent of \( Z_k' \);
+  \item \( (H(z)-H(z'))^{2} \leq A_k^{2} \) by assumption.
+\end{itemize}
+An application of Jensen's inequality yields
+\[ X_k^{2}=\left(\mathbb{E}_{Z_{k+1}}\dots \mathbb{E}_{Z_n} \mathbb{E}_{Z_{k}'}\left[H(z)-H(z')\right]\right)^{2} \leq \mathbb{E}_{Z_{k+1}} \dots \mathbb{E}_{Z_n} \mathbb{E}_{Z_k'}\mathbb{E}\left[\left(H(z)-H(z')\right)^{2}\right] \leq A_k^{2} \]
+This allows us to use Azuma's inequality which yields the result.
+  \end{proof}
+
+
+\subsubsection{Intrinsic Freedman Inequality}
+
+\begin{thm}[Intrinsic Freedman inequality]
+  \label{intfreedman}
+    Let \( (X_k)_k \) be an adapted sequence of random self-adjoint operators on a separable Hilbert space \(\mathcal{H}\) such that 
+    \begin{enumerate}[1)]
+      \item \( X_k \in \mathcal{S}_1(\mathcal{H}) \) almost surely;
+      \item \( \norm{X_k}_{} \leq 1 \) almost surely;
+      \item \( \mathbb{E}_{k-1}\left[X_k\right]=0 \).
+    \end{enumerate}
+    Define \( Y_k := \sum_{j=1}^{k} X_j \) and \( W_k = \sum_{j=1}^{k} \mathbb{E}_j\left[X_j^{2}\right] \). Then, for \( t, \sigma^{2} > 0\),
+    \[ \mathbb{P}\left(\exists k \geq 0:\, \lambda_{\text{max}}\left(Y_k\right) \geq t \text{ and } \norm{W_k}_{} \leq \sigma^{2}\right) 4 \cdot \operatorname{exp}\left(- \frac{\sigma^{2}}{R^{2}}\cdot h\left(\frac{R}{\sigma}\right)\right)\]
+    where \( h(u)= (1+u)\operatorname{ln}(1+u)-u \) for \( u \geq 0 \).
+\end{thm}
+
+\begin{proof}
+    To be proven.
+\end{proof}
+
+It remains unclear how to prove a version of Freedman's inequality similar to Theorem 1.1 in \cite{tropp2011freedman} including the intrinsic dimension. The technical difficulties lie in the following: For matrices of size \( d \times d \)

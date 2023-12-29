@@ -1,0 +1,53 @@
+\newpage
+
+\section{Attempt: Inverse Uniform Smoothness}
+
+
+We can use the result from \cite{lieb1994smooth2} to try to find a lower bound for the expression \( \Norm{X+Y}_{p,q}^{2} \) for adequate random operators \( X,Y \) and some \( p,q \). In fact, we have the following:
+
+
+
+\begin{thm}[Uniform Smoothness]
+    Let \( 1 \leq p \leq 2 \). Let \( X, Y \in \mathcal{S}_p(\mathcal{H}) \). Then,
+    \[ \frac{1}{2} \left[ \left(\norm{X+Y}_{p}^{p}+ \norm{X-Y}_{p}^{p}\right)\right]^{2/p} \geq \norm{X}_{p}^{2} + (p-1)\norm{Y}_{p}^{2} .\]
+\end{thm}
+
+Therefore, similarly to \cite{huang2020matrix}, we can conclude the following.
+
+\begin{corl}[]
+    Let \( 1 \leq p \leq q \leq 2 \) and let \( X,Y \) be random operators such that \( \Norm{X}_{p,q}, \Norm{Y}_{p,q} < \infty  \).  Then,
+    \[ \left[\frac{1}{2} \left( \Norm{X+Y}_{p,q}^{q}+ \Norm{X-Y}_{p,q}^{q}\right)\right]^{2/q} \geq \Norm{X}_{p,q}^{2} + (p-1) \Norm{Y}_{p,q}^{2}. \]
+\end{corl}
+
+
+
+
+\begin{proof}
+    Notice that almost surely \( \norm{X}_{p}, \norm{Y}_{p} < \infty \). Therefore, we have that almost surely
+    \begin{align*}
+      \left[ \frac{1}{2} \left(\norm{X+Y}_{p}^{q} + \norm{X-Y}_{p}^{q}\right)\right] &\geq \left[\frac{1}{2} \left( \norm{X+Y}_{p}^{p}+ \norm{X-Y}_{p}^{p}\right)\right]^{q/p} \\
+                                                                                     &\geq \left[ \norm{X}_{p}^{2} + (p-1) \norm{Y}_{p}^{2}\right]^{q/2}
+    \end{align*}
+    using Jensen's inequality in the first line. Taking expectations yields
+    \begin{align*}
+      \mathbb{E}\left[\frac{1}{2}\left( \norm{X+Y}_{p}^{q}+ \norm{X-Y}_{p}^{q}\right)\right] & \geq \mathbb{E}\left[ \left(\norm{X}_{p}^{2}+ (p-1) \norm{Y}_{p}^{2}\right)^{q/2}\right] \\
+                                                                                             & \overset{\text{(I)}}{\geq}  \left(\mathbb{E}\left[ \norm{X}_{p}^{2 \cdot q/2}\right]^{2/q}+ (p-1) \mathbb{E}\left[ \norm{Y}_{p}^{2 \cdot q/2}\right]^{2/q}\right)^{q/2} \\
+                                                                                             &= \left(\Norm{X}_{p,q}^{2} + (p-1) \Norm{Y}_{p,q}^{2}\right)^{q/2}.
+    \end{align*}
+where (I) holds due to the next lemma.    
+\end{proof}
+
+
+\begin{lem}[]
+    Let \( x,y \) be integrable non-negative random variables. Then, for \( r \in (0,1) \).
+    \[ \mathbb{E}\left[\left(x+y\right)^{r}\right] \geq  \left(\mathbb{E}\left[x^{r}\right]^{1/r} + \mathbb{E}\left[y^{r}\right]^{1/r}\right)^{r}. \]
+\end{lem}
+
+\begin{proof}
+    Notice that we have almost surely for \( t \in (0,1) \) due to convexity
+    \[ \left(x+y\right)^{r}= \left(t \frac{x}{t} + (1-t) \frac{y}{1-t}\right)^{r} \geq t \frac{x^{r}}{t^{r}} + (1-t) \frac{y^{r}}{(1-t)^{r}}. \] 
+    Therefore, 
+    \[ \mathbb{E}\left[ \left(x+y\right)^{r}\right] \geq t \frac{\mathbb{E}\left[x^{r}\right]}{t^{r}} + (1-t) \frac{\mathbb{E}\left[y^{r}\right]}{(1-t)^{r}} .\]
+    Now, choose \( t= \mathbb{E}\left[x^{r}\right]^{1/r}/\left(\mathbb{E}\left[x^{r}\right]^{1/r}+\mathbb{E}\left[y^{r}\right]^{1/r}\right) \). Then, the result follows.
+\end{proof}
+

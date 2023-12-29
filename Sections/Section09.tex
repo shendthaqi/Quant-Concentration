@@ -1,0 +1,202 @@
+\newpage
+
+\section{Product Approximation of Exponential}
+
+\subsection{Worst-Case Error}
+
+\begin{thm}[]
+  \label{worstcaseexp}
+    Let \( A_1, \dots, A_n \) be independent, random operators on a \( d \)-dimensional Hilbert space \( \mathcal{H} \) such that 
+    \begin{enumerate}[1)]
+      \item \( \mathbb{E}\left[A_k\right] = A \) for some \( A \in \mathcal{L}(\mathcal{H}) \);
+      \item \( \norm{A_k}_{} \leq  1 \) almost surely.
+    \end{enumerate}
+    Let \( \epsilon \in (0,\infty),\, \delta \in (0,1) \). For \( n \geq \frac{64e^{2} \operatorname{ln}(2d/\delta)}{\epsilon^{2}} \), we have 
+  \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)-e^{A}}\leq\epsilon\right)  \geq 1-\delta.\]
+\end{thm}
+
+
+The proof idea stems from \cite{chen2021product}. The idea is find some deterministic operator dependent on \( n \) that is close to both, the random expression \( \prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)^{n} \) in a sense that we can apply known concentration results and close to \( e^{A} \) such that for increasing \( n \), the deterministic operator dependent on \( n \) converges to \( e^{A} \).
+\begin{proof}
+    Using the triangle inequality, we have 
+    \[ \norm{\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)-e^{A}}_{} \leq \underbrace{\norm{\mathbb{E}\left[\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)- e^{A}\right]}_{}}_{\text{deterministic bias}} + \underbrace{\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)- \mathbb{E}\left[\prod_{k=1}^{n}\left(I+ \frac{1}{n}A_k\right)\right]}_{}}_{\text{fluctuation error}}. \]
+    The original norm can be decomposed into a fluctuation error and a deterministic bias. The fluctuation error is random. Therefore, we will need to apply adequate concentration results to find an upper bound. The deterministic bias is not, hence it is easier to consider.
+    \begin{enumerate}[(i)]
+      \item Determinstic bias:
+        Using Lemma \ref{expproderror} to obtain
+        \[ \norm{\mathbb{E}\left[\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)\right]-e^{A}} = \norm{\left(I+\frac{1}{n}A\right)^{n} - e^{A}}\leq  \frac{e}{n} .\]
+      \item Fluctuation error:
+        Since we inserted \( \mathbb{E}\left[\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)\right] \) into the norm using the triangle inequality, we see that the difference term in the norm has expectation zero. This allows us to establish a sum of martingale differences, and apply concentration results. Define \( \mathfrak{F}_j= \sigma(A_1,\dots, A_j) \) and 
+        \[ B_j= \mathbb{E}\left[\prod_{k=j+1}^{n}\left(I+\frac{1}{n}\right)\right] \cdot \prod_{k=1}^{j} \left(I+\frac{1}{n}A_k\right).\] 
+        Then \( (B_j)_j \) is a martingale with respect to the filtration \( \left(\mathfrak{F}_j\right)_j \). 
+        Notice that 
+               \[ B_j-B_{j-1} = \mathbb{E}\left[ \prod_{k=j+1}^{n}\left(I+\frac{1}{n}A_k\right)\right] \cdot \left(I+ \frac{1}{n} A_j - \mathbb{E}\left[I+\frac{1}{n}A_j\right]\right) \cdot \prod_{k=1}^{j-1}\left(I+\frac{1}{n}A_k\right)\]
+forms the difference sequence. We wish to apply Bernstein's inequality (Lemma \ref{bernsteinineq}). We need to find boundaries \( R, v \) such that \[ \norm{B_k-B_{k-1}}_{} \leq R \quad \text{and} \quad \norm{\sum_{k=1}^{n} \mathbb{E}_{k-1}\left[(B_{k}-B_{k-1})(B_k-B_{k-1})^{*}\right]}_{} \leq v \] for all \( k \leq n\). 
+          We follow that,
+        \[ \norm{B_j- B_{j-1}}_{} \leq \norm{\mathbb{E}\left[\prod_{k=j+1}^{n}\left(I+\frac{1}{n}\right)\right]}_{} \cdot \frac{1}{n} \norm{A_j-\mathbb{E}\left[A_j\right]}_{} \cdot \norm{\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)}_{}\]
+        By submultiplicativity of the norm, we can find the bound 
+        \[ \norm{B_j-B_{j-1}}_{} \leq \frac{1}{n} \norm{A_j- \mathbb{E}\left[A_j\right]}_{} \cdot e \leq \frac{2e}{n}\] 
+        since \( \norm{A_j}_{}, \norm{\mathbb{E}\left[A_j\right]}_{}\leq 1 \). A similar estimation leads to 
+        \[ \norm{\mathbb{E}_{j-1}\left[(B_j-B_{j-1})(B_j-B_{j-1})^{*}\right]}_{} \leq \frac{4e^{2}}{n^{2}}. \]
+        Thus, we can choose parameters \( R= \frac{2e}{n} \) and \( v= \frac{4e^{2}}{n} \). Applying Lemma \ref{bernsteinineq}, we obtain
+        \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)- \left(I+\frac{1}{n}A\right)^{n}}_{}\geq t \right) \leq \operatorname{exp}\left(\frac{-t^{2}/2}{(4e^{2}/n)+ (2e/n)t/3}\right) .\]
+        In particular, if \( t \leq 6e \), we have the simplified expression
+        \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)- \left(I+\frac{1}{n}A\right)^{n}}_{}\geq t \right) \leq \operatorname{exp}\left(\frac{-t^{2}n}{16e^{2}}\right).\] Plug in the value \( t= \epsilon/2 \), then 
+\[ \mathbb{P}\left(\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)- \left(I+\frac{1}{n}A\right)^{n}}_{}\geq \epsilon/2 \right) \leq \operatorname{exp}\left(\frac{-\epsilon^{2}n}{64e^{2}}\right).\]
+Thus if \( n \geq \frac{64e^{2} \operatorname{ln}(2d/\delta)}{\epsilon^{2}} \) for \( \delta \in (0,1) \), then
+\[ \mathbb{P}\left(\norm{ \prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)-\left(I+\frac{1}{n}A\right)^{n}}_{} \geq \epsilon/2\right) \leq \delta. \]
+In total, if \( n \geq \max \left\{2e/\epsilon,\frac{64e^{2} \operatorname{ln}(2d/\delta)}{\epsilon^{2}} \right\} \), \( n \geq 2 e/\epsilon \), hence we have that with probability greater than \( 1-\delta \),
+\[ \norm{\prod_{k=1}^{n} \left(I+\frac{1}{n} A_k\right)-e^{A}}_{} \leq \epsilon \]
+    \end{enumerate}
+    
+\end{proof}
+
+
+\begin{corl}[Expectation bound for worst-case error]
+    In the setting of Theorem \ref{worstcaseexp}, we also have
+    \[ \mathbb{E} \left[\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)-e^{A}}_{}\right]  \leq \sqrt{\frac{8e^{2}}{n} \operatorname{ln}\left(1+d\right)}+ \frac{4e}{3n}\operatorname{ln}\left(1+d\right) + \frac{4e}{\sqrt{n}} + \frac{11e}{3n}.\]
+\end{corl}
+
+\begin{proof}
+    Notice that using the triangle inequality in the proof of Theorem \label{worstcaseexp}, we have 
+    \[ \norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)-e^{A}}_{} \leq \underbrace{\norm{\mathbb{E}\left[ \prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)\right]-e^{A}}_{}}_{\leq \frac{e}{n}}+ \norm{\underbrace{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)-\mathbb{E}\left[\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)\right]}_{=:Z}}_{}. \]
+    By the layer-cake representation and the concentration result from earlier and using the notation \( v= \frac{4e^{2}}{n},\, R= \frac{2e}{n} \), 
+    \begin{align*}
+      \mathbb{E}\left[\norm{Z}_{}\right] & = \int_{0}^{\infty } \mathbb{P}\left(\norm{Z}_{} \geq t\right) \dd{t} \leq \int_{0}^{\infty } \min_{} \left\{ 1, 2d \exp \left(- \frac{-t^2/2}{v+Rt/3}\right)\right\} \dd{t}.
+    \end{align*}
+    Using the same argument as \cite{tropp2015introduction} in the proof of Corollary 7.3.2, we can find the estimate 
+   \begin{align*}
+     \mathbb{E}\left[\norm{Z}_{}\right] &\leq \int_{0}^{\mu} 1 \dd{t}+ 2d \int_{\mu }^{\infty } \exp \left(- \frac{t^2/2}{v+Rt/3}\right) \dd{t}  \\
+                                        & \leq \mu + 2d \sqrt{v} e^{- \mu^{2}/(2v)} + \frac{4}{3}d L e^{-3\mu/(2L)}.
+   \end{align*}
+   for \( \mu \geq \sqrt{v} \).
+   Selecting \( \mu= \sqrt{2v \operatorname{ln}\left(1+d\right)}+ \frac{2}{3} L \operatorname{ln}\left(1+d\right) \), we can find bounds for the terms in the above expression as 
+   \begin{align*}
+     2d \sqrt{v} e^{-\mu^2/(2v)} & \leq 2d \sqrt{v} e^{-2v \operatorname{ln}\left(1+d\right)/(2v)} = 2d \sqrt{v} /(1+d) \leq 2 \sqrt{v} \\
+     \frac{4}{3}d L e^{-3\mu/(2L)} &\leq \frac{4}{3} dL e^{-3(2/3)L \operatorname{ln}\left(1+d\right)/(2L)} = \frac{4}{3}dL/(1+d) \leq \frac{4}{3}L.
+   \end{align*}
+   Thus, we get 
+   \begin{align*} 
+     \mathbb{E}\left[\norm{Z}_{}\right] &\leq \sqrt{2v \operatorname{ln}\left(1+d)\right)} + \frac{2}{3}L\operatorname{ln}\left(1+d\right) + 2 \sqrt{v} + \frac{4}{3}L  \\
+                                        &= \sqrt{\frac{8e^{2}}{n}\operatorname{ln}\left(1+d)\right)} + \frac{4e}{3n}\operatorname{ln}\left(1+d\right) + \frac{4e}{\sqrt{n}}+\frac{8e}{3n}.
+ \end{align*}
+Combining this result with the triangle inequality, we get
+\[\mathbb{E}\left[\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n} A_k\right)-e^{A}}_{}\right] \leq \sqrt{\frac{8e^{2}}{n}\operatorname{ln}\left(1+d)\right)} + \frac{4e}{3n}\operatorname{ln}\left(1+d\right) + \frac{4e}{\sqrt{n}}+\frac{11e}{3n}.\]
+\end{proof}
+
+
+
+\begin{corl}[]
+    \label{worstcaseexpsep}
+    Let \( A_1, \dots, A_n \) be independent, random operators on a \( d \)-dimensional Hilbert space \( \mathcal{H} \) such that 
+    \begin{enumerate}[1)]
+      \item \( \mathbb{E}\left[A_k\right] = A \) for some \( A \in \mathcal{L}(\mathcal{H}) \);
+      \item \( \norm{A_k}_{} \leq  1 \) almost surely.
+    \end{enumerate}
+    Let \( \epsilon \in (0,\infty),\, \delta \in (0,1) \). For \( n \geq \frac{64e^{2} \operatorname{ln}(4d/\delta)}{\epsilon^{2}} \), we have 
+  \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)-e^{A}}\leq\epsilon\right)  \geq 1-\delta.\]
+
+\end{corl}
+\begin{proof}
+  The proof can be conducted identical to the case that \( \mathcal{H} \) is a \( d \)-dimensional Hilbert space. We just have to adjust by a factor of \( 2 \) due to the weaker version of Freedman's inequality (Theorem \ref{intfreedman}).
+\end{proof}
+
+
+
+\begin{lem}[]
+  \label{expproderror}
+    Let \( A \in \mathcal{L}(\mathcal{H}) \) be a contraction, i.e. \( \norm{A}_{} \leq 1 \). (De we need that \( A \) is self-adjoint?) Then, 
+    \[ \norm{ \left(I+\frac{1}{n}A\right)^{n}- e^{A}}_{} \leq \frac{e}{n}. \]
+\end{lem}
+
+\begin{proof}
+  Let \(a \in [-1,1] \). Then, \( \left(1+ \frac{a}{n}\right)^{n} < e^{a} < \left(1+\frac{a}{n}\right)^{n+1} \). This follows considering \( f(\alpha)= \left(1+\frac{\alpha}{n}\right)^{n},\, f(\alpha)=e^{\alpha},\, f_2(\alpha)=\left(1+\frac{\alpha}{n}\right)^{n+1} \) and noting that 
+  \begin{align*}
+    f_1(0) &=1,\quad f_1'(\alpha)< f_1(\alpha) \\
+    f(0) &=1, \quad f'(\alpha) = f(\alpha) \\
+    f_2(0)&=1, \quad f_2'(\alpha)> f_2(\alpha)
+  \end{align*}
+ Therefore, 
+ \[ \abs{e^{a}- \left(1+\frac{a}{n}\right)^{n}} \leq \left(1+\frac{a}{n}\right)^{n+1}- \left(1+\frac{a}{n}\right)^{n} = \left(1+\frac{a}{n}\right)^{n} \abs{\frac{a}{n}} \leq \frac{e}{n}. \]
+ Now apply continuous functional calculus to obtain the result.
+\end{proof}
+
+
+\begin{lem}[Bernstein's inequality, \cite{chen2021product}]
+  \label{bernsteinineq}
+  Let \( (B_k)_k \) be a matrix martingale with size. Assume that 
+  \begin{enumerate}[1)]
+    \item \( \norm{B_k-B_{k-1}}_{} \leq R \) holds almost surely;
+    \item \( \norm{\sum_{k=1}^{n} \mathbb{E}_{k-1}[(B_k-B_{k-1})(B_{k}-B_{k-1})^*]}_{} \leq v \) holds almost surely.
+  \end{enumerate}
+  Then, 
+  \[ \mathbb{P}\left(\norm{B_n-B_0}_{} \geq t\right) \leq 2d \cdot \operatorname{exp}\left(\frac{-t^{2}/2}{v+Rt/3}\right). \]
+\end{lem}
+
+
+
+
+
+
+
+
+\subsection{Average-Case Error}
+
+
+\begin{thm}[]
+ \label{avgcaseexp}
+
+    Let \( A_1, \dots,A_n \) be independent random operators on a separable Hilbert space \( \mathcal{H} \) such that 
+    \begin{enumerate}[1)]
+      \item \( \mathbb{E}\left[A_k\right]=A \) for some \( A \in \mathcal{L}(\mathcal{H}) \);
+      \item \( \norm{A_k}_{} \leq 1 \) almost surely.
+    \end{enumerate}
+    Let \( x \in \mathcal{H}\) with \( \norm{x}_{2} \leq 1 \) \( \epsilon \in (0,\infty),\, \delta \in (0,1) \). For \( n \geq \frac{64e^{3/2} \operatorname{ln}(2/\delta)}{\epsilon^{2}} \), we have 
+  \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x-e^{A}x}\leq\epsilon\right)  \geq 1-\delta.\]
+
+\end{thm}
+ 
+\begin{proof}
+    The proof idea stems from \cite{chen2021product}. By Markov's inequality, we have 
+    \[ \mathbb{P}\left( \norm{ \prod_{k=1}^{n} \left(I+\frac{1}{n} \right)x- e^{A}x}_{2} \geq \epsilon\right)  \leq \frac{1}{\epsilon ^{q}} \mathbb{E}\left[\norm{\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)x-e^{A}x}_{2}^{q}\right].\]
+    Since \( \mathbb{E}\left[ \norm{ \cdot }_{2}^{q}\right]^{1/q} \) defines a norm for suitable random vectors, we have 
+    \begin{align*}
+      &\mathbb{E}\left[\norm{ \prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x- e^{A}x}_{2}^{q}\right]^{1/q}  \\
+      \leq & 
+      \mathbb{E}\left[ \norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x - \mathbb{E}\left[ \prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)\right]}_{2}^{q}\right]^{1/q} + \mathbb{E} \left[\norm{ \mathbb{E}\left[ \prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x\right]-e^{A}x}_{2}^{q}\right]^{1/q} \\
+      \leq & 2 \max \left\{  \mathbb{E} \left[\norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x - \mathbb{E}\left[\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)\right]}_{2}^{q}\right]^{1/q}, \norm{\mathbb{E}\left[ \prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)\right]- e^{A}x}_{2}\right\}
+    \end{align*}
+    where we used the triangle inequality to decompose the norm into a random fluctuation part and a deterministic bias part, and the elementary inequality \( (a+b) \leq 2 \max \{a,b\} \).  Notice that, similarly to the proof of Theorem \ref{worstcaseexp}, we have that 
+    \[ \norm{\mathbb{E}\left[ \prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)\right]- e^{A}x}_{2} \leq  \frac{e}{n} \norm{x} \leq \frac{e}{n}.\] 
+    To consider the random fluctuation, notice that 
+    \( (B_j)_j \) defined by 
+    \[ B_j = \mathbb{E}\left[\prod_{k=j+1}^{n} \left(I+\frac{1}{n}A_k\right)\right] \prod_{k=1}^{j} \left(I+\frac{1}{n}A_k\right) \] 
+    forms a martingale with respect to the filtration \( (\mathfrak{F}_j)_j = (\sigma(B_1,\dots, B_j))_j \). Therefore, \( B_jx \) is a martingale as well. We now use uniform smoothness (Lemma \ref{!!!}) to obtain 
+    \begin{align*}
+      & \mathbb{E}\left[ \norm{ \prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x - \mathbb{E}\left[\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)x \right]}_{2}^{q/2}\right]  \\
+      =& \mathbb{E}\left[ \norm{\sum_{k=1}^{n} B_kx - B_{k-1}x }_{2}^{q}\right]^{2/q} \\ 
+                                                                                                                                                                       =& \mathbb{E} \left[ \norm{ \sum_{k=1}^{n}  \left(B_kx-B_{k-1}x\right)+ (B_nx-B_{n-1}x)}_{2}^{q}\right]^{2/q} \\
+                                                                                                                                                                        =& \mathbb{E}\left[\norm{\sum_{k=1}^{n-1} \left(B_kx-B_{k-1}x\right)}_2^{q}\right]^{q/2} + (q-1) \mathbb{E}\left[ \norm{ B_n x-B_{n-1}x}_{2}^{q}\right]^{q/2} \\
+                                                                                                                                                                        \leq& \dots
+                                                                                                                                                                            \leq  (q-1) \sum_{k=1}^{n} \mathbb{E}\left[\norm{B_{k}x-B_{k-1}x}_{2}^{q}\right]^{2/q}.
+    \end{align*}
+    To find a bound for each of the terms, notice that 
+    \[ \norm{B_kx-B_{k-1}x}_{2} \leq \norm{B_k-B_{k-1}} \norm{x} \leq \norm{B_k-B_{k-1}} \leq e^{A}\frac{2}{n} \leq \frac{2e}{n} \]
+    similarly as in the proof of Theorem \ref{worstcaseexp}. Therefore,
+  \[ \mathbb{E}\left[ \norm{\prod_{k=1}^{n} \left(I+\frac{1}{n}A_k\right)x - \mathbb{E}\left[\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)x \right]}_{2}^{q}\right]^{2/q}  \leq (q-1) n \left(\frac{2e}{n}\right)^{2}.\]
+  Therefore since \( \frac{e}{n} \leq  2e\sqrt{\frac{q-1}{n}}  \), 
+   \[ \frac{1}{\epsilon^{q}} \mathbb{E}\left[ \norm{ \prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)x - e^{A}x}_{2}^{q}\right]  \leq \frac{1}{\epsilon^{q}} \left(8 e \sqrt{\frac{q-1}{n}}\right)q \leq \left(\frac{64 q e^{2}}{\epsilon^{2} n}\right)^{q/2}.\]
+   Select \( q= \frac{\epsilon^{2}n}{64 e^{3}} \) to obtain the bound
+   \[ \mathbb{P}\left( \norm{ \prod_{k=1}^{n} \left(I+\frac{1}{n} \right)x- e^{A}x}_{2} \geq \epsilon\right)  \leq \frac{1}{\epsilon ^{q}} \mathbb{E}\left[\norm{\prod_{k=1}^{n}\left(I+\frac{1}{n}A_k\right)x-e^{A}x}_{2}^{q} \right] \leq \operatorname{exp} \left(- \frac{\epsilon \sqrt{n}}{8e^{3/2}}\right). \]
+   This concludes the result.
+
+\end{proof}
+
+
+\begin{corl}[Expectation bounds for average-case error]
+  In the setting of \ref{avgcaseexp}, we also have
+  \[ \mathbb{E}\left[\norm{\prod_{k=1}^{n}\left(1+\right)}_{}\right] \]
+    
+\end{corl}
+
+\[ \bm{Z}Z\mathbf{Z}Z \]

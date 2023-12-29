@@ -1,0 +1,78 @@
+\newpage
+
+\section{Operators on a Hilbert Space}
+ I need to introduce theory for compact operators and specifically for Schatten-p operators. 
+Let \( \mathcal{H} \) be a separable Hilbert space. Therefore, we can assume that there is a sequence \( (e_n)_n \) that forms an orthonormal basis. We define projections associated with this sequenc. For this purpose let \( N\in \mathbb{N} \), we define \( P_N \in \mathcal{L}(\mathcal{H}) \) by 
+\[ P_Nx = \sum_{n=1}^{N} \angled*{x;e_n}e_n. \]
+
+
+
+\begin{thm}[]
+    Let \( T\in \mathcal{L}(\mathcal{H})   \) be a compact operator.
+    Then,
+    \begin{enumerate}[1)]
+      \item \( \lim_{N \to \infty} \norm{T-P_NT}_{}=0 \);
+      \item \( \lim_{N \to \infty} \norm{T-TP_N}_{}=0 \);
+      \item \( \lim_{N \to \infty} \norm{T-P_NTP_N}=0 \).
+    \end{enumerate}
+    
+\end{thm}
+
+
+\begin{thm}[Spectral theorem for compact operators]
+    
+\end{thm}
+
+
+\begin{defn}[Schatten p-norm]
+    For \( T \in \mathcal{L}(\mathcal{H}) \), where \( (\nu_n)_n \) is the decreasing sequence of singular values, we define 
+    \[ \norm{T}_{p} := \left(\sum_{n=1}^{\infty} \nu_n^{p}\right)^{1/p} \]
+    if the right-hand sinde is finite. The space of such operators is denoted as \( \mathcal{S}_p(\mathcal{H}) \), \( \norm{\cdot}_{p} \) is a norm on \( \mathcal{S}_p(\mathcal{H}) \).
+\end{defn}
+
+
+\begin{lem}[]
+    Let \( A \in \mathcal{S}_{p}\left(\mathcal{H}\right) \). Then
+    \[ \norm{A}_{p} \geq \Norm{A}_{}. \]
+\end{lem}
+
+
+\begin{thm}[]
+    Let \( A \in \mathcal{S}_p(\mathcal{H}) \). Then
+    \[ \lim_{N \to \infty} \norm{P_NT-T}_{1}=0 .\]
+\end{thm}
+
+\begin{proof}
+    We have 
+    \[ \norm{A-P_NAP_N}_{1} \leq \norm{A-P_NA}_{1} + \norm{P_NA-P_NAP_N}_{1} \leq \norm{A-P_NA}_{1}+ \norm{A-AP_N}_{1} .\]
+
+    1. If \( A \) is a rank-1 operator, then \( Ax= \alpha \angled*{x;f}g \) for some normalized \( f,g \in \mathcal{H} \), \( \alpha \in \mathbb{C} \). Then, for any orthonormal basis \( (f_n)_n \),
+    \begin{align*}
+      \norm{A-AP_N}_{1} &= \operatorname{tr} \abs{ A(I-P_N)} \\
+                        &= \sum_{n=1}^{\infty} \abs{\angled*{A(I-P_N)f_n;f_n}} \\
+                        &= \sum_{n=1}^{\infty} \abs{\angled*{A\left(\sum_{m >N}^{} \angled*{f_n;e_m}e_m\right);f_n}} \\ 
+                        &= \sum_{n=1}^{\infty} \abs{ \angled*{ \angled*{\sum_{m>N}^{} \angled*{f_n;e_m}e_m;f}g;f_n}} \\
+                        &= \sum_{n=1}^{\infty} \abs{ \angled*{ \angled*{\sum_{m>N}^{} \angled*{e_n;e_m}e_m;f}g;e_n}} \\
+                        &= \abs{ \angled*{ \underbrace{\angled*{\sum_{m >N}^{} e_m;f}}_{\to 0}g;e_m}} \to 0.
+    \end{align*}  
+
+   2. If \( A \) is finite-rank operator, then 
+   \[ Ax= \sum_{m=1}^{M} \alpha_m \angled*{x; f_m} g_m \equiv \sum_{m=1}^{M} A_m x .\] 
+   Then, by triangle inequality 
+   \[ \norm{A-P_NA}_{1} \sum_{m=1}^{M} \norm{A_m-P_NA_m}_{1} \to 0 .\]
+   3. If \( A \) is infinite-rank operator, then
+   \[ Ax = \sum_{m=1}^{\infty} \alpha_m \angled*{x;f_m}g_m \equiv \sum_{m=1}^{\infty} A_mx. \]
+   Then, 
+   \[ \norm{A-P_NA}_{1} \leq \underbrace{ \norm{\sum_{m=1}^{M} \left(A_m-P_NA_m\right)}_{1}}_{I}+ \underbrace{\norm{\sum_{m=M+1}^{\infty} \left(A_m-P_NA_m\right)}_{1}}_{II} .\]
+  Consider the second term: For large \( M \) regardless of \( N \)
+  \[ II \leq 2 \norm{\sum_{m=M+1}^{\infty}A_mx}_{1} = 2 \sum_{m=M+1}^{\infty} \abs{\alpha_m} \leq \frac{1}{2} \epsilon \]
+  Consider the first term: For \( N \) large and dependent on \( N \) as seen before
+  \[ I \leq \frac{1}{2}\epsilon. \]
+  We treat the term \( \norm{A-AP_N}_{1} \) similarly.
+\end{proof}
+
+\begin{corl}[]
+    Let \( A \in \mathcal{S}_p(\mathcal{H}) \). Then,
+    \[ \lim_{N \to \infty} \norm{A-P_NAP_N}_{p}=0. \]
+\end{corl}
+

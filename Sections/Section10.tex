@@ -1,0 +1,343 @@
+\section{Concentration for Products}
+
+\subsection{Simple Products}
+\begin{thm}[Concentration for products]
+  \label{prodconc}
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random matrices of size \( d \times d \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a matrix \( \bm{X} \) of size \( d\times d \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]=\bm{X}\);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+            \end{enumerate}
+    Then, for \( t >0 \)
+    \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n}\bm{X}_k- \bm{X}^{n}}_{} \geq t\right) \leq 2d \cdot \operatorname{exp}\left(\frac{-t^2/2}{a^{n-1}(na^{n-1}s^2+rt/3)}\right).
+ \]
+\end{thm}
+
+\begin{proof}
+  Use the notation \( \bm{X}^{(k)} = \bm{X}_k \cdots \bm{X}_1 \) and \( \mathbb{E}_k[\,\cdot\,] = \mathbb{E}\squared*{\,\cdot\,;\bm{X}_1,\dots,\bm{X}_k} \). Then, by independence of the random matrices
+  \begin{align*}
+    \norm{\bm{X}^{(n)}-\bm{X}^{n}}_{} & = \norm{ \bm{X}^{(n)}- \mathbb{E}\left[\bm{X}^{(n)}\right]} \\
+                                      &= \norm{\sum_{k=1}^{n} \left(\mathbb{E}_k\left[\bm{X}^{(n)}\right]- \mathbb{E}_{k-1}\left[\bm{X}^{(n)}\right]\right)}_{}. 
+  \end{align*}
+  Denote \( \bm{M}_k =\mathbb{E}_k[\bm{X}^{(n)}] \). Then, \( \left(\bm{M}_k\right)_k \) forms a martingale adapted to the filtration \( \left(\mathfrak{F}_k\right)_k \) defined by \( \mathfrak{F}_k= \sigma(\bm{X}_1, \dots, \bm{X}_k) \). To apply Lemma \ref{freedman}, notice that 
+  \begin{enumerate}[1)]
+    \item 
+      \begin{align*}
+        \bm{M}_k-\bm{M}_{k-1} &= \mathbb{E}\left[\bm{X}_n \cdots \bm{X}_{k+1}\right] \left(\bm{X}_k \cdots \bm{X}_1\right) - \mathbb{E}\left[\bm{X}_n \cdots \bm{X}_k\right]  \left(\bm{X}_{k-1} \cdots \bm{X}_1\right)  \\
+                              &=\bm{X}^{n-k} \left(\bm{X}_k-\bm{X}\right) \left(\bm{X}^{(k-1)}\right).
+      \end{align*}
+     Therefore taking the norm on both sides and using its submultiplicativity yields 
+     \begin{align*}
+       \norm{\bm{M}_k-\bm{M}_{k-1}}_{} & \leq \norm{\bm{X}}_{}^{n-k} \cdot \norm{ \bm{X}_k-\bm{X}}_{} \cdot \norm{\bm{X}^{(k-1)}}_{} \\
+                                       & \leq a^{n-1}r \quad \text{almost surely}.
+     \end{align*}
+     Thus, we can define \( R= a^{n-1}r \).
+   \item Notice that for \( k=1, \dots, n \)
+     \begin{align*}
+      & \mathbb{E}_{k-1} \left[\left(\bm{M}_k-\bm{M}_{k-1}\right)\left(\bm{M}_k-\bm{M}_{k-1}\right)^{*}\right] \\
+      & \quad= \mathbb{E}_{k-1}\left[\bm{X}^{n-1} \left(\bm{X}_k-\bm{X}\right)\bm{X}^{k-1} \cdot \left(\bm{X}^{k-1}\right)^{*} \left(\bm{X}^{*}-\bm{X}_k^{*}\right) (\bm{X}^{*})^{n-k}\right].
+     \end{align*}
+     Thus, taking the norm on both sides and using its submultiplicativity yields 
+     \begin{align*}
+       \norm{\mathbb{E}_{k-1} \left[\left(\bm{M}_k-\bm{M}_{k-1}\right)\left(\bm{M}_k-\bm{M}_{k-1}\right)^{*}\right] }_{} &\leq a^{2(n-1)} \cdot \mathbb{E} \norm{\bm{X}_k-\bm{X}}_{}^{2} \\
+                                                                                                                         & \leq a^{2(n-1)} s^{2} \quad \text{almost surely}.
+     \end{align*}
+     Thus, we can define \( v= na^{2(n-1)}s^{2} \).
+  \end{enumerate}
+  We can apply Lemma \ref{freedman}, and obtain for \( t >0 \)
+\begin{align*}
+  \mathbb{P}\left(\norm{\bm{X}^{(n)}- \bm{X}^{n}}_{} \geq t\right) &\leq 2d \cdot \operatorname{exp}\left(\frac{-t^2/2}{v+Rt/3}\right) \\
+                                                                   &= 2d \cdot \operatorname{exp}\left(\frac{-t^2/2}{a^{n-1}(na^{n-1}s^2+rt/3)}\right).
+\end{align*}
+
+\end{proof}
+
+Some text about how \( r \leq 2a \) holds by triangle formula, and \( s \leq r \leq 2a \) similarly. Thus, in Theorem \ref{prodconc}, one can infer a concentration result without conditions 2)i) and 2)ii).
+
+\begin{corl}[Expectation bound for products]
+    \label{prodbound}
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random matrices of size \( d \times d \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a matrix \( \bm{X} \) of size \( d\times d \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]=\bm{X}\);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+            \end{enumerate}
+    Then,
+  \[ \mathbb{E} \norm{ \prod_{k=1}^{n} \bm{X}_k - \bm{X}^{n}}_{} \leq \sqrt{n}a^{(n-1)}s (\sqrt{2 \operatorname{ln}\left(1+d\right)}+2) + a^{n-1} \frac{r}{3} (2 \operatorname{ln}\left(1+d\right)+2).\]
+
+\end{corl}
+
+\begin{proof}
+  Define \( R= a^{n-1}r \) and \( v= na^{2(n-1)}s^{2}  \). By the layer-cake representation theorem and Theorem \ref{prodconc}, we have 
+  \begin{align*}
+    \mathbb{E} \norm{ \bm{X}^{(n)}-\bm{X}^{n}}_{}  &= \int_{0}^{\infty} \mathbb{P}\left(\norm{\bm{X}^{(n)}-\bm{X}^{n}}_{} \geq t\right) \dd{t} \\
+                                                   & \leq \int_{0}^{\infty} \min_{} \left\{ 1, 2d \cdot \operatorname{exp}\left(\frac{-t^2/2}{v+Rt/3}\right)\right\} \dd{t} \\
+                                                   & \leq \int_{0}^{\mu} 1  \dd{t} + 2d \int_{\mu}^{\infty} \operatorname{exp}\left(\frac{-t^2/2}{v+Rt/3}\right) \dd{t}
+  \end{align*}
+  We use the same argument as \cite{tropp2015introduction} in the proof of Cor. 7.3.2 to further bound this expression. As their argument is instructive and short, we present their method on how to bound the integral of the exponential term. For \( t \geq \sqrt{v}  \), we have \( \sqrt{v}(t/v) \geq 1\) and hence
+  \begin{align*}
+     \mathbb{E} \norm{ \bm{X}^{(n)}-\bm{X}^{n}}_{} & \leq \mu + 2d \int_{\mu}^{\infty} e^{-t^2/(2v)} \dd{t} + 2d \int_{\mu}^{\infty} e^{-3t/(2R} \dd{t} \\
+                                                   & \leq \mu + 2d \sqrt{v}\int_{\mu}^{\infty} (t/ \sqrt{v})e^{-t^2/(2v)} \dd{t} + 2d \int_{\mu}^{\infty} e^{-3t/(2R)} \dd{t} \\
+                                                   & = \mu + 2d\sqrt{v} e^{-\mu^2/(2v)} + 4/3d e^{-3\mu/(2R)} 
+   \end{align*}
+   Selecting \( \mu = \sqrt{2v \operatorname{ln}(1+d)} + 2/3 R \operatorname{ln}(1+d) \), we can find bounds for the terms in the above expression as 
+   \begin{align*}
+     2d \sqrt{v} e^{-\mu^2/(2v)} & \leq 2d \sqrt{v} e^{-2v \operatorname{ln}\left(1+d\right)/(2v)} = 2d \sqrt{v} /(1+d) \leq 2 \sqrt{v} \\
+     \frac{4}{3}d R e^{-3\mu/(2L)} &\leq \frac{4}{3} dR e^{-3(2/3)R \operatorname{ln}\left(1+d\right)/(2L)} = \frac{4}{3}dR/(1+d) \leq \frac{4}{3}R.
+   \end{align*}
+   Thus, we get 
+   \begin{align*} 
+     \mathbb{E}\left[\norm{ \bm{X}^{(n)}-\bm{X}^{n}}_{} \right] &\leq \sqrt{2v \operatorname{ln}\left(1+d)\right)} + \frac{2}{3}L\operatorname{ln}\left(1+d\right) + 2 \sqrt{v} + \frac{4}{3}R  \\
+                                        &= \sqrt{v}(\sqrt{2 \operatorname{ln}\left(1+d\right)}+2) + R/3 (2 \operatorname{ln}\left(1+d\right)+2).
+ \end{align*}
+
+\end{proof}
+
+
+\begin{lem}[Simplified Freedman's inequality for matrices, \cite{chen2021product} Cor. 3.4, \cite{tropp2011freedman} Cor. 1.3]
+  \label{freedman}
+    Let \( \left(\bm{M}_k \right)_{k=1,\dots,n}  \) be a matrix martingale of size \( d \times d \) adapted to some filtration \( (\mathfrak{F}_k)_k \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is \( R >0 \) such that for all \( k= 1, \dots, n \) \( \norm{\bm{M}_k-\bm{M}_{k-1}}_{} \leq R\) almost surely;
+      \item there is \( v > 0 \) such that \( \norm{\sum_{k=1}^{n}\mathbb{E}_{k-1}\left[(\bm{M}_k-\bm{M}_{k-1})(\bm{M}_k-\bm{M}_{k-1})^{*}\right]}_{} \leq v \) almost surely. 
+    \end{enumerate}
+    Then, for \( t >0 \)
+    \[ \mathbb{P}\left(\norm{\bm{M}_n-\bm{M}_0}_{} \geq t\right) \leq 2d \cdot \operatorname{exp}\left( \frac{-t^{2}/2}{ v+ Rt/3}\right) .\]
+\end{lem}
+
+
+\begin{thm}[Average-case concentration for products]
+    \label{avgprodconc}
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random matrices of size \( d \times d \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a matrix \( \bm{X} \) of size \( d\times d \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]=\bm{X}\);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+            \end{enumerate}
+            Then, for any unit vector \( \bm{u} \) of size \( d \) and \( t >0 \)
+            \[ \mathbb{P}\left(\norm{\prod_{k=1}^{n}\bm{X}_k\bm{u}- \bm{X}^{n}\bm{u}}_{2} \geq t\right) \leq 2 \cdot \operatorname{exp}\left(\frac{-t^2/2}{a^{n-1}(na^{n-1}s^2+rt/3)}\right).
+ \]
+\end{thm}
+
+\begin{proof}
+  This proof is conducted similarly to the proof of Theorem \ref{prodconc} using Lemma \ref{vectorbernstein}.
+\end{proof}
+
+
+In \cite{pinelis2012freedman}, a powerful concentration result for vectors on smooth and separable Banach spaces is proved. It gives a probability bound for the supremum of the norm of martingales with expectation zero. Its utility lies in its generality as it allows us to find probability bounds which are similar to known concentration inequalities for the expression \( \sup_{k\leq n} \norm{\bm{m}_k - \bm{m}_0}_{} \) instead of the smaller or at most equal expression \( \norm{\bm{m}_n-\bm{m}_0}_{} \). The original result is more general as it considers vectors on a separable Banach space \( \mathcal{X} \) which is \( (2,D) \)-smooth. This concept of smoothness is closely related to the uniform smoothness introduced earlier. A Banach space is called \( (2,D) \)-smooth if there is some \( D>0 \) such that
+    \[ \norm{\bm{x}+\bm{y}}_{}^{2} + \norm{\bm{x}-\bm{y}}_{}^{2} \leq 2 \norm{\bm{x}}_{}^{2} + 2D^2 \norm{\bm{y}}_{}^{2} \quad \text{for all \( \bm{x},\bm{y} \in \mathcal{X} \)}. \]
+    Since the parallelogram identity holds on Hilbert space, we have that \( \mathcal{H} \) is \( (2,1) \)-smooth. Therefore, we have the following version of Theorem 3.1 in \cite{pinelis2012freedman}.
+\begin{lem}[Vector concentration inequality on Hilbert spaces, \cite{pinelis2012freedman} Thm. 3.1]
+  Let \( \mathcal{H} \) be a separable Hilbert space. Let \( (\bm{m}_k)_{k=1, \dots, n} \) be a vector-valued martingale on \( \mathcal{H} \) adapted to some filtration \( \left(\mathfrak{F}_k\right)_k \). Set \( \bm{d}_1=\bm{m}_1 \) and \( \bm{d}_k= \bm{m}_k - \bm{m}_{k-1} \) for \( k=2 \dots, n \). Assume that \( \mathbb{E}\left[e^{\lambda\left(\norm{\bm{d}_k}_{}\right)}\right]< \infty \) for all \( k=1, \dots, n \). Then, for \( t > 0 \)
+    \[ \mathbb{P}\left(\sup_{k \leq n} \norm{\bm{m}_k-\bm{m}_0}_{} \geq t\right) \leq 2 \cdot \operatorname{exp}\left(-\lambda t + \sum_{k=1}^{n} \mathbb{E}_{k-1}\left[e^{\lambda \bm{d}_k}- \lambda \bm{d}_k - 1\right]\right).\]
+\end{lem}
+
+In this work, we are concerned with random matrices that satisfy certain boundary conditions. In particular we impose conditions similar to those made in \ref{prodconc}. This allows us to establish a Bernstein type inequality similar to Theorem 3.3 in \cite{pinelis2012freedman}. The following inequality is obtained using a similar approach as in the original proof of the Berstein inequality. 
+
+
+\begin{lem}[Vector Bernstein inequality on Hilbert spaces]
+  \label{vectorbernstein}
+  Let \( \mathcal{H} \) be a separable Hilbert space. Let \( (\bm{m}_k)_{k=1,\dots,n} \) be a vector-valued martingale on \( \mathcal{H} \) adapted to some filtariton \( \left(\mathfrak{F}_k\right)_k \). Assume that 
+  \begin{enumerate}[1)]
+    \item there is \( R>0 \) such that \( \norm{\bm{m}_k-\bm{m}_{k-1}}_{} \leq R \) for all \( k=1, \dots, n \);
+    \item there is \( v>0 \) such that \( \sum_{k=1}^{n} \mathbb{E}\left[\norm{\bm{m}_k- \bm{m}_{k-1}}^2\right] \).
+  \end{enumerate}
+  Then, for \( t >0 \)
+  \[ \mathbb{P}\left(\sup_{k\leq n} \norm{\bm{m}_k-\bm{m}_0}_{} \geq t\right)  \leq 2 \cdot \operatorname{exp}\left(-\frac{v}{R^2} h\left(\frac{tR}{v}\right)\right)\]
+  where \( h(u)=(1+u)\operatorname{ln}\left(1+u\right)-u \). In particular, we have 
+  \[ \mathbb{P}\left(\sup_{k\leq n} \norm{\bm{m}_k-\bm{m}_0}_{} \geq t\right)  \leq 2 \cdot \operatorname{exp}\left(\frac{-t^2/2}{v+Rt/3}\right).  \]
+\end{lem}
+
+
+
+One might expect we should be able to find concentration results in a similar way \cite{huang2020matrix} Theorem 2 is obtained via uniform smoothness. Our attempt to do so does not yield results for the concentration of random vectors that are not "close" to their expected value. Let us demonstrate why this is the case. 
+Consider The setting of \ref{avgprodconc}. Then, we would apply Markov's inequality to obtain
+\begin{equation} \mathbb{P}\left(\norm{\bm{X}^{n}\bm{u}-\bm{X}^{n}\bm{u}}_{2} \geq t\right)  \leq \frac{\epsilon^{q}}{\mathbb{E}\left[\norm{\bm{X}^{n}\bm{u}- \bm{X}^{(n)}\bm{u}}_{2}^{q}\right]}\label{eq:attemptvecconc}\end{equation}
+for \( q \geq 2 \).
+It is natural to form the vector martingale \( (\bm{m}_k)_k \) defined by 
+\[ \bm{m}_k = \mathbb{E}_k\left[\bm{X}^{(n)}\bm{u}\right]. \]
+Now we are in a position to apply uniform smoothness similar to \cite{chen2021product}, \cite{chen2021otoc}, \cite{huang2020matrix}:
+\begin{align*}
+  \mathbb{E}\left[\norm{\bm{X}^{n}\bm{u}- \bm{X}^{(n)}\bm{u}}_{2}^{q}\right]^{2/q} &= \mathbb{E}\left[\norm{ \sum_{k=1}^{n} (\bm{m}_k-\bm{m}_{k-1})}_{2}^{q}\right]^{2/q} \\
+                                                                                   &= \mathbb{E}\left[\norm{ \sum_{k=1}^{n-1} (\bm{m}_k-\bm{m}_{k-1})+ (\bm{m}_n-\bm{m}_{n-1})}_{2}^{q}\right]^{2/q} \\
+                                                                                   &\leq  \mathbb{E}\left[\norm{ \sum_{k=1}^{n-1} (\bm{m}_k-\bm{m}_{k-1})}_{2}^{q}\right]^{2/q} + \left(q-1\right) \mathbb{E}\left[ \norm{\bm{m}_n- \bm{m}_{n-1}}_{2}^{q}\right]^{q/2} \\
+                                                                                   &\leq \dots \\
+                                                                                   &\leq (q-1) \sum_{k=1}^{n} \mathbb{E}\left[\norm{\bm{m}_k-\bm{m}_{k-1}}_{2}^{q}\right]^{2/q}
+\end{align*}
+It follows easily that 
+\[  \mathbb{E}\left[\norm{\bm{m}_k-\bm{m}_{k-1}^{q}}_{2}\right] \leq \mathbb{E}\left[\norm{\bm{X}^{n-k}}_{}^{q} \norm{\bm{X}_k-\bm{X}}_{}^{q} \norm{\bm{X}^{(k-1)}}_{}^{q}\right] \leq a^{q(n-1)}r^{q}.\]
+We even see that the assumption \( \mathbb{E}\left[\norm{\bm{X}_k-\bm{X}}_{}\right] \leq s\) does not find application with this approach. Continuing the attempt, we find 
+\[ \mathbb{E}\left[\norm{\bm{X}^{n}\bm{u}- \bm{X}^{(n)}\bm{u}}_{2}^{q}\right]^{2/q} \leq (q-1) na^{2(n-1)} r^{2}.\] Plugging this into \ref{eq:attemptvecconc}, we obtain
+\[ \mathbb{P}\left(\norm{\bm{X}^{n}\bm{u}-\bm{X}^{n}\bm{u}}_{2} \geq t\right)  \leq  \left(\frac{nqa^{2(n-1)}r^{2}}{\epsilon^{2}}\right)^{q/2}. \]
+We would choose 
+\[ q= \frac{\epsilon^2}{ena^{2(n-1)}r^2} \]
+to achieve a meaningful concentration result. However, \( q \) has to be larger than 2, otherwise the inequalities achieved with uniform smoothness are false. Notice that if we were to consider 
+\[ \mathbb{P}\left(\frac{1}{n}\norm{\bm{X}^{n}\bm{u}-\bm{X}^{n}\bm{u}}_{2} \geq t\right)  \]
+we could restrict ourselves to \( n \) large enough, such that we can select 
+\[ q= \frac{n\epsilon^2}{ea^{2(n-1)}r^2}  \geq 2.\]
+
+
+
+\subsection{Perturbation of Identity}
+
+\begin{thm}[Perturbation of identity]
+  \label{pertidentity}
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random matrices of size \( d \times d \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a matrix \( \bm{X} \) of size \( d \times d \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]\);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \leq 1 \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+    \end{enumerate} 
+    Then, for \( t >0  \), 
+  \[\mathbb{P}\left(\norm{\prod_{k=1}^{n}\left(\bm{1}+\frac{1}{n}\bm{X}_k\right)-e^{\bm{X}}}_{} \geq t \right) \leq 2d \cdot \operatorname{exp}\left(\frac{-nt^2/8}{(e^{a}(e^a s^2+rt/3)}\right) .\]
+\end{thm}
+
+\begin{proof}
+    Use the notation \( \bm{Y}_k = \left(\bm{I}+ \frac{1}{n}\bm{X}_k\right) \), \( \bm{Y}_j^{(k)} = \prod_{l=j}^{k} \bm{Y}_l\) and \( \mathbb{E}_k[\,\cdot\,] = \mathbb{E}\squared*{\,\cdot\,;\bm{X}_1,\dots,\bm{X}_k} \). Then, using the triangle formula
+    \begin{equation} \norm{e^{\bm{X}}- \bm{Y}_1^{(n)}}_{} \leq \underbrace{\norm{e^{\bm{X}}- \mathbb{E}\left[\bm{Y}_1^{(n)}\right]}_{}}_{\text{deterministic bias}} + \underbrace{\norm{\mathbb{E}\left[\bm{Y}_1^{(n)}\right]- \bm{Y}_1^{(n)}}_{}}_{\text{fluctuation error}}  \label{eq:decomp1}\end{equation}
+    Notice that the deterministic part is non-random, and the fluctation error is random.
+    \begin{enumerate}[1)]
+      \item Deterministic bias: Use Lemma \ref{expproderror} and the indepedence of the random matrices to obtain
+        \begin{align*} \norm{e^{\bm{X}}- \mathbb{E}\left[\bm{Y}_1^{(n)}\right]}_{} &=  \norm{e^{\bm{X}}- \left(\bm{I}+ \frac{1}{n}\bm{X}\right)^{n}}  \\
+        &\leq  \frac{e^{a}}{n} \quad \text{almost surely.}\end{align*}. Thus for a given \( t >0 \), if \( n \geq 2e^{a}/n \), then \( \norm{e^{\bm{X}}-\bm{Y}_1^{(n)}}_{} <t/2 \) almost surely 
+      \item Fluctuation error: We are looking to apply Theorem \ref{prodconc}: Notice that \( \bm{Y}_1, \dots, \bm{Y}_n \) are independent random matrices and 
+        \begin{enumerate}[i)]
+        \item \(\norm{\bm{Y}_k} = \norm{1+\frac{1}{n}\bm{X}_k}_{} \leq 1+ \frac{a}{n} \);
+        \item \( \norm{\bm{Y}_k- \mathbb{E}\left[\bm{Y}_k\right]}_{} = \frac{1}{n} \norm{\bm{X}-\bm{X}}_{} \leq \frac{r}{n}\) almost surely;
+        \item \( \mathbb{E} \norm{\bm{Y}_k- \mathbb{E}\left[\bm{Y}_k\right]}_{} = \frac{1}{n} \mathbb{E} \norm{\bm{X}_k-\bm{X}}_{} \leq \frac{s}{n} \) almost surely.
+        \end{enumerate}
+        Thus, we find for \( t> 0 \)
+          \begin{align*} 
+          \mathbb{P}\left( \norm{\mathbb{E}\left[\bm{Y}_1^{(n)}\right]- \bm{Y}_1^{(n)}} \geq t\right) &\leq  2d \cdot \operatorname{exp}\left(\frac{-t^2/2}{(1+a/n)^{n-1}(n(1+a/n)^{n-1}(s/n)^2+(r/n)t/3)}\right)\\
+            &\leq 2d \cdot \operatorname{exp}\left(\frac{-nt^2/2}{(e^{a}(e^a s^2+rt/3)}\right) 
+          \end{align*}
+            
+    \end{enumerate}
+   To bring both results together use the union bound and find that for \( n \geq 2e^{(a)}/n \)
+   \begin{align*}
+     \mathbb{P}\left(\norm{e^{\bm{X}}-\bm{Y}_1^{(n)}}_{} \geq t \right) &\leq \mathbb{P}\left(\norm{e^{\bm{X}}-\mathbb{E}\left[\bm{Y}_1^{(n)}\right]}_{} \geq t/2 \right)  + \mathbb{P}\left(\norm{\bm{Y}_1^{(n)}-\mathbb{E}\left[\bm{Y}_1^{(n)}\right]}_{} \geq t/2 \right) \\
+                                                                        &= 0 + \mathbb{P}\left(\norm{\bm{Y}_1^{(n)}-\mathbb{E}\left[\bm{Y}_1^{(n)}\right]}_{} \geq t/2 \right) \\
+                                                                        & \leq 2d \cdot \operatorname{exp}\left(\frac{-nt^2/8}{(e^{a}(e^a s^2+rt/3)}\right) 
+   \end{align*}
+   
+
+
+\end{proof}
+We can use the theorem about concentration of products to find a bound for the random fluctuation and simplify the bound afterwards.
+
+\begin{corl}[Perturbation of identity on infinite dimensions]
+    Let \( \mathcal{H} \) be a separable Hilbert space. Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random trace-class operators on \( \mathcal{H} \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a trace-class operator \( \bm{X} \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]=\bm{X}\);
+      \item there is a trace-class operator \( \bm{V} \) such that for all \( k=1, \dots, n \), we have \( \bm{V} \succeq \mathbb{E}\left[\bm{X}^{*}\bm{X}\right] \);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \leq 1 \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+    \end{enumerate} 
+    Then, for \( t >0  \), 
+  \[\mathbb{P}\left(\norm{\prod_{k=1}^{n}\left(\bm{1}+\frac{1}{n}\bm{X}_k\right)-e^{\bm{X}}}_{} \geq t \right) \leq 4 \operatorname{int\, dim}\left(\bm{V}\right) \cdot \operatorname{exp}\left(\frac{-nt^2/8}{(e^{a}(e^a s^2+rt/3)}\right) .\]
+\end{corl}
+\begin{proof}
+  The proof is identical to the proof of Theorem \ref{pertidentity} using Theorem (!!! intrinsic Bernstein inequality)
+\end{proof}
+
+
+
+
+\begin{lem}[]
+  \label{expproderror}
+    Let \( \bm{T} \in \mathcal{L}(\mathcal{H}) \) be a contraction, i.e. \( \norm{\bm{T}}_{} \leq 1 \). (De we need that \( \bm{T} \) is self-adjoint?) Then, 
+    \[ \norm{ \left(I+\frac{1}{n}\bm{T}\right)^{n}- e^{\bm{T}}}_{} \leq \frac{e^{\norm{\bm{T}}_{}}}{n}. \]
+\end{lem}
+
+\begin{proof}
+  Let \(t \in [-1,1] \). Then, \( \left(1+ \frac{t}{n}\right)^{n} < e^{t} < \left(1+\frac{t}{n}\right)^{n+1} \). This follows considering \( f(\tau)= \left(1+\frac{\tau}{n}\right)^{n},\, f(\tau)=e^{\tau},\, f_2(\tau)=\left(1+\frac{\tau}{n}\right)^{n+1} \) and noting that 
+  \begin{align*}
+    f_1(0) &=1,\quad f_1'(\tau)< f_1(\tau) \\
+    f(0) &=1, \quad f'(\tau) = f(\tau) \\
+    f_2(0)&=1, \quad f_2'(\tau)> f_2(\tau)
+  \end{align*}
+ Therefore, 
+ \[ \abs{e^{t}- \left(1+\frac{t}{n}\right)^{n}} \leq \left(1+\frac{t}{n}\right)^{n+1}- \left(1+\frac{t}{n}\right)^{n} = \left(1+\frac{t}{n}\right)^{n} \abs{\frac{t}{n}} \leq \frac{e^{\norm{\bm{T}}_{}}}{n}. \]
+ Now apply continuous functional calculus to obtain the result.
+\end{proof}
+
+
+\begin{corl}[Expectation bound for perturbation of identity]
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random matrices of size \( d \times d \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a matrix \( \bm{X} \) of size \( d \times d \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]\);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \leq 1 \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+    \end{enumerate} 
+Then, 
+\[ \norm{e^{\bm{X}}- \bm{Y}_1^{(n)}}_{} \leq    \frac{1}{\sqrt{n}} \left[e^{a}s (\sqrt{2 \operatorname{ln}\left(1+d\right)}+2)\right] +  \frac{e^{a}}{n} \left[ \frac{r}{3} (2 \operatorname{ln}\left(1+d\right)+2)+ 1 \right] .\]
+
+\end{corl}
+
+
+\begin{proof}
+    Notice we can deduce the inequality as in \ref{eq:decomp1} to obtain
+\[ \norm{e^{\bm{X}}- \bm{Y}_1^{(n)}}_{} \leq \norm{e^{\bm{X}}- \mathbb{E}\left[\bm{Y}_1^{(n)}\right]}_{} + \norm{\mathbb{E}\left[\bm{Y}_1^{(n)}\right]- \bm{Y}_1^{(n)}}_{} .\]
+Then, the first part can be bounded by \( e^{a}/n \). Notice that \( \bm{Y}_1, \dots, \bm{Y}_n \) are independent random matrices and 
+        \begin{enumerate}[i)]
+        \item \(\norm{\bm{Y}_k} = \norm{1+\frac{1}{n}\bm{X}_k}_{} \leq 1+ \frac{a}{n} \);
+        \item \( \norm{\bm{Y}_k- \mathbb{E}\left[\bm{Y}_k\right]}_{} = \frac{1}{n} \norm{\bm{X}-\bm{X}}_{} \leq \frac{r}{n}\) almost surely;
+        \item \( \mathbb{E} \norm{\bm{Y}_k- \mathbb{E}\left[\bm{Y}_k\right]}_{} = \frac{1}{n} \mathbb{E} \norm{\bm{X}_k-\bm{X}}_{} \leq \frac{s}{n} \) almost surely.
+        \end{enumerate}
+ Thus, we can apply Corollary \ref{prodbound} to find 
+\begin{align*}
+  \mathbb{E} \norm{ \bm{Y}_1^{(n)} - \bm{Y}^{n}}_{} &\leq \sqrt{n}(1+a/n)^{(n-1)}(s/n) (\sqrt{2 \operatorname{ln}\left(1+d\right)}+2) + (1+a/n)^{n-1}(r/n)/3 (2 \operatorname{ln}\left(1+d\right)+2) \\
+     & = 1/\sqrt{n}e^{a}s (\sqrt{2 \operatorname{ln}\left(1+d\right)}+2) + e^{a}(r/n)/3 (2 \operatorname{ln}\left(1+d\right)+2) \
+\end{align*} 
+In total, we have 
+\[ \norm{e^{\bm{X}}- \bm{Y}_1^{(n)}}_{} \leq    \frac{1}{\sqrt{n}} \left[e^{a}s (\sqrt{2 \operatorname{ln}\left(1+d\right)}+2)\right] +  \frac{e^{a}}{n} \left[ \frac{r}{3} (2 \operatorname{ln}\left(1+d\right)+2)+ 1 \right] .\]
+\end{proof}
+
+A similar expectation bound holds for trace-class operators on separable Hilbert spaces. We only have to account for the change in some details due to changing \( d \) to \( 2 \operatorname{int\, dim}\left(\bm{V}\right) \). 
+\subsubsection{Average-Case Concentration for Perturbation of Identity}
+
+\begin{thm}[Perturbation of identity]
+    Let \( \bm{X}_1, \dots, \bm{X}_n \) be independent random matrices of size \( d \times d \). Assume that 
+    \begin{enumerate}[1)]
+      \item there is a matrix \( \bm{X} \) of size \( d \times d \) such that for all \( k=1, \dots, n \), we have \(\mathbb{E}\left[\bm{X}_k\right]=\bm{X}\);
+      \item there are \( a,r,s >0 \) such that for all \( k=1,\dots, n \), we have 
+        \begin{enumerate}[i)]
+          \item \( \norm{\bm{X}_k}_{} \leq a \) almost surely;
+          \item \( \norm{\bm{X}_k-\bm{X}}_{} \leq r\) almost surely;
+          \item \( \mathbb{E}\norm{\bm{X}_k-\bm{X}} \leq s \).
+        \end{enumerate}
+    \end{enumerate} 
+    Then, for any unit vector \( u  \) of size \( d \) and \( t >0  \), 
+  \[\mathbb{P}\left(\norm{\prod_{k=1}^{n}\left(\bm{1}+\frac{1}{n}\bm{X}_k\right)u-e^{\bm{X}}u}_{2} \geq t \right) \leq 2d \cdot \operatorname{exp}\left(\frac{-nt^2/8}{(e^{a}(e^a s^2+rt/3)}\right) .\]
+\end{thm}
+
+
+
+
+
+\subsection{Concentration for Products of Unitaries}

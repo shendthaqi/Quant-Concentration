@@ -1,0 +1,566 @@
+\section{Concentration of OTOC}
+
+This section is inspired by \cite{chen2021operatorgrowth} and \cite{chen2021otoc}. \cite{chen2021operatorgrowth} describes the model, i.e. operators on a graph, the problem of considering the effect of the time-evolved local operator on a site that does not lie on the support of the local operator. It establishes the milestone which is Theorem \ref{detpathsum}. This theorem gives a bound for said effect in case that the Hamiltonian evolution is stricly deterministic. \cite{chen2021otoc} uses this theorem to provide concentration results for the case that the Hamiltonian is random. Similar to the section about concentration results for unitary products, important techniques in the proofs are decompostion the distance beween a random variable and a value into the bias difference and an error term and invoking martingale techniques on the error term. Uniform smoothness again will be critical to employ Markov's inequality. 
+
+
+\subsection{Notion of a Factor Graph}
+
+\begin{defn}[Factor Graph]
+    Let \(V\) be a set with \(\abs{V} \in \mathbb{N}\) called \emph{node set}, \(F \subseteq \mathcal{P}(V)\), a set of subsets of \(V\) called \emph{factor set}, and \(E:= \set*{(i,X); i \in X,\, X \in F}\) called \emph{edge set}. 
+\end{defn}
+
+
+\begin{figure}[H]
+    \centering
+      \input{Figures/example1.tex}
+      \captionsetup{width=.6\linewidth}
+      \caption{A factor graph \(G=(V,F,E)\) with \(V=\{1,2,3,4\}\) and \(F=\{\{1\},\{1,2\}, \{1,3\}, \{2,3,4\},\{3,4\}\}\).} 
+  \end{figure}
+
+
+\begin{defn}[Functions for graphs]
+    We define the \emph{boundary operation} for \(V\) and \(F\) as
+    \begin{align*}
+      \partial_V: V \to F,\; v \mapsto\partial v:=\set*{X \in F; (v,X) \in E }; \\
+      \partial_F: F \to V,\; X \mapsto\partial X:=\set*{v \in V; (v,X) \in E}.
+    \end{align*}
+    We extend these functions to subsets of each domain as \(\partial_V(\{i_1,\dots,i_n\}):= \partial_V(i_1) \cup \dots \cup \partial_V(i_n)\) and \(\partial_F(X_1,\dots,X_n):= \partial_F(X_1) \cup \dots \cup \partial_F(X_n)\).
+    \\ We define the \emph{degree} of a node or a factor as 
+    \[ \operatorname{deg}_G: V \cup F \to \mathbb{Z}, \; a \mapsto \abs{\partial a}.\]
+    \\ We define the \emph{distance function} between nodes and factors as 
+    \[d_G: V \cup F \times V \cup F \to \mathbb{Z}, \; (a,b) \mapsto \min_{} \set*{ \abs{E'}; (V',F',E') \subseteq G,\, \{a,b\} \subseteq V' \cup F' }. \]
+\end{defn}
+
+
+\subsection{Operators on a Factor Graph}
+
+\subsubsection{Tensor Space}
+
+\begin{defn}[Tensor product of Hilbert spaces]
+    Let \(\mathcal{H}, \mathcal{K}\) be Hilbert spaces with dimensions \(d_{\mathcal{H}} , d_{\mathcal{K}} \in \mathbb{N}\). The \emph{tensor product} of \(\mathcal{H},\mathcal{K}\) is defined as \(\mathcal{H} \otimes \mathcal{K}\) and consists of elements of the form 
+    \[\sum_{j=1}^{n} \phi_i \otimes \psi_i \]
+    where \(n \in \mathbb{N}\), \(\phi_i \in \mathcal{H}, \psi_i \in \mathcal{K}\). We assume that \((\cdot) \otimes (\cdot)\) is linear in both arguments, i.e.
+    \[(\alpha \phi_1 + \phi_2) \otimes (\beta \psi_1 + \psi_2)= \alpha \beta(\phi_1 \otimes \psi_2) + \alpha(\phi_1 \otimes \psi_2) + \beta(\phi_2 \otimes \psi_1) + (\phi_2 \otimes \psi_2).\]
+    The tensor product \(\mathcal{H} \otimes \mathcal{K}\) is equipped with an inner product by setting \[ \left\langle \phi_1 \otimes \psi_1 , \phi_2 \otimes \psi_2 \right\rangle = \left\langle \phi_1, \phi1 \right\rangle_{\mathcal{H}} \left\langle \psi_1 , \psi_2  \right\rangle_{\mathcal{K}}   \] it is linearly extended to account for all elements in \(\mathcal{H} \otimes \mathcal{K}\).
+    The tensor product of \(N\) Hilbert spaces is defined by setting \(\bigotimes_{i=1}^{N} \mathcal{H}_i = \left(\bigotimes_{i=1}^{N-1}\mathcal{H}_i\right) \otimes \mathcal{H}_N \).
+  \end{defn}
+We consider Hilbert spaces \(\mathcal{H}_1, \dots, \mathcal{H}_N\) with dimensions \(d_1,\dots, d_N \in \mathbb{N}\) and their tensor product \(\bigotimes_{i=1}^{N} \mathcal{H}_i\).
+
+
+\begin{fact}[]
+    For Hilbert spaces \(\mathcal{H}, \mathcal{K}\) with dimensions \(d_{\mathcal{H}}, d_{\mathcal{K}}\), the following holds for its tensor product \(\mathcal{H} \otimes \mathcal{K}\). 
+    \begin{enumerate}[1)]
+      \item \(\operatorname{dim}(\mathcal{H} \otimes \mathcal{K})= d_{\mathcal{H}} \cdot d_{\mathcal{K}}\);
+      \item Let \((\phi_i)_{i \leq d_{\mathcal{H}}}\) and \((\psi_j)_{j \leq d_{\mathcal{K}}}\) be orthonormal bases for \(\mathcal{H}\) and \(\mathcal{K}\), respectively. Then, \((\phi_i \otimes \psi_i)_{i,j}\) is an orthonormal basis of \(\mathcal{H} \otimes \mathcal{K}\).
+    \end{enumerate}
+\end{fact}
+
+
+\begin{defn}[Tensor product of operators]
+    Let \(\mathcal{H}, \mathcal{K}\) be Hilbert spaces and \(S \in \mathcal{L}(\mathcal{H}), T \in \mathcal{L}(\mathcal{K})\). We define the \emph{tensor product} of \(S,T\) as \(S \otimes T \in \mathcal{L}(\mathcal{H} \otimes \mathcal{K})\) with \((S \otimes T)(\phi \otimes \psi)= (S \phi) \otimes (T \psi)\). For general elements of \(\mathcal{H} \otimes \mathcal{K}\), this operator is extended linearly.
+\end{defn}
+
+
+\begin{exm}[]
+    The tensor product \(\ell^{2}(\mathbb{N}, \mathbb{C}) \otimes \mathbb{C}^{d}\) is isomorphic to \(\ell^{2}(\mathbb{N}, \mathbb{C}^{d})\).
+\end{exm}
+
+
+\begin{lem}[Space of operators]
+  Let \(\mathcal{H}\) be a Hilbert space with dimension \(d \in \mathbb{N}\). We consider the Hilbert-Schmidt norm on \(\mathcal{L}(\mathcal{H})\), i.e 
+  \[ \left\langle A,B \right\rangle_{\mathrm{HS}}= \frac{1}{d}\operatorname{tr}[A^{*}B] \quad \text{for \(A,B \in \mathcal{L}(\mathcal{H})\)}.\]
+Then, 
+\begin{enumerate}[1)]
+  \item \(\operatorname{dim}(\mathcal{L}(\mathcal{H}))=d^2\);
+  \item There is an orthonormal basis \(T_0, \dots, T_{d^2-1} \in \mathcal{L}(\mathcal{H})\) with;
+    \begin{itemize}
+      \item \(T_0=I\);
+      \item \(\operatorname{tr}[T_j]=0\) for \(j >0\);
+      \item \(\operatorname{tr}[T_j T_k]= d \mathbbm{1}[j=k]\).
+    \end{itemize}
+\end{enumerate}
+\end{lem}
+
+
+Since we consider tensor products, we would like to relate the space of operators to the subspaces as we are interested in how operators that only act on factors evolve in a time interval.
+
+
+\begin{lem}[Projection onto factor]
+    Let \(\mathcal{H}:= \bigotimes_{i=1}^{N} \mathcal{H}_i\) and let \((e^{j}_i)_{j \leq d_i}\) be an orthonormal basis for \(\mathcal{H}_i\). Consider the \emph{projections} 
+    \[P_j: \mathcal{H} \mapsto \mathcal{H} \] by \[P_j(e^{i_1}_{1} \otimes \dots \otimes e^{i_N}_{N}) = (0 \otimes \dots \otimes 0 \otimes \;\;\mathclap{\underbrace{e^{j}_{i_j}}_{\mathclap{j \text{-th spot}}}} \;\;\otimes 0 \otimes  \dots \otimes 0).\]
+    For \(X \in F\), we define \(P_X = \sum_{i\in X}^{} P_i \) as the \emph{projection onto \(X\)}.
+  \end{lem}
+
+
+\begin{defn}[Local operator]
+  Let \(\mathcal{H}:= \bigotimes_{i=1}^{N}\mathcal{H}_i\) and consider the connected graph \(G=(\{1,\dots,N\}, F, E)\). Let \(X \in F\). We say that \(A \in \mathcal{L}(\mathcal{H})\) is \emph{ \(X\)-local} if 
+  \[A = AP_X = P_XA.\]
+  We define the space of \(X\)-local operators as \(\mathcal{L}_X(\mathcal{H})\subseteq \mathcal{L}(\mathcal{H})\). To denote an \(X\)-local operator, we usually write \(A_X\) instead of \(A\).
+\end{defn}
+
+
+\begin{defn}[Random operator]
+    Let \((\Omega , \mathcal{F}, \mathbb{P}\) be a probability space. We define a random operator on \(\mathcal{H}\) as
+    \(A: \Omega \to \mathcal{L}(\mathcal{H}),\, \omega \mapsto A(\omega)\)
+    where \(A(\omega) \in \mathcal{L}(\mathcal{H})\).
+\end{defn}
+
+
+\begin{defn}[Schatten p-norm]
+    Let \(p\geq 1\). We define the Schatten \(L^{p}\)-norms for (deterministic) operators on \(\mathcal{L}(\mathcal{H})\) as
+      \[\norm{T}_{p}:= \operatorname{tr}[ \abs{T}^{p}]^{1/p} .\]
+   We define the Schatten \(L^{q}(S^{p})\)-norm for random operators on \(\mathcal{L}(\mathcal{H})\) as 
+   \[\Norm{T}_{p,q}:= \mathbb{E}[ (\norm{T}_{p}^{q})]^{1/q}.\]
+   The Schatten \(L^{q}(S^{p})\)-norm can be generalized to account for a \(D\)-dimensional input subspace by defining a norm as follows:
+   \[\Norm{T}_{p,q,D}= \sup_{ \operatorname{rank}(P)=D} \left(\mathbb{E} \left[ \norm{TP}_{p}^{q}\right]\right)^{1/q}  \]
+   If \(p=q\), we usually write \(\Norm{T}_{p}=\Norm{T}_{p,p}\) and \(\Norm{T}_{D,p,p}=\Norm{T}_{D,p}\). 
+\end{defn}
+
+
+\begin{lem}[]
+    For \(D=1\), a state \(\rho\) (to be defined ???), we have
+    \[\mathbb{E} \left[\operatorname{tr}(\rho T^{*}T)^{p/2}\right]^{1/p} \leq \sup_{\psi \in \mathcal{H}, \norm{\psi}_{}=1} \left( \mathbb{E} \left[ \norm{T(\psi )}_{}^{p}\right]\right)^{1/p}= \Norm{T}_{D,p} \]
+\end{lem}
+
+
+\begin{fact}[Smooth boundedness]
+  Let \(X,Y\) be random matrices with \( \mathbb{E} \squared*{Y;X} =0 \). 
+  \begin{enumerate}[1)] 
+    \item For \(2 \leq q \leq p\), we have 
+      \[\Norm{X+Y}_{p,q}^{2} \leq \Norm{X}_{p,q}^{2}+ (p-1)\Norm{Y}_{p,q}^{2}.\]
+    \item For \(2 \leq q, p\), we have 
+      \[\Norm{X+Y}_{p,q}^{2} \leq \Norm{X}_{p,q}^{2}+ C_{p,q})\Norm{Y}_{p,q}^{2} \quad\text{for some \(C_{p,q}= \mathcal{O}(p+q)\)}.\] 
+    \item For \(2 \leq q\), we have 
+      \[\Norm{X+Y}_{2,q}^{2} \leq \Norm{X}_{2,q}^{2}+ (q-1)\Norm{Y}_{2,q}^{2}.\]
+  \end{enumerate}
+\end{fact}
+
+
+\begin{defn}[OTOC]
+    Let \(\rho\) be a state (??? to be defined). \(A,B\in \mathcal{L}(\mathcal{H})\), \(t \geq 0\). The \emph{out-of-time-order correlator (OTOC)} is defined as 
+    \[C(\rho, A,B ) = \operatorname{tr} \left[\rho [A,B]^{*}[A,B]\right]\]
+\end{defn}
+We are mostly interested of the effect of a local operator on another site after it has evoluted through time, i.e. \(C(\rho, O_i(t), A_j)\). For convenience, we assume \(\rho=\frac{1}{d}I\) is the maximally mixed state. 
+
+
+\subsubsection{Time-Evolution under Hamiltonians}
+
+
+\begin{defn}[Hamiltonians]
+  Let \(H_X\in \mathcal{L}_X(\mathcal{H})\) be \(X\)-local operators  for \(X \in F\), such that
+  \begin{enumerate}[1)]
+    \item \(H_X \neq 0\); 
+    \item \(\operatorname{tr}H_X=0\). 
+  \end{enumerate}
+  \(H_X\) is then called \emph{\(X\)-local Hamiltonian}. Their sum \(H=\sum_{X\in F}^{} H_X\) is called \emph{Hamiltonian}.
+  If for \(T\in \mathbb{N}\), \(H_X^{T}\) is an \(X-\)local Hamiltonian, we say \((H^{T})_T\) defined by \(\sum_{X}^{} H_X^{T}\) is a time-dependent Hamiltonian.
+\end{defn}
+If not stated differently, we assume \(H\) is not time-dependent.
+
+
+\begin{defn}[Commutator]
+  We define \[[\cdot, \cdot ]: \mathcal{L}(\mathcal{H}) \times \mathcal{L}(\mathcal{H}) \to \mathcal{L}(\mathcal{H}): [A,B] \mapsto AB-BA\] as the \emph{commutator}.
+\end{defn}
+
+
+\begin{defn}[Liouvillian]
+  We define the \emph{Liouvillian} \[\mathcal{L}:\mathcal{\mathcal{L}}(\mathcal{H}) \to \mathcal{L}(\mathcal{H}), H \mapsto \mathcal{L}[H]:= i[H, \cdot]\]
+  We usually write \(\mathcal{L}\equiv\mathcal{L}[H]\) and \(\mathcal{L}_X\equiv\mathcal{L}[H_X]\).
+\end{defn}
+
+
+\begin{lem}[]
+    We have 
+    \begin{enumerate}[1)]
+      \item \(L_X A_i = 0\) if \(i \notin X\);
+      \item \([P_j, \mathcal{L}_X] = 0\) iff \(j \notin X\);
+      \item \([L_{X},\mathcal{L}_Y]=0\) if \(X \cap Y = \emptyset \).
+    \end{enumerate}
+\end{lem}
+
+
+\begin{defn}[Time-evolved operator]
+  For \(A \in \mathcal{L}(\mathcal{H})\), \(t \geq 0\), we define 
+  \[A(t):= \exp(iHt)A \exp(-iHt):= \left( \sum_{n=1}^{\infty} \frac{(it)^n}{n!} H^n  \right)A \left(\sum_{n=1}^{\infty} \frac{(-it)^{n}}{n!} H^{n}\right). \]
+  If \((H(T))_T\) is time-dependent, we define for \(T \in \mathbb{N}\)
+  \[A(T):= \exp(iH^{T})\cdots \exp(iH^{1}) A \exp(-iH_{1})\cdots \exp(-iH^{t}).\]
+\end{defn}
+
+
+\begin{lem}[]
+    We have the equality
+    \[A(t)= \exp(iHt)A \exp(-iHt) = \exp(\mathcal{L}[H]t)A.\]
+\end{lem}
+
+
+\begin{remark}[]
+    We are interested in the behavior of \[P_jA_i(t)=P_j\exp(\mathcal{L}t) A_i= P_j\sum_{n=1}^{\infty} \frac{t^{n}}{n!}(\sum_{X\in F}\mathcal{L}_X)^{n}A_i= P_j\sum_{n=1}^{\infty} \frac{t^{n}}{n!} \sum_{X_1,\dots,X_n \in F}^{} \mathcal{L}_{X_n}\cdots \mathcal{L}_{X_1}A_i.\]
+We will see that "most" of the terms in the sum will vanish. To do so we will introduce the notion of causality.
+\end{remark}
+
+
+\subsection{Causality}
+
+
+\begin{defn}[Causal forests]
+  Consider \((i,X_1, \dots, X_n)\). We define a sequence \((T_k)_k\) of \emph{causal forests} as follows:
+  \begin{enumerate}[1.]
+    \item \(T_0={i}\)
+    \item For given \(T_{k-1}\), we construct \(T_k\) as follows:
+      \begin{itemize}
+        \item If there is \(l< k\) with \(X_l=X_k\), set \(T_k=T_{k-1}\);
+        \item else if \(i \in X_k\), set \(T_k=T_{k-1} \cup (X_k, (i,X_k))\);
+        \item else if there is a \(l <k\), which is the smallest value with \(X_l \cap X_k= \emptyset \), set \(T_k=T_{k-1} \cup (X_k, (X_l, X_k))\);
+        \item else set \(T_k=T_{k-1}\cup (X_k, \emptyset )\).
+      \end{itemize}   
+  \end{enumerate}
+  If \(T_k\) is simply connected, we call it \emph{causal tree}. We denote the final causal forest as \(T(i, X_1,\dots, X_n)=T_n\).
+\end{defn}
+
+
+\begin{lem}[\cite{chen2021operatorgrowth} Proposition 1]
+    If \((i, X_1, \dots, X_n)\) is not a casual tree, we have \(\mathcal{L}_{X_n}\cdots \mathcal{L}_{X_1}A_i=0\)
+\end{lem}
+
+\begin{proof}
+  follows from lemma 6.1. Let \((i, X_1, \dots, X_n)\) be a causal forest, which is not a causal tree. Then, the forest \(T(i,X_1,\dots,X_n)\) consists of at least two components. Let \(k\) be the smallest integer such that there are no vertices \(v=(a,X)\) with \(a\in \{\{i\},X_1,\dots,X_{k-1}\) . Then, we have \[\mathcal{L}_{X_k}\mathcal{L}_{X_{k-1}}\cdots \mathcal{L}_{X_1}A_i=\mathcal{L}_{X_{k-1}}\cdots \mathcal{L}_{X_1}\mathcal{L}_{X_k}A_i= \mathcal{L}_{X_{k-1}\cdots \mathcal{L}_{X_1}}0.\]
+\end{proof}
+
+
+\begin{lem}[\cite{chen2021operatorgrowth} Proposition 2]
+    If \(i \neq j\) and \(P_j \mathcal{L}_{X_n}\cdots \mathcal{L}_{X_1}A_i\neq 0\), there is a unique self-avoiding path from \(i\) to \(j\) in \(T(i, X_1, \dots, X_n)\). We call this path the \emph{irreducible path}.
+\end{lem}
+
+
+\begin{proof}
+  Existence: Is clear from connectedness. Uniqueness: I cannot find an argument. \\ Is \allowbreak $P_5 \mathcal{L}_{45}\mathcal{L}_{579}\mathcal{L}_{147}\mathcal{L}_{124}A_1$ a valid counterexample?
+\end{proof}
+
+
+The last two lemmas encourage the idea of grouping summands in the sum \(\sum_{X_1,\dots,X_n}^{} \mathcal{L}_{X_n}\cdots \mathcal{L}_{X_1}\) by the irreducible path they form. To do so, we introduce further ideas.
+
+
+\begin{defn}[Equivalence classes of causal trees]
+    Let \(\mathcal{T}_{ji}\) be the set of all causal trees from \(i\) to \(j\). For \(T_1,T_2 \in \mathcal{T}_{ji}\), we define the equivalence relation \(\sim_{ji}\) as follows:
+    \[T_1 \sim_{ji} T_{2} \quad\text{if they have the same irreducible path from \(i\) to \(j\).}\]
+    For an irreducible path \(\Gamma=(X_1, \dots, X_l) \), we define its length as \(l(\Gamma )=l\) and define \(X_k^\Gamma=\Gamma_k\). We define \(\mathcal{S}_{ji}=\mathcal{T}_{ji}/\sim_{ji}\) the set of equivalence classes of causal trees. Each element \([T]\in \mathbb{S}_{ji}\) corresponds to a unique irreducible path \(\Gamma(T)\). We usually abuse notation and write \(\Gamma \in \mathcal{S}_{ji}\) to denote an irreducible path, and write \([\Gamma ] \in \mathcal{S}_{ji}\) to denote the equivalence class.
+\end{defn}
+
+
+\subsection{Bounds for OTOC under Deterministic Dynamics}
+
+
+\begin{lem}[]
+    Let \(\Gamma \in \mathcal{S}_{ji}\). Then, for \(l=l(\Gamma )\),
+    \begin{align*}
+        &\sum_{T(i,X_1,\dots,X_n \in [\Gamma ])}^{}  \frac{t^{n}}{n!} \mathcal{L}_{X_n}\cdots \mathcal{L}_{X_1} A_i \\
+      =& \sum_{m_0,\dots,m_l=0}^{\infty} \frac{t^{ \left(l+\sum_{k=0}^{l} m_k \right)}}{ \left(l+\sum_{k=0}^{l} m_k \right)}(\mathcal{L})^{m_l} \mathcal{L}_{X_l^{\Gamma }} \left(\mathcal{L}_{l-1}^{\Gamma }\right)^{m_{l-1}} \cdots \mathcal{L}_{X_{1}^{\Gamma }} \left(\mathcal{L}_{0}^{\Gamma }\right)^{m_0}A_i
+    \end{align*}
+    where
+    \begin{align*}
+      \mathcal{L}_k^{\Gamma }&:=\mathcal{L}-\sum_{Y\in \partial V_k^{\Gamma }}^{} \mathcal{L}_Y; \\ 
+      V_k^{\Gamma }&:= 
+      \begin{cases}
+        \{j\} & k=l-1; \\
+        \bigcup_{m=2+k}^{l} X_m^{\Gamma } & k < l-1
+      \end{cases}
+   \end{align*}
+   where \(\partial V = \set*{Y \in F; \text{There is \(X\in V\) such that \((X,Y)\in E\)}}\).
+\end{lem}
+
+\begin{proof}
+    Every term on the right-hand side is a tree by construction and hence contained on the left-hand side. We argue that every term on the left-hand side appears on the right-hand side: Every tree has a unique irreducible path \(\Gamma =(X_{1},\dots, X_l)\). Since two trees \(T_1,T_2\) with a differing \(Y_1, Y_2\) between \(X_k^{\Gamma }, X_{k+1}^{\Gamma }\) are contained in different equivalence classes, all trees appear in the right-hand side sum.
+\end{proof}
+
+
+\begin{remark}[]
+    Utility of lemma is that it allows us to apply Schwinger-Karplus identity.
+\end{remark}
+
+
+\begin{prop}[Generalized Schwinger-Karplus Identity, \cite{chen2021operatorgrowth} Lemma 5]
+  Let \(\{\mathcal{F}_0,\mathcal{A}_1,\mathcal{F}_1, \dots, \mathcal{A}_l,\mathcal{F}_l\} \subseteq  \mathcal{L}(\mathcal{L}(\mathcal{H}))\), \(t \geq 0\). Define 
+  \begin{align*}
+    \mathcal{I}(t)&:= \sum_{m_0,\dots, m_l=0}^{\infty} \frac{t^{ \left(l+\sum_{k=0}^{l} m_k \right)}}{ \left(l+\sum_{k=0}^{l} m_k \right)!} \mathcal{F}_{l}^{m_l}\mathcal{A}_l \mathcal{F}_{l-1}^{m_l-1}\cdots \mathcal{F}_1^{m_1}\mathcal{A}_1 \mathcal{F}_0^{m_0}, \\
+    \widetilde{\mathcal{I}}(t)&:= \int_{t>t_l>\dots > t_1}^{}   \dd{t_1} \cdots \dd{t_l} e^{\mathcal{F}_l(t-t_l)} \mathcal{A}_l e^{\mathcal{F}_{l-1}(t_l-t_{l-1})}\cdots e^{\mathcal{F}_1(t_2-t_1)}\mathcal{A}_1e^{\mathcal{F}_0t_1}.
+  \end{align*}
+  Then, \(\mathcal{I}(t)=\widetilde{\mathcal{I}}(t)\).
+\end{prop}
+
+
+\begin{proof}
+    By induction: If \(l=0\), the identity is clear. Assume the statement is true for some \(l\). Consider \(\mathcal{I}_{l+1}(t),\widetilde{\mathcal{I}}_{l+1}(t)\) with \(l+1\). Differentiating (after some manipulation) gives:
+    \begin{align*}
+      \dv[]{}{t}\mathcal{I}_{l+1}(t)&=\dots = \mathcal{F}_{l}\mathcal{I}_{l+1}(t)+\mathcal{A}_{l}\mathcal{I}_{_l} \\
+      \dv[]{}{t}\widetilde{\mathcal{I}}_{l+1}(t)&=\dots = \mathcal{F}_{l}\widetilde{\mathcal{I}}_{l+1}(t)+\mathcal{A}_{l}\widetilde{\mathcal{I}}_{_l}
+    \end{align*}
+   Since they satisfy the same linear differential equation and \(\mathcal{I}(0)=\widetilde{\mathcal{I}}(0)=0\), they are equal.
+\end{proof}
+
+
+\begin{fact}[]
+    The following holds:
+    \begin{enumerate}[1)]
+      \item \(\norm{A}_{p}= \norm{UA}_{p}=\norm{AU}_{p}\) if \(U\) is unitary;
+      \item \(\norm{[B,A]}_{p} \leq 2\norm{B}_{\infty} \norm{A}_{p}\).
+    \end{enumerate}    
+\end{fact}
+
+
+\begin{thm}[OTOC bound, \cite{chen2021operatorgrowth} Theorem 3, \cite{chen2021otoc} Theorem 2]
+  \label{detpathsum}
+    Let \(A_i \in \mathcal{L}_i(\mathcal{H}),A_j \in \mathcal{L}_j(\mathcal{H})\) be local operators with \(i \neq j\), \(H=\sum_{X \in F}^{} H_X\) be a (time-dependent) Hamiltonian. Then, 
+    \[\norm{[A_j,A_i(t)]}_{p} \leq 2 \norm{A_i}_{\infty} \sum_{\Gamma \in \mathcal{S}_{ji}}^{} \frac{(2t)^{l(\Gamma )}}{l(\Gamma )} \prod_{X \in \Gamma }^{l(\Gamma )} \sup_{s \leq t} \norm{H_{X}(s)}_{\infty} \norm{A_i}_{p}.\]
+\end{thm}
+
+\begin{proof}
+    We prove the case where \(H_X\) is time-indepedent. The general case follows by submultiplicativity of the norm.
+    
+    \begin{align*}
+      &\norm{[A_j,A_i(t)]}_{p} = \norm{[A_j,P_j(A_i(t))]}_{p} \\
+                              &\leq 2 \norm{A_j}_{\infty} \norm{P_j(A_i(t))}_{p} \\
+                              &= 2 \norm{A_j}_{\infty } \norm{P_j \sum_{X_1,\dots,X_n\in F}^{} \frac{t^{n}}{n!}(\mathcal{L}_{X_n} \cdots \mathcal{L}_{X_1})A_i }_p \\
+                              &= 2 \norm{A_j}_{\infty} \norm{P_j \sum_{T(i,X_1,\dots,X_n)\in \mathcal{T}_{ji}}^{} \frac{t^{n}}{n!} (\mathcal{L}_{X_n} \dots \mathcal{L}_{X_1})A_i}_{p}\\
+                              &= 2 \norm{A_j}_{\infty } \norm{\sum_{{[\Gamma ]\in \mathcal{S}_{ji}}} \sum_{{T(i,X_1,\dots,X_n)\in [\Gamma] } } \frac{t^{n}}{n!} (\mathcal{L}_{X_n}\dots \mathcal{L}_{X_1})A_i }_p \\
+                              &= 2 \norm{A_j}_{\infty } \norm{ \sum_{[\Gamma ] \in \mathcal{S}_{ji}}^{}  \sum_{m_0,\dots,m_{l(\Gamma) }=1}^{\infty}  \frac{t^{ \left(l(\Gamma )+\sum_{k=0}^{l(\Gamma ) }m_k \right)}}{ \left(l(\Gamma ) + \sum_{k=0}^{l(\Gamma )} m_k \right)!} (\mathcal{L})^{m_l} \mathcal{L}_{X_l^{\Gamma }} \left(\mathcal{L}_{l-1}^{\Gamma }\right)^{m_{l-1}} \cdots \mathcal{L}_{X_1^{\Gamma }} \left(\mathcal{L}_0^{\Gamma )^{m_0}}\right)A_i}_{p} \\
+                              &= 2 \norm{A_j}_{\infty } \norm{P_j \sum_{[\Gamma ] \in \mathcal{S}_{ji}}^{}  \int_{t>t_l >\dots > t_1}^{}  \dd{t_1} \cdots \dd{t_l} e^{\mathcal{L}_{l}(t-t_l)} \mathcal{L}_{X_l^{\Gamma }} \cdots e^{\mathcal{L}_1 (t_2-t_1)} \mathcal{L}_{X_1^{\Gamma }} e^{ \mathcal{L}_0 (t_1)}A_i}_{p} \\
+                              &\leq 2 \norm{A_j}_{\infty} \sum_{[\Gamma ] \in \mathcal{S}_{ji}}^{}  \int_{t>t_l > \dots >t_1}^{}  \dd{t_1} \cdots \dd{t_l} \norm{\mathcal{L}_{X_l^{\Gamma }} \cdots \mathcal{L}_{X_1^{\Gamma }}A_i}_p \\ 
+                              &\leq 2 \norm{A_j}_{\infty } \sum_{[\Gamma ] \in \mathcal{S}_{ji}}^{}  \frac{t^{l(\Gamma )}}{l(\Gamma )!} \cdot 2^{l(\Gamma )} \norm{H_{X_l^{\Gamma }}}_{\infty } \cdots \norm{H_{X_1^{\Gamma }}}_{\infty} \norm{A_i}_p \\
+                              &=2 \norm{A_j}_{\infty }\sum_{[\Gamma ] \in \mathcal{S}_{ji}}^{}  \frac{(2t)^{l(\Gamma )}}{l(\Gamma ) !} \left(\prod_{X \in \Gamma }^{} \norm{H_X}_{\infty } \right)\norm{A_i}_{p}.
+    \end{align*}
+\end{proof}
+
+
+\subsection{Bounds for OTOC under Random Dynamics}
+
+
+\begin{defn}[Random Hamiltonian]
+   Let \( H_X\) be random self-adjoint operators on \( \mathcal{L}_X(\mathcal{H}) \). Then \( H= \sum_{X \in F}^{} H_X \) is called random Hamiltonian.
+\end{defn}
+
+
+\begin{remark}[Problems]
+    We could find bounds for random Hamiltonians by considering the worst case evolution with respect to the OTOC, but these bounds might be bad because we consider the worst cast. Instead we want to consider the expected value for the OTOC.
+\end{remark}
+
+
+
+\subsection{Moment bounds}
+
+
+
+\begin{lem}[\cite{chen2021otoc} Lemma 2.1]
+
+  Let \(\mathcal{H}\) be a finite-dimensional Hilbert space. Let \((A^{t})_{t\geq 0}\) be family of random operators in \(\mathcal{L}(\mathcal{H})\), continuously differentiable in \(t\), \((B^{t}_j)_t\) be a family of random (not necessarily local) operators continuously differentiable in \(t\) for \(j\in \{1,\dots,n\}\), \(H, H_j\) be random Hermitian (not necessarily local) operators in \(\mathcal{L}(\mathcal{H})\) with \(\norm{H_j}_{\infty} \leq b_j\) and 
+  \begin{enumerate}[1)]
+    \item \(\mathbb{E} \squared*{H_j ; B_1, \dots, B_j}=0 \);  
+    \item \(\mathbb{P} \squared*{H_{1}\in F_1,\dots, H_{j}\in F_j ; B_1,\dots, B_j}=\prod_{k=1}^{j} \mathbb{P}\squared*{H_{k}\in F_k;B_1, \dots, B_j} \).
+  \end{enumerate}
+  Assume further that 
+  \[\dv[]{}{t}A^{t}= \mathcal{L}[H]A^{t}+ \sum_{j=1}^{n} \mathcal{L}[H_j]B^{t}_j.  \]
+Then, 
+\[ \dv[]{}{t} \Norm{A^{t}}_{*,p} \leq \sqrt{4p \sum_{j=1}^{n} b_j^{2} \Norm{B^{t}_j}^{2}_{*,p}}\]
+In particular, for \(\beta>0\),
+\[ \dv[]{}{t}\left(\Norm{A^{t}}_{*,p}^{2}\right) \leq \beta \Norm{A^{t}}^{2}_{*,p} + \frac{4p}{\beta} \sum_{j=1}^{n} b_j^{2}\Norm{B^{t}_j}^{2}_{*,p}. \]
+    (Is written differently from COO to avoid confusion with previous notion of time-evolution)
+\end{lem}
+
+\begin{proof}
+  Idea is to apply uniform smoothness, hence we transform \(\sum_{j}^{} \mathcal{L}_j[H_j]B_j^{t}\) into a sequence of martingale differences. 
+  \begin{enumerate}[1.]
+    \item Consider the filtration formed by \(\mathcal{F}_0:= \sigma(B_1^{t},\dots,B_n^{t})\) and \(\mathcal{F}_j:= \sigma(B_1^{t},\dots,B_n^{t},H_1,\dots,H_j)\), and denote the conditional expectation with respect to \(\mathcal{F}_j\) as \(\mathbb{E}_j\). Then, we have
+  
+      \begin{align*}
+        \mathbb{E}_{j-1} \squared*{\mathcal{L}_j(B_j^{t}) } &= i\mathbb{E}_{j-1}\squared{H_jB_j^{t}-B_j^{t}H_j} \\
+                                                      &= i \left( \mathbb{E}_{j-1}[H_j]B_j^{t} -B_j^{t} \mathbb{E}_{j-1}[H_j] \right) = 0
+      \end{align*}
+      since 
+      \begin{align*}\mathbb{E}_{j-1}[H_j] &= \mathbb{E} \squared*{H_j; B_1^{t},\dots,B_n^{t},H_1,\dots,H_{j-1}} \\
+        &= \mathbb{E} \squared*{H_j; B_1^{t},\dots,B_n^{t}} \\
+        &= 0
+      \end{align*}
+      by independence of \((H_j)_j\). We conclude that \(\mathbb{E} \squared*{\mathcal{L}_{j}(B_j^{t})}; \sum_{l=1}^{j-1} \mathcal{L}_{l}(B_l) =0\). 
+    \item We can apply uniform smoothness by our assertion in 1. Hence, we get the estimation
+      \begin{align*}
+        \Norm{\sum_{j=1}^{n} \mathcal{L}_{j}(B_j^{t})}^{2}_{*,p} &\leq \Norm{\sum_{j=1}^{n-1}\mathcal{L}_{j}(B_j^{t})}_{*,p}^{2} + (p-1) \Norm{\mathcal{L}_{n}(B_n^{t})}_{*,p}^{2} \\
+                                                             & \leq \dots \\
+                                                             & \leq \sum_{j=1}^{n} (p-1) \Norm{\mathcal{L}_j(B_j^{t})}_{*,p}^{2} \\
+                                                             & \leq \sum_{j=1}^{n} 4(p-1) b_j \Norm{B_j^{t}}_{*,p}^{2}
+      \end{align*}
+    (!!! We even have the bound with p-1 instead of p. )))
+    \item We get 
+      \[ \Norm{A(t+h)}_{*,p} -\Norm{A(t)}_{*,p}  \leq \sqrt{ 4 (p-1) \sum_{j=1}^{n}b_j^{2} \Norm{B_j(t)}_{}^{2}h^{2}} + \Norm{\mathcal{O}(h^{2})}.\]
+      \begin{align*}
+      \Norm{A^{t + h}}_{*,p} &\leq \Norm{U^{h} \left(A^{t }+ \sum_{j=1}^{n}\mathcal{L}_{j}(B_j(t))h\right)(U^{h})^{*}}_{*,p} + \Norm{\mathcal{O}(h^{2})}_{*,p} \\
+                                    &= \Norm{A^{t}+ \sum_{j=1}^{n}\mathcal{L}_{j}(B_j^{})h}_{*,p} + \Norm{\mathcal{O}(h^{2})}_{*,p}  \\
+                                    &\leq \Norm{A^{t}}_{*,p} + \Norm{\sum_{j=1}^{n} \mathcal{L}_j(B_j)h}_{*,p} + \Norm{\mathcal{O}(h^{2})}_{*,p} .
+      \end{align*}
+    \item 
+      \begin{align*}
+        \dv[]{}{t} \Norm{A^{t}}_{*,p}^{2} &= 2 \Norm{A^{t}}_{*,p} \dv[]{}{t} \Norm{A^{t}}_{*,p} \\
+                                          &\leq 2 \Norm{A^{t}}_{*,p} \cdot \sqrt{4(p-1) \sum_{j=1}^{n} b_j^{2} \Norm{B_j(t)}^{2}_{*,p}} \\ 
+                                          & \leq \lambda \Norm{A^{t}}_{*,p}^{2}+ \frac{4p}{\lambda} \sum_{j=1}^{n} b_j^{2} \Norm{B_j(t)}^{2}_{*,p}.
+      \end{align*}
+      The last equality is based on \(0\leq \left(\right)1/\sqrt{\lambda}) a- \sqrt{\lambda}b )^{2} = (1/\lambda) a^{2}-2ab +\lambda b^{2}\).
+  \end{enumerate}
+\end{proof}
+
+
+\begin{remark}[summing over paths ending in \(\gamma \)]
+    Previously, we studied \(P_j \exp(\mathcal{L}t) A_i\). This allowed us to only consider paths that end in \(j\), i.e.
+    \[P_j \exp(\mathcal{L}_t)A_i = P_j \sum_{\Gamma =  \mathcal{S}_ji} \int_{t>t_l>\dots t_1} \dd{t_l}\cdots \dd{t_1}e^{\mathcal{L}(t-t_l)}\mathcal{L}_{X_l^{\Gamma }}e^{\mathcal{L}_{l-1}^{\Gamma }(t_l-t_{l-1})}\mathcal{L}_{X_{l-1}}\cdots e^{\mathcal{L}_1^{\Gamma }(t_2-t_1)} \mathcal{L}_{X_1^{\Gamma }}e^{\mathcal{L}_0^{\Gamma }(t_1)} A_i.\]
+    For the case with random Hamiltonians, it is useful to consider the following: Let \(\gamma \) be a subpath of \(\Gamma \), such that \(\gamma \) is backtracking along \(\Gamma \) from its endpoint, i.e. \(\gamma =\{X_k,\dots,X_l\} \subseteq \{X_1,\dots, X_k,\dots,X_l\}= \Gamma \). Now we consider a sum as above that does not run along all irreducible paths from \(i\) to \(j\), but only along those irreducible paths \(\Gamma '\) that with \(\gamma\subseteq  \Gamma'\).
+\end{remark}
+
+
+\begin{defn}[Time-evolution along subpath]
+  For \(\gamma \subseteq \Gamma \) backtracking along \(\Gamma \) with \(l(\gamma )=l-m\), we define 
+  \[A[\gamma ](t) := \sum_{\Gamma ' \in \mathcal{S}_{ji},\gamma \subseteq \Gamma '}^{} \int_{t>t_m>\dots>t_1}^{}  \dd{t_l}\cdots \dd{t_1} e^{\mathcal{L}(t-t_m)}\mathcal{L}_{X_m^{\Gamma }}e^{\mathcal{L}_{m-1}^{\Gamma }(t_m-t_{m-1})}\cdots e^{\mathcal{L}_1^{\Gamma }(t_2-t_1)} \mathcal{L}_{X_1^{\Gamma }}e^{\mathcal{L}_0^{\Gamma }(t_1)} A_i.\]
+\end{defn}
+
+\begin{remark}[]
+    The time-evolution along a subpath leads to 
+    \[ P_r A_0[r](t) = P_r A_i^{t} .\]
+\end{remark}
+
+\begin{lem}[Leibniz]
+  Let \( f: \mathbb{R} \times \mathbb{R} \to \mathbb{R} \) be continuously differentiable. Then,
+  \[ \dv[]{}{x} \int_{a(x)}^{b(x)}  f(x,t)   \dd{t} = \int_{a(x)}^{b(x)} \partial_x f(x,t)  \dd{t} + \left(f(x,b(x)) \dv[]{}{x}b(x) - f(x,a(x)) \dv[]{}{x} a(x)\right). \]
+\end{lem}
+
+
+\begin{lem}[]
+  \label{difftimeevol}
+    For small enough \( h>0 \), 
+    \( A[\gamma](t+h) = e^{h \mathcal{L}_j}\left[A[\gamma](t) + \sum_{X\in \Delta(\gamma)}^{} \mathcal{L}_X [A[\gamma+X](t) ]\right] + \mathcal{O}(h^{2})\)
+\end{lem}
+
+\begin{proof}
+    We have 
+    \begin{align*}
+      \dv[]{}{t}A[\gamma](t) &= \dv[]{}{t} \left[\sum_{\substack{\Gamma' \in \mathcal{S}_{ji} \\ \gamma \subseteq  \Gamma'}}^{} \int_{t > t_m > \dots > t_1}^{}  \dd{t_m} \cdots \dd{t_1}\left(e^{\mathcal{L}_m(t-t_m)} \mathcal{L}_{X_m^{\Gamma '}}e^{\mathcal{L}_{m-1}(t_m-t_{m-1})} \cdots \mathcal{L}_{X_1^{\Gamma '}} e^{\mathcal{L}_0t_1}\right)A_0\right] \\
+                             &= \sum_{\substack{\Gamma' \in \mathcal{S}_{ji} \\ \gamma \subseteq  \Gamma'}}^{} \left(\mathcal{L}_m \int_{t> t_m > \dots > t_1}^{}  \dd{t_m} \cdots \dd{t_1} e^{\mathcal{L}_m(t-t_m)} \mathcal{L}_{X_m^{\Gamma '}}e^{\mathcal{L}_{m-1}(t_m-t_{m-1})} \cdots \mathcal{L}_{X_1^{\Gamma '}} e^{\mathcal{L}_0t_1}\right. \\
+                             & \quad + \left. \int_{t> t_{m-1} > \dots > t_1}^{}  \dd{t_{m-1}} \cdots \dd{t_1} \mathcal{L}_{X_m^{\Gamma '}}e^{\mathcal{L}_{m-1}(t-t_m)} \mathcal{L}_{X_{m-1}^{\Gamma '}}e^{\mathcal{L}_{m-2}(t_m-t_{m-2})} \cdots \mathcal{L}_{X_1^{\Gamma '}} e^{\mathcal{L}_0t_1} \right) A_0 \\ 
+                             &= \mathcal{L}_{m}[A[\gamma](t)] + \sum_{X \in \Delta_m}^{} \sum_{\substack{\Gamma' \in \mathcal{S}_{ji} \\ \gamma + X \subseteq \Gamma' }}^{} \mathcal{L}_X[A[\gamma+ X](t)] \\
+                             &= \mathcal{L}_{\gamma} [A[\gamma](t)] + \sum_{X \in \Delta(\gamma)}^{} \mathcal{L}_X[A[\gamma + X](t)].
+    \end{align*}
+    For small \( h \), we obtain 
+    \begin{align*}
+      A[\gamma](t+h) &= A[\gamma](t) + h \mathcal{L}_{\gamma }A[\gamma](t) + h \sum_{X}^{}\mathcal{L}_X\left[A [\gamma + X](t)\right] + \mathcal{O}(h^{2}) \\
+      & = e^{h \mathcal{L}_\gamma} \left[A[\gamma](t) + \sum_{X}^{} \mathcal{L}_X \left[A[\gamma+X]\right]\right] + \mathcal{O}(h^{2}).
+    \end{align*}
+    
+\end{proof}
+
+
+We can now show the following theorem.
+
+
+\begin{thm}[Operator growth for time-independent random Hamiltonians, \cite{chen2021otoc} Theorem 3]
+  \label{growthtimedep}
+  Let \(H=\sum_{X\in F}^{} H_X(t)\) be time-dependent Hamiltonian with \(\sup_{t}\norm{H_X(t)}_{\infty}< \infty\), \(A_i \in \mathcal{L}_{i}(\mathcal{H}), A_{j}\in \mathcal{L}_j(\mathcal{H})\).
+  Then for any \( (\beta_k)_k \) and \( t_{k+1}=t \),
+  \[ \Norm{ \frac{1}{2} \left[A_j,A_i(t)\right]}_{*,p}^{2} \leq \sum_{\gamma \in \Gamma }^{} \int_{t>t_l > \dots > t_1}^{}  \dd{t_l} \cdots \dd{t_1} \prod_{1 \leq k \leq l(\gamma )}^{} \left(e^{\beta_k (t_{k+1}-t_k)} \frac{4(p-1) b_{X_k}^{2}}{\beta_k}\right) \Norm{A_i}_{*,p}^{2}. \]  
+
+\end{thm}
+
+\begin{proof}
+    We want to apply the lemma about moment growth. We need 
+    \begin{enumerate}[1)]
+      \item \(\mathbb{E}\squared*{\mathcal{L}_{X_j}; A[\gamma+X_1](t), \dots, A[\gamma+ X_j](t)}=0\); 
+      \item \( \mathbb{P}\rounded*{H_1, \dots, H_j; A[\gamma +X_1](t), \dots, A[\gamma + X_j(t)]} = \prod_{k \leq j} \mathbb{P}\rounded*{H_k; A[\gamma+X_1](t), \dots, A[\gamma+X_j](t)}\)
+    \end{enumerate}
+    For the first condition, consider 
+    \[ A[\gamma + Y](t) = \sum_{\substack{\Gamma ' \in \mathcal{S}_{ji} \\ \gamma + Y \subseteq \Gamma '}}^{}  \int_{t > t_{m-1} > \dots > t_1}^{}  \dd{t_{m-1}} \cdots \dd{t_{1}} \mathcal{L}_{X_{m-1}^{\Gamma '}} e^{\mathcal{L}_{m-1}^{\Gamma '}(t-t_{m-1})} \cdots e^{\mathcal{L}_1^{\Gamma '}(t_2-t_1)}\mathcal{L}_{X_1^{\Gamma '}} e^{\mathcal{L}_0^{\Gamma '}t_1} A_i.\]
+    By irreducibility of the paths, we have that \( X_m^{\Gamma '}, \dots, X_1^{\Gamma '}\neq Y. \) \( \Gamma ' \) has the form 
+    \[ \Gamma '=( \underbrace{X_l, \dots X_m}_{\gamma}, Y, X_{m-1}, \dots, X_1) \] where we sum over the (unspecified) \( X_{m-1}, \dots, X_1 \). If \( k < m \), we have 
+    \[ V_k^{\Gamma '} = X_{k+2} \cup X_{k+3} \cup \dots \cup X_l  \subseteq X_m \cup \dots \cup X_l\]
+    Since \( (Y,X_m) \in \mathcal{E} \), we have \( Y \in \partial V_k^{\Gamma '} \). We get that \( \mathcal{L}_k^{\Gamma '} \) does not contain \( \mathcal{L}_Y \) since both sums contain \( \mathcal{L}_Y \) once and they are subtracted. \( A[\gamma+Y](t) \) does not contain \( \mathcal{L}_Y \), thus is indepedendent of \( \mathcal{L}_Y \) by indepedendence of \( (H_X)_X \). \\
+    The second condition follows from independence of \( (H_X)_X \).
+    Applying the lemma yields
+    \[ \dv[]{}{t} \Norm{A[\gamma](t)}_{*}^{2} \leq \lambda_{\gamma} \Norm{A[\gamma](t)}_{*}^{2} + \frac{1}{\lambda_{\gamma}} \sum_{X \in \Delta(\gamma)}^{} 4(p-1) b_X^{2} \Norm{A[\gamma+X](t)}_{*}.  \]
+    Since 
+    \[ \dv[]{}{t} f(t, \gamma) = \lambda_{\gamma } f(t,\gamma) + \frac{1}{\lambda_{\gamma }}\sum_{X\in \Delta(\gamma )}^{} 4(p-1) b_X^{2}f(t,\gamma+X) \]
+    is solved by 
+    \[ f(t,\gamma ) = \sum_{\substack{\Gamma ' \in \mathcal{S}_{ji} \\ \gamma \subseteq \Gamma '}}^{} \int_{t > t_m > \dots > t_1}^{}  \dd{t_m} \cdots \dd{t_1} \prod_{k \leq m}^{}\left( e^{\lambda_k(t_{k+1}-t_k)} \frac{4(p-1)b_{X_m}^{2}}{\lambda_k} \right) f(0) \]
+    the claim follows. The fact that this function solves the differential equation (!!! inequality) follows from the same proof as \ref{difftimeevol}
+\end{proof}
+
+Can we use the following lemma:
+
+\begin{lem}[]
+    Let \( w: \Lambda \to \mathbb{R} \) be continuous and locally Lipschitz-continuous, \( \Lambda \subseteq \mathbb{R}^{2} \) be open and connected. Assume that 
+    \begin{align*}
+      u'(t) &= w(t,u) \\
+      v'(t) &= w(t,v)
+    \end{align*}
+Then, \( u(t) \geq v(t) \).   
+\end{lem}
+
+
+\subsection{Concentration in k-local models}
+
+\begin{defn}[k-local random Hamiltonian]
+  Let \( H_{k,N} = \sum_{i_1<\dots < i_k \leq N}^{} \underbrace{\sqrt{\frac{J^{2}(k-1)}{kN^{k-1}}}\widehat{H}_{i_1 \dots i_k}}_{H_{i_1\dots i_k}} \) 
+  where \( H_{i_1,\dots,i_k} \) are random self-adjoint with 
+  \begin{enumerate}[1)]
+    \item \(\norm{H_{i_1 \dots i_k}}_{} \leq 1\);
+    \item \( \mathbb{E}\left[H_{i_1 \dots i_k}\right] =0\)
+  \end{enumerate}
+\end{defn}
+
+
+\begin{lem}[]
+    For a \( k \)-local random Hamiltonian as above, we have 
+    \begin{enumerate}[1)]
+      \item \( \abs{\delta(\gamma)} \leq R:= (k-1)\frac{k}{N}  \binom{N}{k} \leq \frac{N^{k-1}}{(k-2)!} \) ; 
+      \item \( b_X^{2} \leq b^{2} = \frac{J^{2}(k-1)!}{kN^{k-1}} \) and \( Rb^{2}\leq J^{2} \);
+      \item The number of paths with fixed length length \( l \) between two different sites is at most \( R^{l} \frac{k-1}{N} \).
+    \end{enumerate}
+    
+\end{lem}
+\begin{proof}
+  There are \( \binom{N}{k} \) factors \( X=\{i_1, \dots, i_k\} \). \( X=\{i_1,\dots,i_k\} \) and \( Y= \{j_1, \dots, j_k\} \) are connected if \( X \cap Y \supsetneq \emptyset  \). For fixed \( i \leq N \), there are \( \binom{N-1}{k-1} \) factors containing \( i \). \( \binom{N-1}{k-1} = \frac{k}{N} \binom{N}{k}\). There are at most \( (k-1)\frac{k}{N}\binom{N}{k} \) possible steps \( X_2 \) after \( X_1 \), hence
+  \[ \abs{\delta(\gamma )} \leq (k-1) \frac{k}{N} \binom{N}{k}  \leq \frac{N^{k-1}}{(k-2)!}.\]
+  The bound \( \norm{H_X}_{} \leq  b_X^{2} = \frac{J^{2}(k-1)!}{kN^{k-1}} \) is uniform in \( X \). 
+  \( Rb^{2} \leq J^{2} \) since: 
+  \[ Rb^{2} = (k-1)\frac{k}{N} \frac{N!}{k!(N-k)!} \frac{J^{2}(k-1)!}{N^{k-1}} = \frac{N!}{N^{k}(N-k)!} \frac{k-1}{N}J^{2} \leq J^{2} \] 
+  The estimate of the number of paths stems from overestimating it by the number of possible factors \( (i), X_1, X_2,\dots, X_{l-1} \) where \( X_k \) are arbitrary, but not included in \( X_1,\dots, X_{k-1} \) and choosing any \( X_l \supseteq \{j\}\). 
+\end{proof}
+
+
+
+
+\begin{lem}[]
+  \[ \Norm{P_j e^{t \mathcal{L}} A_i(t)}_{D_P,p}^{2} \leq D_{P}^{p/2} \frac{k-1}{N} e^{4 \sqrt{(p-1) Rb^{2}}t} \Norm{A_i}_{D_P,p}^{2}. \]
+\end{lem}
+
+\begin{proof}
+  Use \ref{growthtimedep}, \( \beta_k= \beta \) constant to simplify:
+  \begin{align*}
+    \Norm{P_r e^{t \mathcal{L}}A_i}_{D_P,p}^{2} & \leq \sum_{\Gamma}^{} \int_{t>t_l > \dots > t_1}^{} \dd{t_l} \cdots \dd{t_1}\left( \prod_{k \leq l} \left[e^{\beta (t_{k+1}-t_k)} \frac{4(p-1) b^{2}}{\beta}\right]\right) \Norm{A_r}_{D_P,p}^{2} \\
+                                                & = \sum_{\Gamma }^{} e^{\beta(t-0)} \left(\prod_{k \leq l }^{} \frac{4(p-1) b^{2}}{\beta}\right)  \int_{t> t_l > \dots t_1}^{}  \dd{t_l} \cdots \dd{t_1} \Norm{A_r}_{D_P,p}^{2} \\
+                                                &= \sum_{\Gamma \in \mathcal{S}_{ji}}^{} e^{\beta t} \left(\frac{4(p-1)b^{2}}{\beta}\right)^{l} \frac{t^{l}}{l!} \Norm{A_i}_{D_P,p}^{2} \\
+                                                &\leq e^{\beta t} \sum_{l=1}^{\infty} \frac{k-1}{N} \left(R \frac{4(p-1) b^{2}}{\beta} t \right)^{l} \frac{1}{l!} \Norm{A_i}_{D_P,p}^{2} \\
+                                                &= \frac{k-1}{N} e^{\beta t} \left(e^{R \frac{4(p-1)b^{2}}{\beta}}-1\right)\Norm{A_i}_{D_P,p}^{2} 
+  \end{align*}
+  Choose \( \beta = \sqrt{4(p-1)Rb^{2}} \) which yields the result after omitting the (-1) in the expression
+\end{proof}
+
+
+\begin{lem}[]
+  \begin{align*} 
+    \sup_{P \in \mathcal{P}_D}\mathbb{P}\left(\norm{A_r(t)P}_{} \geq \epsilon\right) &\leq D\left(e^{4Jt \sqrt{(p-1)}} \frac{k-1}{N\epsilon^{2}}\right)^{p/2} \\
+                                                                                     &\leq 
+    \begin{cases}
+      D \operatorname{exp}\left(- \left(\frac{\operatorname{ln}(N\epsilon^{2}/ (k-1)}{6}\right)^{3} \frac{1}{J^{2}t^{2}}\right) & \text{if} \left( \frac{\operatorname{ln}(N\epsilon^{2}/(k-1))}{6Jt}\right)^{2} >2 \\
+      D\left(e^{4Jt} \frac{(k-1)}{N\epsilon^{2}}\right) & \text{else}
+    \end{cases}
+  \end{align*}
+\end{lem}
+\begin{proof}
+    Follows from Markov's inequality with \( f(x)=x^{p}  \).
+\end{proof}
+
+
+

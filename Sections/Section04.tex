@@ -1,0 +1,344 @@
+\newpage
+
+\section{Concentration for an Operator Product}
+
+This section is inspired by \cite{huang2020matrix}. We generalize their results to infinite-dimensional but separable Hilbert spaces. For this purpose, let \( \mathcal{H} \) be a separable Hilbert space.
+
+In order to show a tail bound for the norm of a random operator it is useful to find a bound on the \( p \)-th moment of \( \norm{X}_{} \), since then one can apply Markov's inequality to deduce 
+\[ \mathbb{P}\left(\norm{X}_{} \geq t \right) \leq \frac{1}{t^{p}} \mathbb{E}\left[\norm{X}_{}^{p}\right]. \]
+In many instances one may have bounds on the Schatten-\( p \) norm of \( X \) and can use the weakened bound 
+\[ \mathbb{P}\left(\norm{X}_{} \geq t\right) \leq \frac{1}{t^{p} \mathbb{E}\left[\norm{X}_{p}^{p}\right]} \]
+which follows from \( \norm{X}_{} \leq \norm{X}_{p} \) for \( p \geq 1 \).
+
+
+\begin{defn}[Schatten p-norm]
+    
+\end{defn}
+
+
+\subsection{Uniform Smoothness}
+
+
+\begin{lem}[Bell, Carlen, Lieb]
+  Let \( A,B \) be matrices of the same size, \( p \geq 2\). Then,
+    \[ \left[\frac{1}{2} \left( \norm{A+B}_{p}^{p}+ \norm{A-B}_{p}^{p}\right)\right]^{2/p} \leq  \norm{A}_{p}^{2}+ (p-1) \norm{B}_{p}^{2}. \]
+\end{lem}
+(!!! Find reference)
+
+\begin{corl}[Uniform smoothness for Schatten-class operators]
+    Let \( p \geq 2 \). Let \( A,B \in \mathcal{S}_p(\mathcal{H}) \). Then,
+    \[ \left[\frac{1}{2} \left( \norm{A+B}_{p}^{p}+ \norm{A-B}_{p}^{p}\right)\right]^{2/p} \leq  \norm{A}_{p}^{2}+ (p-1) \norm{B}_{p}^{2}. \]
+\end{corl}
+
+\begin{proof}
+   By continuity, we have
+   \begin{align*}
+     \left[\frac{1}{2} \left(\norm{A+B}_{p}^{p}+ \norm{A-B}_{p}^{p}\right)\right]^{2/p} &= \lim_{N \to \infty} \left[\frac{1}{2} \left(\norm{A_N+B_N}_{p}^{p}+\norm{A_N-B_N}_{p}^{p}\right)\right]^{2/p} \\
+                                                                                        & \leq \varliminf_{N \to \infty} \norm{A_N}_{p}^{2} + (p-1)\norm{B_N}_{p}^{2} \\
+                                                                                        & = \Norm{A}_{p}^{2} + (p-1) \norm{B}_{p}^{2}
+   \end{align*}
+\end{proof}
+
+We now use extend the smoothness principle to random operators in a similar way as \cite{huang2020matrix}.
+\begin{corl}[Uniform smoothness for random Schatten-class operators]
+    Let \( 2 \leq q \leq p \) and let \( X,Y \) be random operators such that \( \Norm{X}_{p,q}, \Norm{X}_{p,q}< \infty \). Then,
+\[ \left[ \frac{1}{2} \left(\Norm{X+Y}_{p,q}^{q}+ \Norm{X-Y}_{p,q}^{q}\right)\right]^{2/q}\leq \Norm{X}_{p,q}^{2}+ (p-1) \Norm{Y}_{p,q}^{2}. \]
+\end{corl}
+
+\begin{proof}
+    Notice that we have 
+    \begin{align*}
+      \left[\frac{1}{2}\left(\norm{X+Y}_{p}^{q}+\norm{X-Y}_{p}^{q}\right)\right] & \leq \left[\frac{1}{2}\left(\norm{X+Y}_{p}^{q}+\norm{X-Y}_{p}^{q}\right)\right]^{q/p} \\
+       & \leq \left(\norm{X}_{p}^{2}+ (p-1) \norm{Y}_{p}^{2}\right)^{p/2 \cdot q/p} \\
+       &= \left(\norm{X}_{p}^{2}+ (p-1) \norm{Y}_{p}^{2}\right)^{q/2}
+    \end{align*}
+       where we used Jensen's inequality in the first and uniform smoothness in the second equality. Taking expectations yields
+       \begin{align*}
+         \mathbb{E}\left[\frac{1}{2}\left(\norm{X+Y}_{p}^{q}+\norm{X-Y}_{p}^{q}\right)\right] & \leq \mathbb{E}\left[ \left(\norm{X}_{p}^{2}+ (p-1) \norm{Y}_{p}^{2}\right)^{q/2}\right] \\
+         & \leq \mathbb{E}\left[ \left(\norm{X}_{p}^{2}\right)^{q/2}\right]^{2/q}+(p-1)\mathbb{E}\left[\left(\norm{Y}_{p}^{2}\right)^{q/2}\right]^{2/q} \\
+         & = \left(\norm{X}_{p,q}^{2} + (p-1)\Norm{Y}_{p,q}^{2}\right)^{q/2}
+       \end{align*}
+\end{proof}
+
+
+Uniform smoothness is a critical tool to which allows to find an upper bound for the squared norm of the sum of operators as a sum of squared norms of the operators, which is usually easier to deal with if we impose conditions on the operators
+
+\begin{thm}[Subquadratic averages for matrices]
+    Let \( X,Y \) be random matrices of the same size, \( \mathbb{E} \squared*{Y;X}=0 \), \( 2 \leq q \leq p \). Then
+  \[ \Norm{X+Y}_{p,q}^{2} \leq \Norm{X}_{p,q}^{2}+ (p-1) \Norm{Y}_{p,q}^{2}. \]
+\end{thm}
+
+
+\begin{corl}[Subquadratic averages for operators]
+    Let \( 2 \leq q \leq p \). Let \( X,Y \) be random operators on \( \mathcal{H} \) such that 
+    \begin{enumerate}[1)]
+      \item \(\mathbb{E}\squared*{Y;X}=0\);
+      \item \( \Norm{X}_{p,q}, \Norm{Y}_{p,q} < \infty  \).
+    \end{enumerate}
+    Then, 
+   \[ \Norm{X+Y}_{p,q}^{2} \leq \Norm{X}_{p,q}^{2}+ (p-1) \Norm{Y}_{p,q}^{2}. \]
+\end{corl}
+
+\begin{proof}
+    Define \( X_N,Y_N \) as before. Then, 
+    \begin{align*}
+      \Norm{X+Y}_{p,q}^{2} &= \mathbb{E} \squared*{ \norm{X+Y}_{p}^{q}}^{2/q} \\
+                           &= \mathbb{E} \squared*{ \norm{\lim_{N\to \infty} X_N + Y_N}_{p}^{2/q};}^{2/q} \\
+                           &\overset{\text{I}}{=} \lim_{N \to \infty}\mathbb{E} \squared*{\Norm{X_N+Y_N}_{p}^{q}}^{2/q} \\
+                           &= \lim_{N \to \infty} \Norm{X_N+Y_N}_{p,q}^{2} \\
+                           &\leq \lim_{N \to \infty}(\Norm{X_N}_{p,q}^{2} + C_p \Norm{Y}_{p,q}^{2}) \\
+                           &\overset{\text{II}}{=} \Norm{X}_{p,q}^{2} + C_p \Norm{Y}_{p,q}^{2}.
+    \end{align*}
+    In \( \mathrm{I} \), we can change the order of taking the limit and integration by the monotone convergence theorem as the set of singular values \( T_{N+1} \) is a superset of the set of singular values of \( T_N \). The equality in \( \mathrm{II} \) follows from similarly.  
+\end{proof}
+
+
+
+\subsubsection{Extension to infinite-dimensional operators}
+Throughout this chapter, assume \( \mathcal{H} \) is separable, and thus has an orthonormal basis. 
+
+\begin{thm}[Finite-rank approximation of compact operators]
+    Let \( T \in \mathcal{K}(\mathcal{H}) \), \( (e_n)_n \) be an orthonormal basis in \( \mathcal{H} \). Define the projection \( P_N \in \mathcal{L}(\mathcal{H}) \) by 
+    \[ P_Nx = \sum_{n=1}^{N} \angled*{x;e_n}e_n.\]
+    Then,
+    \begin{enumerate}[1)]
+      \item \( P_NT \myxrightarrow[]{} T\);
+      \item \( TP_N \myxrightarrow[]{} T\).
+    \end{enumerate}
+    In particular, we have \( P_NTP_N \myxrightarrow[]{} T \).
+\end{thm}
+\begin{proof}
+    We start with the first statement: Define \( T_N=P_NT \). Assume to the contrary that there is some \( \epsilon > 0 \) such that for all \( N \), there is \( n\geq N \) with \( \norm{T_n-T}_{} \). Thus, there is a subsequence \( (n_k)_k \) with \( \norm{T_{n_k}-T}_{}\geq \epsilon \).We label this subsequence \( (n)_n \) instead of \( (n_k)_k \). Then there are \( (x_n)_n \) with unit norm such that \( \norm{(T_n-T)X_n}_{} \geq \frac{1}{2}\epsilon \). By compactness there is a subsequence \( (x_{n_{k}})_k \) and \( y \in \mathcal{H} \) such that \( \lim_{k \to \infty} \norm{Tx_{n_k}-y}_{}=0 \). Notice that we have
+    \begin{align*}
+      (T_{n_k}-T)x_{n_k} &= (P_{n_k}-I)Tx_{n_k} = (P_{n_k}-I)y + (P_{n_k}-I)(Tx_{n_k}-y) \\
+                         &= - \sum_{j=n_k+1}^{\infty} \angled*{y;e_j}e_j + (P_{n_k}-I)(Tx_{n_k}-y)
+    \end{align*}
+  Thus we have 
+  \[ \epsilon \leq \norm{(T_{n_k}-T)x_{n_k}}_{} \leq \left(\underbrace{\sum_{j=n_k+1}^{\infty}\angled*{y;e_j}^{2}}_{\to 0}\right)^{1/2} + \underbrace{\norm{P_{n_k}-I}}_{\leq 2} \underbrace{\norm{Tx_{n_k}-y}}_{\to 0}\].
+  The second statement follows similarly. The third statement is a consequence from the first two statements. 
+\end{proof}
+
+
+
+\begin{nota}[]
+    Usually, we denote \( T_N = P_NTP_N \), which acts on \( \mathcal{H} \). Similarly, we denote \( \widehat{T}_N=T_N\vert_{\mathcal{H}_N} \), where \( \mathcal{H}_N= \operatorname{span}(e_1,\dots,e_N) \). \( \widehat{T}_N \) can be regarded as a matrix. 
+\end{nota}
+
+
+\subsection{Product of independent random operators}
+
+\begin{lem}[Decomposition of random product]
+    Let \( Z_0 \) be fixed operator, \( Y_1,\dots,Y_n \in \mathcal{B}(\mathcal{H}) \) be random and independent. Define 
+    \( Z_k=Y_k Z_{k-1} \). Then, \( \mathbb{E}[Z_k] =  \mathbb{E}[Y_k] \cdots \mathbb{E}[Y_1]Z_0\). We can decompose \( Z_k \) into:
+    \[ Z_k = \mathbb{E}[Y_k]Z_{k-1} + (Y_k-\mathbb{E}[Y_k])Z_{k-1}. \]
+    We have 
+    \[ \mathbb{E}\squared*{(Y_n-\mathbb{E}[Y_k])Z_{k-1};Z_{k-1}}=0. \]
+    We have a bound on the norm 
+    \[\Norm{(Y_{k}-\mathbb{E}[Y_k])Z_{k-1}}_{p,q} \leq \left(\mathbb{E}[ \norm{Y_k-\mathbb{E}[Y_k]}_{}^{q}] \cdot \mathbb{E} [\norm{Z_{k-1}}_{p}^{q}]\right)^{1/q} = (\mathbb{E} [\norm{Y_k-\mathbb{E}[Y_k]}_{}^{q}])^{1/q} \Norm{Z_k}_{p,q}. \]
+    We further have the decomposition
+    \[ Z_k - \mathbb{E}[Z_k] = \mathbb{E}[Y_k](Z_{k-1}-\mathbb{E}[Z_{k-1}]) + (Y_k-\mathbb{E}[Y_{k}])Z_{k-1} .\]
+\end{lem}
+
+
+\begin{thm}[Growth and concentration of product, \cite{huang2020matrix} Theorem 5.1]
+    Let \( 2 \leq q \leq p \). Let \( Z_0 \in \mathcal{S}_{p}(\mathcal{H}) \) be fixed, \( Y_1,\dots,Y_n \in \mathcal{B}(\mathcal{H}) \) be random and indepedendent. Define
+    \[ Z_n = Y_nZ_{n-1}. \]
+    Assume 
+    \begin{itemize}
+      \item \( \norm{\mathbb{E}[Y_k]}_{} \leq m_k \);
+      \item \( (\mathbb{E}[\norm{Y_k-\mathbb{E}[Y_k]}_{}^{q}])^{1/q} \leq \sigma_k m_k. \)
+    \end{itemize}
+    Define \( M= \prod_{k}^{}m_k \) and \( v= \sum_{k}^{}\sigma_k^{2} \).
+
+    Then, we have
+   \begin{enumerate}[1)]
+     \item \( \Norm{Z_n}_{p,q} \leq Me^{C_p v/2} \norm{Z_0}_p{}; \)
+     \item \( \Norm{Z_n-\mathbb{E}[Z_n]}_{p,q} \leq M \left(e^{C_pv/2}-1\right)^{1/2}\norm{Z_0}_{p} \).
+   \end{enumerate}   
+\end{thm}
+
+\begin{proof}
+  \begin{enumerate}[1)]
+    \item We have 
+    \begin{align*}
+      \Norm{Z_k}_{p,q}^{2} &\leq \Norm{\mathbb{E}[Y_k]Z_{k-1}}_{p,q}^{2} + C_p \Norm{(Y_k-\mathbb{E}[Y_k])Z_{k-1}}_{p,q}^{2} \\
+                           & \leq \norm{\mathbb{E}[Y_k]}_{}^{2} \Norm{Z_{k-1}}_{p,q}^{2}+C_p (\mathbb{E}[\norm{Y_k-\mathbb{E}[Y_k]}_{}^{q}]^{2/q} \Norm{Z_{k-1}}_{p,q}^{2}) \\
+                           & \leq (1+C_p \sigma_k^{2}) \Norm{Z_{k-1}}_{p,q}^{2} \\
+                           & \leq e^{C_p \sigma_k^{2}} \Norm{Z_{k-1}}_{p,q}^{2}.
+    \end{align*}
+    Repeating this argument yields 
+    \[ \Norm{Z_n}_{p,q} \leq \exp(C_p \sum_{k}^{} \sigma_k^{2} )\norm{Z_0}_{p}^{2}, \]
+    As \( \Norm{Z_0}_{p,q}=\norm{Z_0}_{p} \) as \( Z_0 \) is not random.
+  \item We might rescale \( Y_k \) and assume \( m_n=1 \). We have 
+    \begin{align*}
+      \Norm{Z_{k}-\mathbb{E}[Z_k]}_{p,q}^{2} & \leq \Norm{ \mathbb{E}[Y_k](Z_{k-1}-\mathbb{E}[Z_{k-1}])}_{p,q}^{2} + C_p \Norm{(Y_k-\mathbb{E}[Y_k])Z_{k-1}}_{p,q}^{2} \\
+                                             & \leq \Norm{Z_{k-1}-\mathbb{E}[Z_{k-1}]}_{p,q}^{2} + C_p \sigma_k^{2} \Norm{Z_{k-1}}_{p,q}^{2} \\
+                                             & \leq \Norm{Z_{k-1}-\mathbb{E}[Z_{k-1}]}_{p,q}^{2} + C_p \sigma_k^{2} \exp\left(\sum_{j=1}^{k-1}C_p \sigma_j^{2}\right) \norm{Z_0}_{p}^{2} .
+    \end{align*}
+    Repeating this argument yields
+    \begin{align*}
+      \Norm{Z_n-\mathbb{E}[Z_n]}_{p,q}^{2}& \leq \Norm{Z_0 - \mathbb{E}[Z_0]}_{p,q}^{2} + \left[\sum_{k=1}^{N}C_p \sigma_k^{2} \exp\left(\sum_{j=1}^{k-1} C_p \sigma_j^{2}\right)\right] \norm{Z_0}_{p}^{2} \\
+      &= \left[\sum_{k=1}^{n} C_p \sigma_k^{2} \exp\left(\sum_{j=1}^{k-1}C_p \sigma_{j}^{2}\right)\right] \norm{Z_0}_{p}^{2} \\
+      &\leq \left[\exp\left(\sum_{k=1}^{n}C_p \sigma_k^{2}\right)-1\right] \norm{Z_0}_p^{2}
+    \end{align*}
+\end{enumerate}
+\end{proof}
+
+\begin{remark}[Growth and concentration of product]
+    In the previous theorem (and in the following theorems), we can replace 
+    \( Z_n = Y_n\cdots Y_1 Z_0 \) by \( Z_n = Z_0 Y_1 \cdots Y_n \), since the decomposition into the expectation and fluctuation part is similar with inverse order and for both \( \norm{YZ}_p,\,\norm{ZY}_{p} \leq \norm{Z}_p \norm{Y} \).
+\end{remark}
+
+
+\begin{corl}[Expectation bounds, \cite{huang2020matrix} Corollary 5.4]
+    Let \( (e_N)_N \) be an orthonormal sequence. Define the projection \( P_d\in \mathcal{B}(\mathcal{H}) \) as 
+    \[ P_dx = \sum_{n=1}^{d} \angled*{x;e_n}e_n. \]
+    Let \( Y_1,\dots,Y_n \in \mathcal{B}(\mathcal{H})\) be random and independent
+    Define the product \( Z_n = Y_nZ_{n-1} \), where \( Z_0=P_d \).
+    Assume 
+    \begin{itemize}
+      \item \( \norm{E[Y_k}_{} \leq m_k \);
+      \item \( (\mathbb{E}[\norm{Y_k-\mathbb{E}[Y_k]}_{}^{2}])^{1/2} \leq \sigma_k m_k \).
+    \end{itemize}
+    Define \( M= \prod_{k}^{}m_k \) and \( v= \sum_{k}^{} \sigma_k^{2} \). Then,
+    \begin{enumerate}[1)]
+      \item \( \mathbb{E}[\norm{Z_n}_{}] \leq M\exp\left(\sqrt{2v(2v \vee \operatorname{ln}d)}\right) \);
+      \item If \( v(1+ \operatorname{ln}d ) \leq 1\), then \( \mathbb{E}[\norm{Z_n - \mathbb{E}[Z_n]}_{}] \leq  M\sqrt{e^{2}v(1+2 \operatorname{ln}d} \)
+    \end{enumerate}
+    
+\end{corl}
+ \begin{proof}
+   Identical to \cite{huang2020matrix}.
+ \end{proof}
+
+
+ \begin{corl}[Tail bounds, \cite{huang2020matrix} Corollary 5.6]
+     Let \( (e_N)_N \) be an orthonormal sequence. Define the projection \( P_d\in \mathcal{B}(\mathcal{H}) \) as 
+    \[ P_dx = \sum_{n=1}^{d} \angled*{x;e_n}e_n. \]
+    Let \( Y_1,\dots,Y_n \in \mathcal{B}(\mathcal{H})\) be random and independent
+    Define the product \( Z_k = Y_kZ_{k-1} \), where \( Z_0=P_d \).
+    Assume 
+    \begin{itemize}
+      \item \( \norm{E[Y_k]}_{} \leq m_k \);
+      \item \( (\mathbb{E}[\norm{Y_k-\mathbb{E}[Y_k]}_{}^{2}])^{1/2} \leq \sigma_k m_k \).
+    \end{itemize}
+    Define \( M= \prod_{k}^{}m_k \) and \( v= \sum_{k}^{} \sigma_k^{2} \). Then,
+    \begin{enumerate}[1)]
+      \item \( \mathbb{P}\left(\norm{Z_k}_{} \geq t\right) \leq D \exp\left(\frac{- \operatorname{ln}^{2}t/M}{2v}\right)\) if \( \operatorname{ln}t \geq 2v \);
+      \item \( \mathbb{P}\left( \norm{Z_k- \mathbb{E}[Z_k]}_{} \geq t\right) \leq (d \vee e) \exp\left(\frac{-t^{2}}{2e^{2}v}\right)\) if \( t \leq e \).
+    \end{enumerate} 
+ \end{corl}
+ 
+ \begin{proof}
+   Identical to \cite{huang2020matrix}.
+ \end{proof}
+
+
+\begin{remark}[Application]
+  In \cite{chen2021otoc}, we are interested in \( P_r \left(\mathcal{L}_{X_n} \cdots \mathcal{L}_{X_1} \right) O_0\), where \( P_r \) is the projection onto site \( r \), \( \mathcal{L}_{X_i} \) are operators that act locally on the factor \( X_i \) and \( O_0 \) acts on site \( 0 \), and we assume \( r \neq 0 \).
+\end{remark}
+
+ 
+\subsubsection{Product of contractions}
+
+\begin{lem}[]
+    Let \( 2 \leq q \leq p\). Let \( Y \) be a random contractive matrix, \( Z \) be an independent random matrix. Then,
+    \[ \Norm{YZ}_{p,q} \leq \norm{\mathbb{E}\left[ \abs{Y}^{2}\right]}_{}^{1/p} \cdot \Norm{Z}_{p,q} \]
+\end{lem}
+
+\begin{proof}
+  See \cite{huang2020matrix}.
+\end{proof}
+
+
+\begin{corl}[Variance decomposition for contractions]
+    Let \( 2 \leq q \leq p \). Let \( Y \) be a random contractive operator on \( \mathcal{H} \), \( Z \) be an independent random matrix such that \( \Norm{Z}_{p,q}<\infty  \). Then,
+    \[ \Norm{YZ}_{p,q} \leq \norm{\mathbb{E}\left[ \abs{Y}^{2}\right]}_{}^{1/p} \cdot \Norm{Z}_{p,q} \]
+\end{corl}
+
+\begin{proof}
+    Let \( (e_n)_n \) be an orthonormal basis in \( \mathcal{H} \). Then, we know \( \lim_{N \to \infty} \norm{Z-P_NZP_N}_{p}=0 \) almost surely. Thus, we have almost surely 
+    \begin{align*}
+      \norm{YP_NZP_N-YZ}_{p} &= \norm{YP_NZP_N-YP_NZ+YP_NZ-YZ}_{p} \\
+                             &\leq \norm{YP_NZ(P_N-I)}_{p}+ \norm{Y(P_N-I)}_{p} \\
+                             &\leq \norm{Y}_{} \norm{P_N}_{}\underbrace{\norm{Z(P_N-I)}_{p}}_{\to 0}+ \norm{Y}\underbrace{\norm{(P_N-I)Z}_{p}}_{\to 0} \to 0
+    \end{align*}
+    Thus, we have 
+    \begin{align*}
+      \Norm{YZ}_{p,q} &= \lim_{N \to \infty} \Norm{YP_NZP_N}_{p,q} \\
+                      &= \lim_{N \to \infty} \Norm{(YP_N)(P_NZP_N)}_{p,q} \\
+                      &\leq \varliminf_{N \to \infty} \norm{\mathbb{E}\left[\abs{YP_N}^{2}\right]}_{}^{1/p} \cdot\Norm{P_NZP_N}_{p,q} \\
+                      & = \norm{\mathbb{E}\left[\abs{Y}^{2}\right]}_{}^{1/p} \cdot \Norm{Z}_{p,q}
+    \end{align*}
+    
+\end{proof}
+
+\begin{thm}[Product of Contractions, \cite{huang2020matrix} Theorem 7.1]
+  Let \( Y_1,\dots,Y_n \) be random contractions on \( \mathcal{H} \), P_d be an orthogonal projection onto \( \{e_1,\dots,e_d\} \). Define \[ Z_n=Y_n\cdots Y_1 \cdot P_d \]
+  Assume 
+  \begin{itemize}
+    \item \( \norm{\mathbb{E}\left[ \abs{Y_k}^{2}\right]}_{} \leq m_k^{2} \), define \( M= \prod_{k=1}^{n}m_k \);
+    \item \( \norm{Y_k-\mathbb{E}\left[Y_k\right]}_{} \leq \sigma_k m_k \), define \( v=\sum_{k=1}^{n} \sigma_k^{2} \).
+  \end{itemize}
+  Then, 
+  \begin{enumerate}[1)]
+    \item \( \mathbb{E}\left[\norm{Z_n}_{}\right] \leq 1 \wedge (\sqrt{d}M )\);
+    \item \( \mathbb{E}\left[\norm{Z_n-\mathbb{E}\left[Z_n\right]}_{}\right] \leq \sqrt{dv}M \).
+      In particular,
+      \[ \mathbb{P}\left(\norm{Z_n-\mathbb{E}\left[Z_n\right]}_{}\geq t\right) dM^{2} \cdot e^{- \frac{t^{2}}{2ev}} \quad \text{if \( t^{2} \geq 2ev \)} \]
+  \end{enumerate}
+  
+\end{thm}
+
+\begin{proof}
+  Proof is similar to \cite{huang2020matrix}. I am not sure if there is a simple argument to use approximation (should be since \( Z_n \) is finite rank, thus we can approximate it with \( P_NZ_nP_N \).
+  First, we have \( \mathbb{E}\left[\abs{Y_k}^{2}\right] \geq \abs{\mathbb{E}\left[Y_k\right]}^{2} \), and hence \( \norm{\mathbb{E}\left[Y_k\right]}_{}^{2} \leq \norm{\mathbb{E}\left[\abs{Y_k}^{2}\right]}_{} \leq m_k^{2}\). For \( p \geq 2 \), we have 
+  \begin{align*}
+    \Norm{Z_k-\mathbb{E}\left[Z_k\right]}_{p,p}^{2} & \leq \Norm{\mathbb{E}\left[Y_k\right]\left(Z_{k-1}-\mathbb{E}\left[Z_{k-1}\right]\right)}_{p,p}^{2} + C_p \Norm{\left(Y_k-\mathbb{E}\left[Y_k\right]\right)Z_{k-1}}_{p,p}^{2} \\
+                                                    & \leq m_k^{2} \Norm{Z_{k-1}-\mathbb{E}\left[Z_{k-1}\right]}_{p,p}^{2} + C_p \sigma_{k}^{2}m_k^{2} \cdot \Norm{Z_{k-1}}_{p,p}^{2} \\
+                                                    & \leq m_{k}^{4/p} \Norm{Z_{k-1}-\mathbb{E}\left[Z_{k-1}\right]}_{p,p}^{2} + C_p \sigma_{k}^{2} d^{2p} \prod_{k=1}^{n} m_k^{4/p}
+  \end{align*}
+  using uniform smoothness, the variance decomposition for contractions and \( m_k \leq 1 \). Repeating the argument yields
+  \[ \Norm{Z_{n}-\mathbb{E}\left[Z_n\right]}_{p,p}^{2} \leq C_p d^{2/p}\left(\prod_{k=1}^{n}m_k^{4/p}\right) \left(\sum_{k=1}^{n}\sigma_{k}^{2}\right)= C_pd^{2/p}M^{4/p}v\]
+  Plugging in \( p=2 \) yields the result. To obtain the tail probability, we use the Markov inequality and find 
+  \[ \mathbb{P}\left(\norm{Z_n-\mathbb{E}\left[Z_n\right]}_{}\geq t\right) \leq \inf_{p\geq 2} t^{-p}\Norm{Z_n-\mathbb{E}\left[Z_n\right]}_{p,p}^{2} \leq d M^{2} \, \inf_{p\geq 2}  \left(\frac{pv}{t^{2}}\right)^{p/2}\]
+  Plugging in \( p= \frac{t^{2}}{ev} \) and estimating \( C_p <p \) gives the desired result.
+\end{proof}
+
+
+\subsubsection{Growth and Concentration of Low-Rank Products}
+
+\begin{thm}[Growth and Concentration of Low-Rank Products, \cite{huang2020matrix} Theorem 7.3]
+    Let \( p \geq 2 \). Let \( Z_0 \) be a \( r \)-rank operator on \( \mathcal{H} \) with \( \norm{Z_0}_{p}< \infty \), \( Y_1,\dots,Y_n \) be independent random operators on \( \mathcal{H} \). Define \(Z_n=Y_n \cdots Y_1 \cdot Z_0\). Assume 
+    \begin{itemize}
+      \item \( \norm{\mathbb{E}\left[Y_k\right]}_{} \leq m_k \), define \( M=\prod_{k=1}^{n}m_k \);
+      \item \( \sup_{P \in \mathcal{P}_r} \mathbb{E}\left[ \norm{\left(Y_k-\mathbb{E}\left[Y_k\right]\right)P}_{}^{2}\right]^{1/2} \leq  \sigma_km_k\), define \( v= \sum_{k=1}^{n}\sigma_k^{2} \).
+    \end{itemize}
+    Then,
+    \begin{enumerate}[1)]
+      \item \( \mathbb{E}\left[\norm{Z_n}_{}\right] \leq e^{C_p \frac{v}{2}} \cdot \norm{Z_0}_{p} M \);
+      \item \( \mathbb{E}\left[\norm{Z_n-\mathbb{E}\left[Z_n\right]}_{}\right] \leq \left(e^{C_pv}-1\right)^{1/2} \cdot \norm{Z_0}_{p}M \)
+    \end{enumerate}
+    
+\end{thm}
+
+\begin{proof}
+  \cite{huang2020matrix} have proven the assertion for matrices. We will use an approximation argument to show the assertion for operators on a separable Hilbert space. Let \( (e_k)_k \) be an orthonormal basis, define \( P_N \) as the projection onto the first \( N \) vectors \( e_1,\dots, e_N \). Then
+  \begin{itemize}
+    \item \( \norm{\mathbb{E}\left[P_NY_kP_N\right]}_{} \leq \norm{\mathbb{E}\left[Y_k\right]}_{} \leq m_k\);
+    \item \( \sup_{P\in \mathcal{P}_r} \mathbb{E}\left[ \norm{\left(Y_k-\mathbb{E}\left[Y_k]\right]P\right)}_{}^{2}\right]^{1/2} \leq \sigma_km_k \).
+  \end{itemize}
+  Therefore by the assertion for matrices
+  \begin{enumerate}[1)]
+    \item \( \mathbb{E}\left[ \norm{P_NZ_nP_N}_{}\right]  \leq e^{C_pv/2} \norm{P_NZ_0P_N}_{p} \cdot M \leq e^{C_pv/2} \norm{P_NZ_0P_N}_{p} \cdot M\);
+    \item \( \mathbb{E}\left[\norm{P_NZ_nP_N-\mathbb{E}\left[P_NZ_nP_N\right]}_{}\right] \leq \left(e^{C_pv}-1\right)^{1/2} \norm{P_NZ_0P_N}_{p}\cdot M \)
+  \end{enumerate}
+  
+
+  Since \( Z_0 \) is a compact operator, so is \( Z_n \) almost surely, as \( Y_k \) are bounded almost surely. Thus, we have \( \lim_{N \to \infty} \norm{Z_n- P_NZ_nP_N}_{}=0 \). Thus by dominated convergence 
+  \begin{align*}
+  \mathbb{E}\left[\norm{Z_n}_{}\right]&= \lim_{N \to \infty} \mathbb{E}\left[P_NZ_nP_N\right] \\
+                                      & \leq \varliminf_{N \to \infty} e^{C_pv/2} \norm{P_NZ_0P_N}_{p} \cdot M = e^{C_pv/2}\norm{Z_0}_{p}\cdot 
+  \end{align*}
+where the second inequality is due to the assertion holding for matrices.
+\end{proof}

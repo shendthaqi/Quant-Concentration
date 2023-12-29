@@ -1,0 +1,210 @@
+\newpage
+
+\section{Concentration for an Operator Evolution}
+
+
+\subsection{Concentration for Unitary Products}
+
+This section is inspired by \cite{chen2021product}.
+
+Let \( \mathcal{H} \) be an \( n \)-dimensional, \( H= \sum_{j=1}^{L} h_j \) be a Hamiltonian such that \( \sum_{j=1}^{L} \norm{h_j}_{}= \lambda \). We are looking to find an approximation for \( U= \operatorname{exp}\left(-iHt\right) \) which is the product of \( N \) more simple unitaries
+\[ U \approx V^{(N)} = V_1 \dots V_N .\]
+
+\begin{defn}[Quantum channel]
+    Let \( U \) be a unitary. We define the quantum channel associated with \( U \) as 
+    \begin{align*}
+      \mathcal{U}: \mathcal{L}(\mathcal{H}) &\to \mathcal{L}(\mathcal{H}) \\
+                                          T  &\mapsto UTU^{*}
+    \end{align*}
+    We define the diamond norm as 
+    \[ \norm{\mathcal{U}-\mathcal{V}}_{\diamond}:= \max_{\norm{\phi }_{}=1} \norm{}_{} .\]
+\end{defn}
+
+We will use the notation that \( \mathcal{U}\) and \( \mathcal{V}  \) denote the quantum channels for \( U \) and \( V \), repsectively.
+
+The distance between \( V^{(N)} \) and \( U \) will be specified in the results. Not only do want to minimize the error between \( V^{(N)} \) and \( U \), but also the error between their quantum channels.
+
+Notice that this approximation problem does have similarities to the problem of finding matrix versions for scalar concentration inequalities in a sense that for matrices \( T_1,\dots, T_N \) expression \( \prod_k e^{T_k} \) and \( e^{\sum_k T_k} \) are not in general equal.
+
+\begin{exm}[]
+    Let \( T_1, \dots, T_N \) be quadratic matrices of the same size. Then,
+    \begin{align*}
+      e^{\sum_{k}^{} T_k} &= \sum_{n=1}^{\infty} \frac{1}{n!} \left(\sum_{k}^{}T_k\right)^{n} \\
+                          &= I + \sum_{k}^{} T_k + \frac{1}{2}\left(\sum_{k\neq l} T_kT_l+\sum_{k}^{}T_k^{2}\right) + \dots 
+    \end{align*}
+    whereas
+    \begin{align*}
+      \prod_{k}^{}e^{T_k} &= \prod_{k}^{}\left(\sum_{n=1}^{\infty}\frac{1}{n!}T_k^{n}\right) \\
+                          &=I + \sum_{k}^{} T_k + \left(\sum_{k<l}^{}T_kT_l + \frac{1}{2} \sum_{k}^{}T_k^{2}\right) \dots
+    \end{align*}
+    We can see that up the the first order both expressions are equal, however as soon as we include terms that are products of different matrices, equality does not hold since commutativity fails. 
+\end{exm}
+
+\begin{defn}[qDRIFT]
+  Let \( H= \sum_{j=1}^{L} h_j \) be a Hamiltonian such that \( \sum_{j=1}^{L} \norm{h_j}_{}= \lambda \). We say that 
+  \[ (V_k)_{k \leq N} \sim \text{qDRIFT}(H,t,N)\] w
+  if  \( V_k = \operatorname{exp}\left(-t\left(t/N\right)X_k\right) \) where \( (X_k)_k \) is an indepedendent family of random matrices with
+  \[ \mathbb{P}(X= \frac{\lambda}{\norm{h_j}_{}}h_j)= p_k := \frac{\norm{h_j}_{}}{\lambda}.\]
+  We denote \( V^{(N)}=V_N \cdots V_1 \).
+\end{defn}
+
+It follows that the familiy \( \left(V_k\right)_k \) is independent and therefore 
+\[ \mathbb{E}\left[V^{(N)}\right] = \mathbb{E}\left[V_N\right] \cdots \mathbb{E}\left[V_1\right] .\]
+Since realizations of \( V_k \) are unitary almost surely, \( \mathbb{E}[V_k] \) is not unitary unless \( V_k \) are deterministic. 
+
+This section revolves around showing that \( V^{(N)} \) concentrates around \( U \). This may come as a surprise as we cannot assume that \( \mathbb{E}\left[V^{(N)}\right] = U \). This phenomenon is not new as there are results such as the following:
+
+\begin{thm}[Concentration of the norm]
+  Let \(X_1,\dots, X_N\) be independent sub-Gaussians with \( \mathbb{E}\left[X_k\right]=0, \mathbb{E}\left[X_k^{^2}\right]=1 \). Then, there is \(C>0\) such that for all \(t>0\)
+  \[\mathbb{P}(\abs{\norm{X}_2-\sqrt{N}}\geq t) \leq 2 \exp\left({-C\frac{t^2}{K^2}}\right)\]
+with \(K=\max\{\max_n \inf \curled*{t>0 ; \mathbb{E}[e^{\abs{X_j^2-1}/t}]\leq 2},1\}\).
+  
+\end{thm}
+
+Notice that in the above theorem \( \mathbb{E}\left[\norm{X}_{2}^{2}\right]=N \). Therefore, if  \( X \) is not constant, \( \mathbb{E}\left[\norm{X}_{2}\right] < \sqrt{N} \) by Jensen's inequality. 
+
+\subsection{States}
+Here, I should introduce notation from physics and explain how the diamond norm can be interpreted: What do we mean by worst-case (average-case) metric for norms.
+
+\subsection{Worst-Case Concentration}
+
+\begin{thm}[Worst-case concentration]
+  \label{worstcaseconc}w
+    Let \( \mathcal{H} \) be an \( n \)-dimensional Hilbert space, \( h_j \in \mathcal{L}(\mathcal{H}) \) be self-adjoint for \( j = 1, \dots, L \) such that \( \lambda= \sum_{j=1}^{L} \norm{h_j}_{} \). Define the Hamiltonian \( H=\sum_{j=1}^{L}h_j \) and \( U=e^{-itH} \). Let \( \epsilon>0,\, \delta \in (0,1) \). Draw 
+    \[ (V_k)_{k\leq N} \sim \text{qDRIFT}(H,t,\lambda) \]
+    with \( N \geq 44 \frac{t^{2}\lambda^{2}}{\epsilon^{2}}\operatorname{ln}\left(\frac{2\cdot 2^{n}}{\delta}\right) \).
+    Then,
+    \[ \mathbb{P}\left(\norm{\mathcal{U}-\mathcal{V}^{(N)}}_{ \diamond}\geq \epsilon\right) \leq \delta .\]
+\end{thm}
+
+To prove this result, we need to introduce lemmas which relate the diamond norm of the quantum channels to the operator norm of the matrices and a concentration results for matrices
+
+\begin{lem}[]
+  \label{diamond}
+    Let \( \phi \) be a unit vector in \( \mathcal{H} \), \( U,V \) be unitaries on \( \mathcal{H} \). Then, the following statements are true.
+    \begin{enumerate}[l)]
+      \item \( \frac{1}{2} \norm{\mathcal{U}\left(P_{\phi }\right)- \mathcal{V}(P_{\phi})}_{1} \leq \norm{(U-V)\phi }_{\ell^{2}} \);
+      \item \( \frac{1}{2} \norm{\mathcal{U}-\mathcal{V}}_{\diamond} \leq \norm{U-V} \);
+      \item \( \frac{1}{2} \norm{\mathcal{U}-\mathcal{E}\left[\mathcal{V}\right]}_{\diamond} \leq \norm{U-\mathbb{E}\left[V\right]}_{}\).
+    \end{enumerate}
+    
+\end{lem}
+
+\begin{lem}[]
+  \label{qdriftnorm}
+    Let \( \mathcal{H} \) be an \( n \)-dimensional Hilbert space, \( h_j \in \mathcal{L}(\mathcal{H}) \) be self-adjoint, \( H=\sum_{j=1}^{L}h_j \), \( U=e^{-itH} \) such that \( \lambda= \sum_{j=1}^{L} \norm{h_j}_{} \). Let \( (V_k)_{k \leq N} \sim \text{qDRIFT}(H,t, \lambda) \). Then, the following statements are true for \( V =_d V_k \)
+    \begin{enumerate}[1)]
+      \item \( \norm{V-\mathbb{E}[V]}_{} \leq 2t\lambda/N \) almost surely;
+      \item \( \norm{\mathbb{E}\left[V\right]- U^{1/N}}_{} \leq \frac{t^{2}\lambda^{2}}{N^{2}} \).
+    \end{enumerate}
+    
+\end{lem}
+
+ 
+\begin{lem}[]
+  \label{unitaryN}
+      Let \( S,T \) be matrices such that that \( \norm{S}_{}, \norm{T}_{} \leq 1 \). Then,
+      \[ \norm{S^{N}-T^{N}}_{} \leq N \norm{S-T}_{}. \]
+\end{lem}
+  
+
+\begin{thm}[Matrix Bernstein: bounded case]
+  \label{matrixbernstein}
+    Let \( (B_k)_k \) be a matrix matringale with sizes \( d \times d \) and filtration \( (\mathfrak{F}_k)_k \). Assume that \( \norm{B_k-B_{k-1}}_{} \leq R \) and that \( \norm{\sum_{k=1}^{N} \mathbb{E}\squared*{(B_k-B_{k-1})(B_k-B_{k-1})^{*};\mathfrak{F}_k}}_{} \leq v \). Then, for \( t >0 \)
+    \[ \mathbb{P}\left(\norm{B_N-B_0}_{} \geq t\right) \leq 2d \operatorname{exp}\left(\frac{-t^{2}/2}{v+Rt/3}\right).\]
+\end{thm}
+Need to elaborate on this as usually, we had concentration results only for self-adjoint matrices !!!.
+
+
+\begin{proof}
+  We are equipped to prove \ref{worstcaseconc}.
+  We have 
+  \begin{align*}
+    \frac{1}{2}{\norm{\mathcal{U}-\mathcal{V}^{(N)}}_{\diamond}} & \overset{\text{\ref{diamond}}}{\leq} \norm{U-V^{(N)}}_{} \\
+                                                                 & \leq \underbrace{\norm{U-\mathbb{E}\left[V^{(N)}\right]}_{}}_{\text{bias}} + \underbrace{\norm{V^{(N)}-\mathbb{E}\left[V^{(N)}\right]}_{}}_{\text{error}}
+  \end{align*}
+  using the triangle inequality in the last line. 
+  We first consider the bias term:
+  \begin{align*}
+    \norm{\mathbb{E}\left[V^{(N)}\right]-U}_{} &= \norm{\mathbb{E}\left[V\right]^{N}-(U^{1/N)^{N}}}_{} \\
+                                               & \overset{\text{\ref{unitaryN}}}{\leq} N \norm{\mathbb{E}\left[V\right]-U^{1/N}}_{} \\ 
+                                               & \overset{\text{\ref{qdriftnorm}}}{\leq} N \cdot \frac{t^{2}\lambda^{2}}{N^{2}}
+  \end{align*}
+  Notice that this bound is almost surely. Now consider the error term. Since \[ B_k = \mathbb{E}\left[V_N \dots V_{k+1}\right]V_{k}\cdots V_1 \] 
+  forms a martingale, we can apply \ref{matrixbernstein} and yield using \( B_N-B_0= V^{(N)}-\mathbb{E}\left[V^{(N)}\right] \)
+  \[ \mathbb{P}\left(\norm{V^{(N)}-\mathbb{E}[V^{(N)}]}_{}\right) \leq 2d \operatorname{exp}\left(-\frac{N \epsilon^{2}}{44 t^{2} \lambda^{2}}\right)\].
+In total we have for \( N \leq 44 \frac{t^{2}\lambda^{2}}{\epsilon^{2}} \operatorname{ln}\left(\frac{2\cdot 2^{n}}{\delta}\right) \)
+\[ \frac{1}{2} \norm{\mathcal{U}-\mathcal{V}^{(N)}}_{} \leq \frac{t^{2} \lambda^{2}}{N} + \epsilon/2 \leq \epsilon .\]
+\end{proof}
+
+In many proofs of concentration results around a value that is not the expectation of the considered random variable, we will employ the triangle inequality to consider the difference due to the bias in the expecation and the difference due to the fluctuation of the random variable around the expectation.
+
+
+\subsection{Average-Case Concentration}
+
+\begin{thm}[Average-case concentration]
+\label{averagecaseconc}
+    Let \( \mathcal{H} \) be an \( n \)-dimensional Hilbert space, \( h_j \in \mathcal{L}(\mathcal{H}) \) be self-adjoint for \( j = 1, \dots, L \) such that \( \lambda= \sum_{j=1}^{L} \norm{h_j}_{} \). Define the Hamiltonian \( H=\sum_{j=1}^{L}h_j \) and \( U=e^{-itH} \). Let \( \epsilon>0,\, \delta \in (0,1) \). Draw 
+    \[ (V_k)_{k\leq N} \sim \text{qDRIFT}(H,t,\lambda) \]
+    with \( N \geq 32 e \frac{t^{2}\lambda^{2}}{\epsilon^{2}} \operatorname{ln}\left(\frac{1}{\delta}\right)\).
+    Then,
+    \[ \mathbb{P}\left(\norm{\mathcal{U}(\rho)-\mathcal{V}^{(N)}(\rho)}_{1}\geq \epsilon\right) \leq \delta .\]
+\end{thm}
+
+Again, we first need to present lemmas about ... !!!
+
+The next lemma should come very familiar to the reader as it has been presented in a very similar way in the section regarding concentration for operator products. It utilizes uniform smoothness to give a bound for the \( q \)-th moment of the fluctuation error of \( V^{(N)} \) at a specific state.
+\begin{lem}[]
+  \label{smoothnessforvectors}
+  Let \( q \geq 2 \). Let \( (V_k)_{k\leq N}\sim \text{qDRIFT}(H,t,\lambda) \), \( \phi \in \mathcal{H} \) be a unit vector. Then,
+  \[ \mathbb{E}\left[ \norm{\left(V^{(N)}-\mathbb{E}\left[V^{(N)}\right]\right)\phi}_{\ell^{2}}^{q}\right]^{1/q} \leq 2 \sqrt{ \frac{(q-1)(t^{2 \lambda^{2}}}{N} }. \]
+\end{lem}
+
+\begin{proof}
+    Define \( \phi_k:= \mathbb{E}\left[V_N \cdots V_{k+1}\right] \left(V_k \cdots V_1\right) \phi \). Then \( (\phi_k)_k \) is a martingale. Thus 
+    \begin{align*}
+      \mathbb{E}\left[\norm{V^{(N)} \phi - \mathbb{E}\left[V^{(N)}\right]\phi }_{\ell^{2}}^{q}\right]^{2/q} &= \mathbb{E}\left[\norm{\sum_{k=1}^{N}\left(\phi_k - \phi_{k-1}\right)}_{\ell^{2}}^{q}\right]^{2/q} \\
+                                                                                                            &\leq \mathbb{E}\left[\norm{\sum_{k=1}^{N}\left(\phi_k-\phi_{k-1}\right)}_{\ell^{2}}^{q}\right]^{2/q} + (q-1) \mathbb{E}\left[\norm{\phi_{N}-\phi_{N-1}}_{\ell^{2}}^{q}\right]
+    \end{align*}
+    Using uniform smoothness for vectors. Repeating this argument yields
+    \begin{align*}
+      \mathbb{E}\left[\norm{V^{(N)} \phi - \mathbb{E}\left[V^{(N)}\right]\phi }_{\ell^{2}}^{q}\right]^{2/q} &\leq (q-1)\sum_{k=1}^{N} \mathbb{E}\left[\norm{\phi_k-\phi_{k-1}}_{\ell^{2}}^{q}\right]^{2/q} \\
+                                                                                                            &\leq (q-1) \sum_{n=1}^{N} \mathbb{E}\left[\norm{V_k-\mathbb{E}\left[V_k\right]}_{}^{q}\right]^{2/q} \\
+                                                                                                            &\leq (q-1)N \mathbb{E}\left[\norm{V-\mathbb{E}\left[V\right]}_{}^{q}\right]^{2/q} \\
+                                                                                                            & \overset{\text{\ref{qdriftnorm}}}{\leq} (q-1)N \left(\frac{2t\lambda}{N}  \right)^{2}
+    \end{align*}
+\end{proof}
+
+We now prove the average-case concentration result.
+We can assume \( \rho= P_{\phi} \) as the norm is maximized at some pure state (!!! find proof)
+\begin{proof}
+    By Markov's inequality, we have
+    \begin{align*}
+      \mathbb{P}\left(\frac{1}{2}\norm{\mathcal{U}(P_{\phi})-\mathcal{V}^{(N)}(P_{\phi})}_{1}\geq \epsilon\right) & \leq \frac{1}{\epsilon^{q}} \mathbb{E}\left[\left(\frac{1}{2} \norm{\mathcal{U}(P_{\phi})- \mathcal{V}^{(N)}(P_{\phi})}_{1}\right)^{q}\right] \\
+                                                                                                          & \overset{\text{\ref{diamond}}}{\leq} \frac{1}{\epsilon^{q}} \mathbb{E}\left[\norm{(U-V^{(N)})\phi}_{\ell^{2}}^{q}\right]
+    \end{align*}
+    We use the triangle inequality to decompose the norm into a bias and an error term. Thus,
+    \[ \mathbb{P}\left(\frac{1}{2}\norm{\mathcal{U}(P_{\phi})-\mathcal{V}^{(N)}(P_{\phi})}_{1}\geq \epsilon\right) \leq \frac{1}{\epsilon^{q}} \mathbb{E}\left[\left( \norm{\left(U-\mathbb{E}\left[V^{(N)}\right]\right)\phi }_{\ell^{2}}+ \norm{\left(V^{(N)}-\mathbb{E}\left[V^{(N)}\right]\right)\phi }_{\ell^{2}}\right)^{q}\right] .\]
+    We use the estimation \( \left(a+b\right)^{q} \leq 2\max \{a^q,b^{q}\} \) to obtain
+    \[ \mathbb{P}\left(\frac{1}{2}\norm{\mathcal{U}(\rho)-\mathcal{V}^{(N)}(\rho)}_{1}\geq \epsilon\right) \leq 2 \cdot \max_{} \left\{\underbrace{\norm{(U-\mathbb{E}\left[V^{(N)}\right])\phi }_{\ell^{2}}^{q}}_{\text{bias}},\underbrace{\mathbb{E}\left[ \norm{\left(V^{(N)}-\mathbb{E}\left[V^{(N)}\right]\right)\phi}_{\ell^{2}}^{q}\right] }_{\text{error}}   \right\} .\]
+    We first consider the bias term. By \ref{qdriftnorm},
+    \[ \norm{\left(U-E\left[V^{(N)}\right]\right)\phi }_{} \leq \norm{U-\mathbb{E}\left[V\right]^{N}}_{} \leq \frac{t^{2}\lambda^2}{N}. \]
+    Now consider the error term: Using \ref{smoothnessforvectors}, we obtain
+    \[ \mathbb{E}\left[\norm{\left(V^{(N)}-\mathbb{E}\left[V^{(N)}\right]\right) \phi}_{\ell^{2}}^{q}\right]^{1/q} \leq 2 \sqrt{\frac{(q-1)t^{2}\lambda^2}{N}} .\] 
+    For large \( N \geq t^{2}\lambda^2\), the bound for the error term dominates the bound for the bias term, thus by taking the maximum, we can ignore the bias term. Therefore,
+    \begin{align*}
+      \mathbb{P}\left(\frac{1}{2}\norm{\mathcal{U}(\rho)-\mathcal{V}^{(N)}(\rho)}_{1}\geq \epsilon\right) &\leq \frac{1}{\epsilon^{q}}\left(4 \sqrt{\frac{(q-1)t^2 \lambda^2}{N}}\right)^{q} \\
+                                                                                                          &= \left(\frac{16qt^2 \lambda^2}{\epsilon^{2}N}\right)^{q/2}.
+    \end{align*}
+    The result follows from choosing \( q= \frac{\epsilon^{2}N }{16 et^{2}\lambda^{2}} \) as in that case
+    \[ \mathbb{P}\left(\frac{1}{2}\norm{\mathcal{U}(\rho)-\mathcal{V}^{(N)}(\rho)}_{1}\geq \epsilon\right) \leq e^{-\frac{1}{2}\left(\frac{\epsilon^{2}N}{16et^2 \lambda^2}\right)} . \]
+    Notice that 
+    \[ e^{-\frac{1}{2}\left(\frac{\epsilon^{2}N}{16et^2 \lambda^2}\right)} \leq \delta  \]
+    is equivalent to 
+    \[ N \geq 32e \frac{t^2 \lambda^2}{\epsilon^{2}} \operatorname{ln}(\frac{1}{\delta}). \]
+\end{proof}
+
+
+
+
+

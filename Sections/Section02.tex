@@ -1,0 +1,520 @@
+\newpage
+
+\begin{remark}[]
+    We need Hahn-Banach corollary about functional maximization for the lemma about the norm of strong random vectors. We need that continuous functions of measurable functions are measurable in lemma about functions of random vectors.
+\end{remark}
+
+
+This section is inspired by \cite{bharucha1972random} and \cite{ledoux1991probability}, Hille-Phillips, Hans.
+
+
+\section{Probability on a Banach Space}
+Let \( (\Omega, \mathcal{F}, \mathbb{P}) \) be a complete probability space. We recall that that the completeness of the measure \( \mathbb{P} \) means that each subset of a \( \mathbb{P} \)-null set is measurable. You can get by without measurability. This requires quite simple technical detours. However, since this is not the focus of this paper, we will refrain from doing so. Let \( \mathcal{X} \) be a Banach space and let \( \mathfrak{B}(\mathcal{X}) \) denote the Borel \( \sigma \)-algebra over \( \mathcal{X} \). Thus, \( (\mathcal{X}, \mathfrak{B}(\mathcal{X})) \) forms a measurable space.
+
+
+\subsection{Notions of Random Vectors}
+Similarly to other notions one may wish to generalize to more general spaces that stem from consideration on \( \mathbb{R} \), the generalization of real-valued random variables to vector-valued random variables is not straight forward. If we consider a random vector on \( \mathbb{R}^{n} \), its measurability is equivalent to the measurability of its entries. For vectors on general Banach spaces, we cannot assume the existence of an orthonormal basis such that the notion of entries makes sense. However, the measurability of the entries of a vector does suggest that we require the measurability of functionals evaluated at the random vector in the general setting. However, measurability of random vectors on \( \mathbb{R}^{n} \) also means that the vector is the limit of simple random vectors. The canonical generalization of this concept, i.e. the random vector on the general Banach space being the limit of simple random vectors however is not equivalent to the measurability of functionals of the random vector. The reason behind is separability of \( \mathbb{R}^{n} \). Therefore, we need to consider possible definitions of vector-valued random variables.
+
+
+\begin{defn}[Random vector]
+    A map \( x: \Omega \to \mathcal{X} \) is called \emph{random vector} in \( \mathcal{X} \) if \( x^{-1}(B) \in \mathfrak{F} \) for \( B \in \mathfrak{B} \).
+\end{defn}
+
+
+\begin{defn}[\(\mathbb{P}\)-almost separable map]
+    \( x: \Omega  \to \mathcal{X}  \) is called \emph{\( \mu \)-almost separable random vector} if there is \( A_0 \in \mathfrak{A} \) such that 
+  \begin{enumerate}[1)]
+    \item \( \mu(A_0)=0 \);
+    \item \( x(\Omega \setminus A_0) \) is separable.
+  \end{enumerate}
+\end{defn}
+
+
+\begin{defn}[Simple random vector]
+    A map \( x: \Omega  \to \mathcal{X} \) is called \emph{simple random vector} if there is \( n \in \mathbb{N} \), disjoint sets \( (A_k)_{k\leq n} \subseteq \mathfrak{A} \) and vectors \( (x_i)_{k \leq n} \in \mathcal{X} \) such that \( x(\omega) = \sum_{k=1}^{n} x_k\mathbbm{1}_{A_k}(\omega) \). 
+\end{defn}
+
+
+\begin{defn}[Strong random vector]
+    \( x: \Omega  \to \mathcal{X} \) is called \emph{strong random vector} if there is a sequence \( (x_n)_n \) of simple random vectors which converges to \( x \) almost surely, i.e.
+    \[ \mathbb{P}(\lim_{n \to \infty} \norm{x_n-x}_{}=0)=1. \]
+\end{defn}
+
+
+\begin{defn}[Weak random vector]
+    \( x: \Omega \to \mathbb{X} \) is called \emph{weak random vector} if for any functional \( f\in \mathcal{X}^{*} \), \( f(x) \) is a real-valued random variable. 
+\end{defn}
+
+One can see that a strong random vector is a weak random vector. As hinted before the converse however is generally not true. To show that separability does ensure the equivalence of the definitions, we first have to introduce auxiliary results. 
+
+
+\begin{lem}[]
+    Let \( x: \Omega \to \mathcal{X} \) be a map, \( y in \mathcal{X} \) be fixed. Then, the following statements are true.
+    \begin{enumerate}[1)]
+      \item If \( x \) is a strong random vector, so is \( x+y \);
+      \item if \( x \) is a weak random vector, so is \( x+y \).
+    \end{enumerate}
+\end{lem}
+
+\begin{proof}
+    1. If \( (x_n)_n \) are simple random vectors that converge to \( x \) \( \mathbb{P} \)-almost surely, \( (x_n+y)_n \) are simple random vectors that converge to \( x+y \) \( \mathbb{P} \)-almost surely.
+    2. If for \( f \in \mathcal{X}^{*} \), \( f(x) \) is measurable, so is \( f(x+y)=f(x)+f(y) \).
+\end{proof}
+
+
+Seeing the second statement, one might question why we did not immediately show that the sum of two weak random variables is again a weak random variable. The statement however is actually not true. If we have two measurable maps \( x,y: \Omega \to \mathbb{R} \), the sum is measurable. This is because for \( t \in \mathbb{R} \), we have that \( x+y < t \) iff \( x < t-y \) iff there is a rational number \( q \) such that \( x<q< t-y \). Thus,
+\[ \{x+y< t\} = \bigcup_{q \in \mathbb{Q}} \left(\{x<q\} \cap \{r<t-y\}\right)\]
+The measurability of the right-hand side stems from the term being a countable unions of intersections of measurable sets. This argument  relies on the countability and density of \( \mathbb{Q} \) in \( \mathbb{R} \). 
+We show an example of a sum of two weak random vectors which is not measurable.
+
+\begin{exm}[Sum of weak random variables]
+    
+\end{exm}
+
+As we have seen earlier strong random vectors inherit most of the properties of real-valued random variables. Another such property comes from the next result.
+\begin{lem}[Linearity of strong random vectors]
+    Let \( x,y: \Omega \to \mathcal{X} \) both be strong random vectors, \( \alpha,\beta \in \mathbb{C} \). Then, \( \alpha x+ \beta y \) is a strong random vector.
+\end{lem}
+
+\begin{proof}
+  1. If \( x,y \) are simple, then \( x= \sum_{k=1}^{n}x_k \mathbbm{1}_{A_k} \) and \( y=\sum_{k=1}^{m} y_k \mathbbm{1}_{B_k}  \). \( (A_k)_k \) and \( (B_k)_k \) are finite partitions, so we may consider the smallest partition \( (C_k)_{k\leq l} \) which is finer that both. Then, there are \( (\widetilde{x}_k)_{k\leq l}, (\widetilde{y}_k)_{k\leq l}  \subseteq \mathcal{X}\) such that 
+  \[ \alpha x + \beta y= \sum_{k=1}^{l} (\alpha \widetilde{x}_k + \beta \widetilde{y}_k)\mathbbm{1}_{C_k} \]
+  2. If \( x,y \) are strong random vectors, there are \( \left(x_n\right)_n, \left(y_n\right)_n \) simple random vectors such that we have \( \lim_{n \to \infty} \norm{x-x_n}_{} \) and \( \lim_{n \to \infty} \norm{y-y_n}_{} \) \( \mathbb{P} \)-almost surely. As shown in 1., \( (\alpha x_n + \beta y_n)_n \) are simple and we since 
+  \[ \lim_{n \to \infty} \norm{(\alpha x+ \beta y)-(\alpha x_n + \beta y_n)}_{} \leq \lim_{n \to \infty} \left[ \alpha \norm{x-x_n}_{}+ \beta \norm{y-y_n}\right]=0,\]
+  the result follows.
+\end{proof}
+
+
+\begin{lem}[Norm of strong random vector]
+  \label{normstrongvector}
+    Let \( x: \Omega \to \mathcal{X} \) be a map, \( y \in \mathcal{X} \) be fixed. Then, \( \norm{x-y}_{} \) is measurable (real-valued random variable) if one of the the following statements hold.
+    \begin{enumerate}[1)]
+      \item \( x \) is a strong random vector;
+      \item \( x \) is \( \mathbb{P} \)-almost separably-valued and a weak random vector.
+    \end{enumerate}
+    
+\end{lem}
+
+\begin{proof}
+   1. Let \( x \) be a simple random vector. Then, there is a representation \( x= \sum_{k=1}^{n}x_k \mathbbm{1}_{A_k}\). The,
+   \[ \norm{x-y}_{}= \norm{\sum_{k=1}^{n} x_k \mathbbm{1}_{A_k}-y}_{} = \sum_{k=1}^{n} \mathbbm{1}_{A_k} \norm{x_{k}-y}_{} \]
+   which is measurable. If \( x \) is a strong random vector, then there is \( (x_n)_n \) convergent to \( x \) \( \mathbb{P} \)-almost surely. Then, we have
+   \[ \norm{x-y}_{}= \lim_{n \to \infty} \norm{x_n-y}_{} \] 
+   since the reverse triangle inequality implies
+   \[ \varlimsup_{n \to \infty} \abs{ \norm{x_n-y}_{}- \norm{x-y}_{}} \leq \lim_{n \to \infty} \norm{x_n-x}_{} \]
+   It is left to show that \( \norm{x_n-y}_{} \) is measurable. But this was shown for simple random vectors.
+   2. If \( x \) is \( \mathbb{P} \)-almost separably-valued and a weak random vector, then so is \( x-y \). Thus it suffices to consider \( y=0 \). Let \( \mathcal{Y}:= \overline{\operatorname{span}}\left(x(\Omega \setminus A_0\right) \), where \( x \) is separably-valued on \( \Omega \setminus A_0 \) and \( \mathbb{P}(A_0)=0 \). Then, \( \mathcal{Y} \) is separable, and there is \( \left(y_n\right)_n \) dense in \( \mathcal{Y} \). By (!!! Hahn-Banach corollary about functional maximization), for each \( y_n \) there is \( f_n \in \mathcal{X}^{*} \) such that \( \norm{f_n}_{}=1 \) and \( f_n(y_n)=\norm{y_n}_{} \). For any \( z \in \mathcal{Y} \), there is a subsequence \( \left(y_{n_k}\right)_k \) such that \( \lim_{k \to \infty}y_{n_k}=z \). By continuity of the functionals \( (f_n)_n \), we have \( \lim_{k \to \infty} f_{n_k}(z)=\norm{z}_{} \). As a result, we have
+     \[ \norm{x}_{}= \sup_{\norm{f}=1} \abs{f(x)}= \sup_{n} f_n(x). \]
+     Since \( f_n(x) \) is measurable, so is \( \sup_{n} f_n(x) \).
+\end{proof}
+
+
+We are now equipped to prove the following theorem which is due to Hille-Phillips (!!!).
+
+\begin{thm}[]
+  \label{equivalencevectors}
+    Let \( (\Omega , \mathfrak{F}) \)  be a measure space, \( x: \Omega \to \mathcal{X} \) be a map. Then, the following statements are equivalent.
+    \begin{enumerate}[1)]
+      \item \( x \) is a strong random vector;
+      \item \( x \) is a \( \mathbb{P} \)-almost separably-valued weak random vector.
+    \end{enumerate}
+    
+\end{thm}
+
+\begin{proof}
+  !!! This proof was found by Lecture Notes from Jan van Neerven, Stoch evolution Equations)
+    1. By definition, there are simple random vectors \( (x_n)_n \) and \( A_0 \in \mathfrak{F} \) with \( \mathbb{P}(A_0)=0 \) such that 
+    \[ \lim_{n \to \infty}\norm{x(\omega )-x_n(\omega )}_{}=0 \quad \text{for \( \omega \in \Omega  \setminus A_0 \).}\]
+    \( x_n \) is simple, therefore \( x_n(\Omega ) \) is finite. It follows that \( \bigcup_{n=1}^{\infty } x_n(\Omega ) \) is countable and therefore \( \mathcal{Y}:= \overline{\operatorname{span}}\left(\bigcup_{n=1}^{\infty } x_n(\Omega ) \right) \) is separable. We have that \( x(\Omega \setminus A_0) \subseteq \mathcal{Y} \) is separable as well. Since \( x_n \) is simple, for all \( f \in \mathcal{X}^{*} \), \( f(x_n) \) is measurable. Since \( f(x)=\lim_{n \to \infty}f(x_n) \) \( \mathbb{P} \)-almost surely. by continuity of the functionals, \( f(x) \) is measurable and \( x \) is a weak random vector.
+    2. Let \( A_0 \) be such that \( \mathbb{P}(A_0)=0 \) and \( x(\Omega \setminus A_0) \) is separable. Then, \( \mathcal{Y}= \overline{\operatorname{span}}\left(x(\Omega  \setminus A_0\right) \)  is separable as well. Then, there is \( \left(y_n\right)_n \) dense in \( \mathcal{Y} \). By \ref{normstrongvector}, \( \norm{x-y}_{} \) is measurable for all \( y \in \mathcal{X} \). 
+    Consider the map \( s_k: \mathcal{Y} \to \{y_1,\dots, y_n\} \) such that for \( y \in  \mathcal{Y} \), \( s_n(y)=y_k \) where \( k \leq n \) is the smallest integer such that \( \norm{y-y_k}_{}= \min_{j \leq n} \norm{y-y_j}_{} \). Define \( x_n=s_n(x) \). \( x_n \) then obtains values in \( \{y_1,\dots,y_n\} \) thus is finite-valued. It is left to show that it is measurable. But we have that 
+    \[ \{x_n=y_k\}= \underbrace{\{ \norm{x_n-y_k}= \min_{j\leq k} \norm{x-y_j}_{}\}}_{\in \mathfrak{F}} \cap  \bigcup_{l \leq k-1} \underbrace{\{\norm{x-y_l}_{}> \min_{} \norm{x-y_l}_{}\}}_{\in \mathfrak{F}}\] 
+    (!!! check indices in above line)
+    by previous assertations, hence \( s_n(x) \) is measurable. The convergence follows since \[ \lim_{n \to \infty} \norm{s_n(x(\omega )- x(\omega )}_{}=0 \] for \( \omega  \in \Omega  \setminus A_0 \).
+\end{proof}
+
+This theorem is useful as it provides results for the measurability of different constructions of strong random vectors. An important application is the following result. 
+
+\begin{corl}[]
+  \label{functionsofvectors}
+    the following statements are true.
+    \begin{enumerate}[1)]
+      \item Assume a sequence \( \left(x_n\right)_n \) of strong random vectors converges to \( x: \Omega \to \mathcal{X} \) \( \mathbb{P} \)-almost surely. Then, \( x \) is a strong random vector;
+      \item let \( x: \Omega \to \mathcal{X} \) be a strong random vector and \( \phi: \mathcal{X} \to \mathcal{Y} \) be contiuous. Then, \( \phi (x) \) is a strong random vector in \( \mathcal{Y} \).
+    \end{enumerate}
+    
+\end{corl}
+
+\begin{proof}
+  1. By Theorem \ref{equivalencevectors}, \( x_n(\Omega \setminus A_0) \) is separably-valued for some \( A_0 \in \mathfrak{F} \) with \( \mathbb{P}(A_0)=0 \) and for \( f \in \mathcal{X}^{*} \), \( f(x_n)_n \) is measurable. By assumption, there is \( B_0 \) with \( \mathbb{P}(B_0)=0 \) such taht
+  \[ \lim_{n \to \infty} \norm{x_n(\omega )-x(\omega )}_{}=0 \quad \text{for \( \omega in \Omega  \setminus B_0 \)} \] 
+  By continuity \( \lim_{n \to \infty} f(x_n(\omega ))=f(x(\omega )) \) for \( \omega \in \Omega  \setminus \left(A_0 \cup B_0\right) \). thus, \( f(x) \) is measurable. Since \( x(\Omega \setminus B_0= \overline{\bigcup_{n=1}^{\infty } x_n(\Omega \setminus B_0} \), \( x \) is \( \mathbb{P} \)-almost separably-valued. We apply Theorem \ref{equivalencevectors} to conclude that \( x  \) is a strong random vector.
+  2. We consider \( \mathcal{Y}=\mathcal{X} \). There is \( (x_n)_n \) of simple random vectors and \( A_0 \in \mathfrak{F}\) with \( \mathbb{P}(A_0)=0 \) such that \( \lim_{n \to \infty} \norm{x_n(\omega )-x(\omega )}_{}=0 \) for \( \omega  \in \Omega  \setminus A_0 \). Then, \( pgi \)(x_n) is measurable as \( \phi   \) is continuous and therefore a simple random vector. Continuity yields 
+        \[ \lim_{n \to \infty} \norm{\phi(x_n(\omega ))-\phi(x(\omega ))}_{}=0 \quad \text{for \( \omega \in \Omega \setminus A_0 \).} \]
+
+\end{proof}
+
+
+\begin{thm}[Equivalence of measurability and strong measurabililty]
+    Let \( x: \Omega \to \mathcal{X} \) be a map. Then, the following statements are equivalent.
+    \begin{enumerate}[1)]
+      \item \( x \) is a strong random vector;
+      \item \( x \) is \( \mathbb{P} \)-almost separably-valued and a random vector.
+    \end{enumerate}
+    
+\end{thm}
+
+\begin{proof}
+   \( 1) \implies 2) \): Let \( x \) be strong random vector. Then, \( x \) is \( \mathbb{P} \)-almost separably-valued. To prove that for \( B \in \mathfrak{B}(\mathcal{X}) \), \( x^{-1}(B) \in \mathfrak{F} \), it suffices to shaow that for \( U \subseteq \mathcal{X} \) open, \( x^{-1}(U) \in \mathfrak{F} \). There are simple random vectors \( (x_n)_n \) that converge to \( x \) \( \mathbb{P} \)-almost surely. Define for \( r >0 \), 
+   \[ U_r:= \curled*{x \in U; d(x,U^{c}}>0. \]
+   Then we have \( x_n^{-1}(U_r ) \in \mathfrak{F}\) since \( x_n \) is simple. (!!! Why). We claim that 
+   \[ x_n^{-1}(U) \text{ only differs from } \bigcup_{m\geq 1} \bigcup_{n\geq 1} \bigcap_{k \geq n} x_k^{-1}(U_{1/m}) \text{by a null set}.\]
+   \( \subseteq  \): Let \( \omega \in x^{-1}(U) \) such that \( \lim_{n \to \infty} x_n(\omega ) = x(\omega )\). This holds \( \mathbb{P} \)-almost surely (but we only exclude a null set). Then \( x(\omega ) \in U \). Assume for all \( m,n \geq 1 \), there is \( k \leq n \), such that \( \omega \notin x_k^{-1}(U_{1/m} \), i.e. \( x_k(\omega ) \notin U_{1/m} \). But then
+   \[ \norm{x(\omega )-x_k(\omega )}_{} \geq d(x(\omega ), U_{1/m}) \geq \frac{1}{m} .\] 
+   This contradicts the assumption about convergence.
+   (!!! not sure about above argument)
+   \( 2) \implies 1) \): \( x \) measurable, hence for \( f \in \mathcal{X}^{*} \), \( f(x) \) is measurable as \( f \) is continuous. In particular, \( x \) is weak random vector. We conclude that \( x \) is strong random vector using Theorem \ref{equivalencevectors}.
+\end{proof}
+
+\begin{corl}[Random vectors on a separable Banach space]
+    Let \( \mathcal{X} \) be separable, \( x: \Omega \to \mathcal{X} \) be a map. Then, the following statements are equivalent.
+    \begin{enumerate}[1)]
+      \item \( x \) is a weak random vector;
+      \item \( x \) is a random vector;
+      \item \( x \) is a strong random vector.
+    \end{enumerate}
+    
+\end{corl}
+
+
+
+As this work revolves around operators on Hilbert spaces, we show important characterizations of strong random vectors on Hilbert spaces.
+
+\subsubsection{Random vectors on a separable Hilbert space}
+
+\begin{lem}[Strong random vectors on a Hilbert space]
+    
+\end{lem}
+
+
+\subsection{Integration of Random Vectors}
+Both of the concepts of measurability we introduced allow the definition of some form of integration for a random vector, which is necessary to deal with expectations. As strong measurability measurability resembles the definition of real-valued random vectors, it is of no surprise that the integral will be established in a similar fashion. As in the case in \( \mathbb{R} \), we start by considering simple functions and use an approximation argument for the generale case. 
+
+\begin{defn}[Strong integration of a simple random vector]
+   Let \( x: \Omega \to \mathcal{X} \) be a simple random vector, i.e. 
+   \[ x= \sum_{k=1}^{n} x_k \mathbbm{1}_{A_k} \] 
+   for some fixed \( \left(x_k\right)_k \subseteq \mathcal{X} \) and \( \left(A_{k}\right)_{k} \subseteq \mathfrak{F} \). Then we define 
+   \[ \int_{\Omega}^{} x  \dd{\mathbb{P}} = \sum_{k=1}^{n} x_i \mathbb{P}\left(\mathbb{A}_k\right).\]
+   
+\end{defn}
+
+
+\begin{lem}[Well-definedness and norm estimation]
+    The definition is well-defined and we have the estimation 
+    \[ \norm{ \int_{\Omega}^{} x  \dd{\mathbb{P}}}_{} \leq \int_{\Omega}^{} \norm{x}_{} \dd{\mathbb{P}} \]
+\end{lem}
+
+\begin{proof}
+    We have 
+    \[ \sum_{k=1}^{n}\norm{x_k \mathbb{P}\left(A_k\right)}_{} \leq \max_{k \leq n} \norm{x_k}_{}\mathbb{P}\left(\Omega \right). \]
+\end{proof}
+
+
+\begin{defn}[Strong integration of a strong random vector]
+\label{strongvectorintegration}
+    Let \( x: \Omega \to \mathcal{X} \) be a map. \( x \) is called strongly integrable if there is a sequence \( \left(x_n\right)_n \) of simple random vectors such that 
+    \begin{enumerate}[1)]
+      \item \( \norm{\lim_{n \to \infty}x_n - x }=0\) holds \( \mathbb{P} \)-almost surely;
+      \item \( \lim_{n \to \infty} \int_{\Omega}^{} \norm{x_n-x}_{} \dd{\mathbb{P}}=0 \).
+    \end{enumerate}
+    Then we define 
+    \[ \int_{\Omega}^{} x \dd{\mathbb{P}}= \lim_{n \to \infty} \int_{\Omega}^{} x_n \dd{\mathbb{P}} .\]
+\end{defn}
+
+
+\begin{lem}[Well-definedness]
+    The definition of the strong integral is not dependent on the choice of the sequence \( \left(x_n\right)_n \) and we have 
+    \[ \norm{\int_{\Omega}^{} x \dd{\mathbb{P}}}_{} \leq \int_{\Omega}^{} \norm{x}_{} \dd{\mathbb{P}}. \]
+\end{lem}
+
+
+\begin{proof}
+  (!!! is this proof important)
+\end{proof}
+
+
+\begin{lem}[Strong integrability]
+    Let \( x: \Omega \to \mathcal{X} \) be a strong random vector. Then, \( x \) is strongly integrable if and only if \( \norm{x}_{} \) is integrable. 
+\end{lem}
+
+\begin{proof}
+    
+\end{proof}
+
+As the underlying measure is a probability measure, we denote 
+\( \mathbb{E}\left[x\right] = \int_{\Omega}^{} x \dd{\mu}\).
+
+
+Most of the properties of integration for real-valued random variables generalize as long as they are not dependent on the notion of positivity. 
+
+\begin{lem}[Properties of strong expectation]
+    The following statements are true.
+    \begin{enumerate}[1)]
+      \item If \( x \) is strongly integrable, then for each \( A \in \mathfrak{F} \), \( \mathbbm{1}_{A}x \) is integrable;
+      \item if \( x,y \) are strongly integrable, \( \alpha,\beta \in \mathbb{C} \), then \( \alpha x + \beta y \) is strongly integrable and \( \mathbb{E}\left[\alpha x + \beta y\right]= \alpha \mathbb{E}\left[x\right]+ \beta \mathbb{E}\left[y\right] \);
+      \item if \( x \) is integrable and \( f \in \mathcal{X}^{*} \), then \( f(x) \) is integrable and \( f\left(\mathbb{E}\left[x\right]\right)= \mathbb{E}\left[f(x)\right] \).
+    \end{enumerate}
+    
+\end{lem}
+
+\begin{proof}
+    Only last one is interested to prove.
+\end{proof}
+
+
+\begin{thm}[Convergence theorems]
+  (!!! Monotone convergence, dominated convergence)
+\end{thm}
+
+
+
+Clearly, if \( T \) is a (fixed) operator on \( \mathcal{X} \), \( x \) is a strong random vector, we know that \( Tx \) again is a strong random vector, as the operator carries on the separability property. Therefore, it makes sense to present the next result which is due to Hille-Phillips (!!!)
+
+\begin{lem}[Hille-Phillips]
+    Let \( x: \Omega \to \mathcal{X} \) be strongly integrable, \( T \in \mathcal{L}(\mathcal{X}\mathcal{Y}) \) for some Banach space \( \mathcal{Y} \). Then, \( Tx: \Omega \to \mathcal{Y} \) is strongly integrable and 
+    \[ T \mathbb{E}\left[x\right]= \mathbb{E}\left[Tx\right]. \]
+\end{lem}
+
+
+\begin{defn}[Strong conditional expectation of strong random vectors]
+    Let \( \mathfrak{G} \subseteq \mathfrak{F} \) be a sub-\(\omega  \)-algebra, \( x: \Omega \to \mathcal{X} \) be an integrable \( \mathfrak{F} \)-random vector. We say \( y: \Omega \to \mathcal{X} \)  is the conditional expectation of \( x \) given \( \mathfrak{G} \) if  
+    \begin{enumerate}[1)]
+      \item \( y \) is \( \mathfrak{G} \)-measurable;
+      \item \( \left[\mathbbm{1}_By\right]= \mathbb{E}\left[\mathbbm{1}_Bx\right] \) for all \( B \in \mathfrak{G} \).
+    \end{enumerate}
+    In that case we denote \( \mathbb{E}\squared*{x;\mathfrak{G}}:= y \).
+\end{defn}
+
+
+\begin{lem}[Properties of the strong conditional expectation]
+    Let \( x,y: \Omega \to \mathcal{X} \) be strongly integrable random vectors, \( \mathfrak{H}\subseteq \mathfrak{G} \subseteq \mathfrak{F} \) be sub\(\omega\)-algebras, \( \alpha,\beta \in \mathbb{C} \) and \( T \in \mathcal{B}(\mathcal{X},\mathfrak{Y}) \). Then, the following statements are true.
+    \begin{enumerate}[1)]
+      \item \(\mathbb{E}\squared*{x;\mathfrak{G}}\) exists uniquely;
+      \item if \( x=x_0 \in \mathcal{X}\) \( \mathbb{P} \)-almost surely, then \( \mathbb{E}\squared*{x;\mathfrak{G}}=x_0 \);
+      \item \( \mathbb{E}\squared*{\alpha x+\beta y;\mathfrak{G}}= \alpha EE\squared*{X;\mathfrak{G}}+ \beta \mathbb{E}\squared*{y;\mathfrak{G}} \);
+      \item \(\norm{\mathbb{E}\squared*{x;\mathfrak{G}}}_{} \leq \mathbb{E}\squared*{\norm{x}_{};\mathfrak{G}} \) ;
+      \item \( \mathbb{E}\squared*{ \mathbb{E}\squared*{x;\mathfrak{G}};\mathfrak{H}} = \mathbb{E}\squared*{x;\mathfrak{H}} \);
+      \item \( \mathbb{E}\squared*{Tx;\mathfrak{G}} = T \mathbb{E}\squared*{x;\mathfrak{G}} \).
+    \end{enumerate}
+    
+\end{lem}
+
+\begin{proof}
+    The proof is similar to the proof of the usual expectation.
+\end{proof}
+
+
+\begin{thm}[Convergence theorems]
+  (!!! Monotone convergence and dominated convergence)
+\end{thm}
+
+
+\begin{defn}[Vector-valued martingale]
+    
+\end{defn}
+
+
+% Do we need to consider integration of weakly measurable random vectors?
+
+
+\subsection{Random Operators on a Banach Space}
+In the scope of this work we want to consider random operators as well. Therefore, it might seem reasonable to regard the space of bounded linear operators \( \mathcal{B}(\mathcal{X},\mathcal{Y}) \) between two Banach spaces \( \mathcal{X}, \mathcal{Y}\) again as a Banach space. However,if \( \mathcal{X} \) is infinite-dimensional, \( \mathcal{B}(\mathcal{X},\mathcal{Y}) \) is not separable. The linearity of operators however allows us to apply important concepts such as interation for random operators relying on the separabilty of \( \mathcal{X} \). We first define measurability concepts for operators which closely align with their counterparts for random vectors.
+
+
+\begin{defn}[Random operator]
+  A map \( T: \Omega \times \mathcal{X} \to \mathcal{Y} \) is called random operator if \( \{Tx \in B\}:= \curled*{\omega ;T(\omega)x \in B}\in \mathfrak{F} \) for all \( x \in \mathcal{X}\), \( B\in \mathfrak{B}(\mathcal{Y}) \) and \( T(\omega) \in \mathcal{L}(\mathcal{X},\mathcal{Y})\) \( \mathbb{P} \)-almost surely.
+\end{defn}
+
+
+\begin{defn}[Strong random operator]
+    A map \(  T \Omega \times \mathcal{X} \to \mathcal{Y} \) is called strong random operator if \( Tx \) is a strong random vector in \( \mathcal{Y} \) for each \( x \in \mathcal{X} \) and \( T \in \mathcal{L}(\mathcal{X},\mathcal{Y}) \) \( \mathbb{P} \)-almost surely.
+\end{defn}
+
+
+\begin{defn}[Weak operator]
+    A map \(  T \Omega \times \mathcal{X} \to \mathcal{Y} \) is called weak random operator if \( Tx \) is a weak random vector in \( \mathcal{Y} \) for each \( x \in \mathcal{X} \) and \( T\in \mathcal{L}(\mathcal{X},\mathcal{Y}) \) \( \mathbb{P} \)-almost surely.
+\end{defn}
+
+
+A similar equivalence of strong measurability and weak measurability applies to operators.
+
+
+\begin{thm}[]
+    Let \( T: \Omega \times \mathcal{X} \to \mathcal{Y} \) be a map. Then, the following statements are equivalent.
+    \begin{enumerate}[1)]
+      \item \( T \) is a strong random operator;
+      \item \( Tx \) is \( \mathbb{P} \)-almost separably-valued for all \( x \in \mathcal{X} \) and \( T \) is a weak random operator.
+    \end{enumerate}
+    
+\end{thm}
+
+\begin{proof}
+    \( 1) \implies 2) \): Let \( x \in \mathcal{X} \) . Then \( Tx \) is a strong random vector. By Hille-Phillips, \( Tx \) is \( \mathbb{P} \)-almost separably-valued and a weak random vector. 
+    \( 2) \implies 1) \): Follows from Hille-Phillips.
+\end{proof}
+
+
+\begin{corl}[Linearity of strong random operators]
+    Let \( S,T :\Omega \times \mathcal{X} \to \mathcal{X} \) be strong random operators, \( \alpha,\beta \in \mathbb{C} \). Then \( \alpha T+\beta S \) is a strong random operator.    
+\end{corl}
+
+\begin{proof}
+    For \( x \in \mathcal{X} \), we have \( \alpha Tx+ \beta Sx= (\alpha T+\beta S)x \) is a strong random vector by theorem about linearity of strong random vectors (!!! find ref). 
+\end{proof}
+
+
+\begin{thm}[Construction of a strong random operator, Hans]
+    Let \( \mathcal{X} \) be a separable, \( T: \Omega \times \mathcal{X} \to \mathcal{Y} \) be a strong random operator, which is bounded \( \mathbb{P} \)-almost surely, \( x: \Omega \to \mathcal{X} \) be a strong random vector. Then \( Tx: \Omega \to \mathcal{Y} \) is a strong random vector.
+\end{thm}
+\begin{proof}
+    Own proof: has to be checked.
+    Let \( T \) be a strong random operator and \( x \) be a strong random vector.
+    1.  If \( x \) is simple, \( x= \sum_{i=1}^{n}\xi_i \mathbbm{1}_{A_i} \). \( T\xi_i \) is strong random vector, thus there are \( y_{i,m}= \sum_{j=1}^{m} \eta_{i,j}\mathbbm{1}_{B_{i,j}} \myxrightarrow[n\to\infty ]{} T \xi_i\). We then have 
+    \[ Tx= \sum_{i=1}^{n}T\xi_i \mathbbm{1}_{A_i}= \sum_{i=1}^{n} \left(\lim_{m \to \infty}\sum_{j=1}^{m} \eta_{i,j}\mathbbm{1}_{B_{i,j}}\right) \mathbbm{1}_{A_i}= \lim_{m \to \infty} \sum_{i=1}^{n} \sum_{j=1}^{m} \eta_{i,j}\mathbbm{1}_{B_{i,j} \cap A_i}.\]
+    this is the limit of simple random operators thus a strong random vector.
+    2. If \( x \) is a strong random vector, there are \( (x_n)_n \) simple random vectors with \( \lim_{n \to \infty} \norm{x-x_n}_{}=0 \). \( Tx_n \) is a strong random vector as argued above. For \( \omega \in \Omega \setminus A_0 \) (\( A_0 \) is the null set where \( T \) might not be a bounded operator),
+    \[ \lim_{n \to \infty}\norm{T(\omega ) x_n(\omega ) - T(\omega ) x(\omega )}_{} \leq \lim_{n \to \infty} \norm{T(\omega)}_{} \norm{x_n(\omega )- x(\omega )}_{} .\]
+    The limit of strong random vectors is again a strong random vector.
+  \end{proof}
+
+
+
+\begin{corl}[Products of strong random operators]
+Let \( S: \Omega \times \mathcal{X} \to \mathcal{Y} \), \( T: \Omega \times \mathcal{Y} \to \mathcal{Z} \) be strong random operator, which are bounded \( \mathbb{P} \)-almost surely. Then, \[ TS :\Omega \times \mathcal{X} \to \mathcal{Z},\, (\omega,x) \mapsto T(\omega)\left(S(\omega) x\right) \]
+is a strong random operator, which is bounded \( \mathbb{P} \)-almost surely.
+\end{corl}
+
+\begin{proof}
+    Let \( x \in \mathcal{X} \). \( Sx \) is a strong random vector. Since \( T \) is bounded, \( TSx \) is a strong random vector.
+\end{proof}
+
+
+% Do we need results about sequences of random operators?
+\begin{thm}[Convergence theorem for strong random operators]
+    Do we need these
+\end{thm}
+
+
+
+\begin{defn}[Classes of random operators]
+    We transfer the notion of classes of operators such as orthogonal projections, unitaries, contractions, and bounded, compact, self-adjoint, positive, invertible, closed operators. If for example a random operator is bounded \( \mathbb{P} \)-almost surely, we just say it is a bounded random operator. We treat other classes similarly.
+\end{defn}
+
+
+As this work focusses on operators on separable Hilbert spaces, we want to give characterizations of random operators on such spaces.
+
+
+\subsubsection{Random operators on a separable Hilbert space}
+Let \( \mathcal{H} \) be a separable Hilbert space and \( (e_n)_n \) be an orthonormal basis.
+As the three notions of measurability for random vectors coincide on separable spaces, it is not hard to see that they are also equivalent for operators as their definition is based on how they map fixed vectors. Therefore, under separability it makes sense to just use the term \emph{random operator}.
+
+
+\begin{thm}[Norm of random operator]
+    Let \( T: \Omega \times \mathcal{H} \to \mathcal{H} \) be a random operator. Then, \( \norm{T}_{ } \) is a real-valued random variable.
+\end{thm}
+
+\begin{proof}
+    Let \( y: \Omega \to \mathcal{H} \) be a random vector, \( \left(e_n\right)_n \) be an orthonormal basis. Then, \( \angled*{y;e_n} \) is a scalar-valued random variable and hence 
+    \[ \norm{y}_{}^{2} = \sum_{n=1}^{\infty} \abs{\angled*{y;e_n}}^{2} \] 
+    is measurable. Thus \( \norm{Tx}_{} \) is measurable for \( x \in \mathcal{H} \). Let \( \left(x_m\right)_m \) be dense on the unit sphere. Then 
+    \[ \norm{T}_{}= \sup_{m} \norm{Tx_m}_{}. \]
+\end{proof}
+
+
+\begin{lem}[Adjoint]
+    Let \( T: \Omega \times \mathcal{H} \to \mathcal{H} \) be a random operator. Then, if for \( \omega \in \Omega  \), \( T^{*}(\omega ) \) denotes the adjoint of \( T(\omega ) \), \( T^{*} \) is measurable.
+\end{lem}
+
+\begin{proof}
+    For \( x,y \in \mathcal{H} \), we have 
+    \[ \angled*{T^{*}x;y}= \angled*{x;Ty} = \overline{\angled*{Ty;x}} .\]
+    Since conjugation is continuous, \( \angled*{T^{*}x;y} \) is measurable.
+\end{proof}
+
+In the deterministic case, the singular value composition for compact random operators is very useful as it gives a very practical represenation of the operator. In the random case, we have to consider measurability of this representation. It is however still possible to find such a represenation.
+\begin{thm}[Series representation of compact random operators]
+    Let \( T: \Omega \times \mathcal{H} \to \mathcal{H}\) be a strong random operator, which is \( \mathbb{P} \)-almost surely compact. Denote for \( \omega \in \Omega  \) the decreasing sequence of singular values 
+    \[ \nu_1 (T,\omega) \geq \dots \geq \nu_n(T,\omega) \geq \dots \] of \( T(\omega ) \). Then, for each \( n\in \mathbb{N} \), \( \nu_n(T):= \nu_n(T,\cdot) \) is \( \mathfrak{F} \)-measurable
+\end{thm}
+Is the \( n \)-th eigenvector (random) measurable as well?. Probably using some min-max principle.
+\begin{proof}
+    Follows from the min-max principle and separability. This needs to be elaborated.
+\end{proof}
+
+
+% Are the eigenvectors e_n(T) strong random vectors?
+
+
+\subsection{Integration of Random Operators}
+Since a strong random operator is not necessarily \( \mathbb{P} \)-almost separably-valued, we cannot use the definition in \ref{strongvectorintegration} to construct a corresponding integral.Since for a strong random operator \( T \) and each fixed \( x\in \mathcal{X} \), we only have to check the integrability of \( Tx \) such that we may take the integral \( \mathbb{E}\left[Tx\right] \). This will define a fixed operator which we will call the expectation \( \mathbb{E}\left[T\right] \).
+
+\begin{defn}[Strong integration of a strong random operator]
+    Let \( T: \Omega \times \mathcal{X} \to \mathcal{X} \) be a strong random operator. Then, we say \( T \) is strongly integrable if \( Tx \) is integrable for all \( x \in \mathcal{X} \) and \( S: \mathcal{X} \to \mathcal{Y} \) is called the expectation of \( T \) if 
+    \[ Sx = \mathbb{E}\left[Tx\right] \quad \text{for all \( x \in \mathcal{X} \)}.\]
+    We write \( \mathbb{E}\left[T\right]:=S \) in this case.
+\end{defn}
+
+
+\begin{lem}[Well-definedness]
+    The expectation of a strong random operator is well-defined.
+\end{lem}
+
+\begin{proof}
+    clear?
+\end{proof}
+
+
+\begin{lem}[Properties of strong expectation]
+    Let \( T,S :\Omega \times \mathcal{X} \to \mathcal{Y} \) be strong random operators, \( \alpha, \beta \in \mathbb{C} \). Then, the following statements are true.
+    \begin{enumerate}[1)]
+      \item \( \mathbb{E}\left[T\right] \) is a linear operator;
+      \item \( \mathbb{E}\left[\alpha T + \beta S\right]= \alpha \mathbb{E}\left[T\right] + \beta \mathbb{E}\left[S\right] \);
+      \item \[ \mathbb{E}\left[T^{*}\right]= \mathbb{E}\left[T\right]^{*} \];
+      \item if \( T=T_0 \in \mathcal{L}(\mathcal{X},\mathcal{Y}) \) \( \mathbb{P} \)-almost surely, then \( \mathbb{E}[T]=T_0 \);
+      \item \( \norm{\mathbb{E}\left[T\right]}_{} \leq \mathbb{E}\left[\norm{T}_{}\right] \);
+      \item \( \mathbb{E}\left[RT\right]= R \mathbb{E}\left[T\right] \) for \( R \in \mathcal{L}(\mathcal{W},\mathcal{X}) \) and \( \mathbb{E}[TR]= \mathbb{E}[T]R \) if \( R \in \mathcal{B}(\mathcal{X},\mathcal{Y}) \). 
+    \end{enumerate}
+    
+\end{lem}
+Do we have to be careful with \( \mathcal{L} \) and \( \mathcal{B} \)?
+
+\begin{proof}
+    
+\end{proof}
+
+
+\begin{defn}[Strong conditional expectation of a random operator]
+    Let \( T: \Omega \times \mathcal{X} \to \mathcal{Y} \) be a strong random operator, \( \mathfrak{G} \subseteq \mathfrak{F} \) be a sub-\(\sigma\)-algebra. Let \( S: \mathcal{X} \to \mathcal{Y} \) satisfy
+    \[ \mathbb{E}\squared*{Tx;\mathfrak{G}}= Sx \quad \text{for all \( x \in \mathcal{X} \)}. \]
+    Then, \( S \) called conditional expectation of \( T \) given \( \mathfrak{G} \). In that case we write \( \mathbb{E}\squared*{T;\mathfrak{G}}=S \).
+\end{defn}
+
+\begin{lem}[Existence and uniqueness of conditional expectation]
+    
+\end{lem}
+
+
+\begin{lem}[Properties of conditional expectation for strong random operators]
+    
+\end{lem}
+
+
+\begin{thm}[Convergence theorems for conditional expectation for strong random operators]
+    
+\end{thm}
+
+
+\begin{defn}[Operator-valued martingale]
+    
+\end{defn}
+

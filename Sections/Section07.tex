@@ -1,0 +1,100 @@
+\section{Concentration of Lyapunov Exponent}
+
+
+\begin{defn}[(Semi-)group of matrices]
+    Let \( \mathcal{G} \) be a set of matrices. If \( \mathcal{G} \) is closed under matrix multiplication, it is called semi-group. 
+  \end{defn}
+
+\begin{defn}[]
+    Let \( L_1, \dots, L_n \) be a sequence of random matrices of the same size \( d \) such that \( L_k \in \mathcal{G} \) almost surely. We define 
+    \begin{align*}
+      \gamma_{k,n} &= \frac{1}{n} \operatorname{ln}\left[\nu_k \left(L_n \cdots L_1\right)_{}\right]; \\
+      \widehat{\gamma}_{k,n} &= \frac{1}{n} \operatorname{ln} \mathbb{E}\left[ \nu_k \left(L_n \cdots L_1\right)\right].
+    \end{align*}
+     where \( \nu_k\left(L\right) \) denotes the \( k \)-th singular values for \( k \leq d \).
+\end{defn}
+
+
+Let \( L^{(k)} = L_k \cdots L_1 \).
+
+\begin{lem}[First bound for expected values]
+    We have 
+    \[ \gamma_{1,n}  \leq \frac{1}{pn} \operatorname{ln} \operatorname{tr}\left(\abs{L_1}^{p}\right) + \frac{1}{pn}\sum_{k=2}^{n} \operatorname{ln} \left(\frac{\operatorname{tr}\left(\abs{L^{(k)}}^{p}\right)}{\operatorname{tr}\left( \abs{L^{(k-1)}}^{p}\right)}\right).
+ \]
+\end{lem}
+
+\begin{proof}
+    We have \( p\geq 1 \)
+    \begin{align*}
+      \gamma_{1,n} &= \frac{1}{n} \operatorname{ln}\left(\norm{L^{(n)}}_{}\right) \\
+                   & \leq \frac{1}{n} \operatorname{ln}\left(\norm{L^{(n)}}_{p}\right) = \frac{1}{pn} \operatorname{ln} \operatorname{tr}\left(\abs{L^{(n)}}^{p}\right) \\
+                   & = \frac{1}{pn} \operatorname{ln} \operatorname{tr}\left(\abs{L_1}^{p}\right) + \frac{1}{pn}\sum_{k=2}^{n} \operatorname{ln} \left(\frac{\operatorname{tr}\left(\abs{L^{(k)}}^{p}\right)}{\operatorname{tr}\left( \abs{L^{(k-1)}}^{p}\right)}\right)
+    \end{align*}
+   Thus, we can bound the expression using 
+   \begin{align*}
+       \gamma_{1,n} \leq \frac{1}{pn} \max_{L\in \mathcal{G} } \operatorname{ln} \operatorname{tr}\left(\abs{L}^{p}\right) + \frac{1}{pn}\sum_{k=2}^{n} \operatorname{ln} \left(\frac{\operatorname{tr}\left(\abs{L^{(k)}}^{p}\right)}{\operatorname{tr}\left( \abs{L^{(k-1)}}^{p}\right)}\right)
+   \end{align*}
+
+In particular, for \( p=2 \), we get 
+    \begin{align*}
+      \gamma_{1,n} &= \frac{1}{n} \operatorname{ln}\left( \norm{L^{(n)}}_{}\right) \\
+                   &\leq \frac{1}{n} \operatorname{ln}\left(\norm{L^{(n)}}_{2}\right) = \frac{1}{2n} \operatorname{ln} \operatorname{tr}\left(L^{(n)} \left(L^{(n)}\right)^{*}\right) \\
+                   &= \frac{1}{2n} \operatorname{ln}\operatorname{tr}\left(L_{1} L_{1}^*\right) + \frac{1}{2n} \sum_{k=2}^{n} \left[\operatorname{ln}\left(\frac{\operatorname{tr}\left(L^{(k)}\left(L^{(k)}\right)^{*}\right)}{\operatorname{tr}\left(L^{(k-1)}\left(L^{(k-1)}\right)^{*}\right)}\right).\right]
+    \end{align*} 
+\end{proof}
+
+
+\begin{lem}[Bound using uniform smoothness]
+    Assume that \( L_1, \dots, L_n \) are independent random matrices such that 
+    \begin{enumerate}[1)]
+      \item \(  \norm{\mathbb{E}\left[L_k\right]} \leq m_k \);
+      \item \( \mathbb{E} \left[ \norm{L_k-\mathbb{E}\left[L_k\right]}_{}^{q}\right]^{1/q} \leq \sigma_k^{2} \).
+        Then, 
+        \[ \widehat{\gamma }_{1,n} \leq \frac{1}{n}\left[\operatorname{ln}\left(Md^{1/p}\right) + \frac{C_p}{2} \sum_{k=1}^{n} \frac{\sigma_k^{2}}{m_k^{2}}\right]. \]
+    \end{enumerate}
+    
+\end{lem}
+
+\begin{proof}
+  We have using the argument in \cite{huang2020matrix}
+    \begin{align*}
+      \Norm{L^{(n)}}_{p,q}^{2} &= \Norm{\mathbb{E}\left[L_n\right]L^{(n-1)}+ \left(L_n-\mathbb{E}\left[L_n\right]\right)L^{(n-1)}}_{p,q}^{2} \\
+        &\leq \Norm{\mathbb{E}\left[L_n\right] L^{(n-1)}}_{p,q}^{2}+C_p \Norm{\left(L_n-\mathbb{E}\left[L_n\right]\right)L^{(n-1)}}_{p,q}^{2} \\
+        &\leq \norm{\mathbb{E}\left[L_n\right]}_{}^{2} \cdot \Norm{L^{(n-1)}}_{p,q}^{2} + C_p \mathbb{E}\left[\norm{L_n- \mathbb{E}\left[L_k\right]}_{}^{q}\right]^{2/q} \cdot \Norm{L^{(n-1}}_{p,q}^{2} \\
+        &\leq m_k^{2} \cdot \operatorname{exp}\left(C_p \frac{\sigma_k^{2}}{m_k^{2}}\right) \cdot \Norm{L^{(k-1)}}_{p,q}^{2}
+    \end{align*}
+    Repeating this argument yields:
+    \[ \Norm{L^{(n)}}_{p,q}^{2} \leq M^{2} \cdot \operatorname{exp}\left(C_p \sum_{k=1}^{n}\frac{\sigma_k^{2}}{m_k^{2}}\right) \norm{I}_{p}^{2}. \]
+    Using this estimate, we obtain for \( 2 \leq q \leq p \)
+    \begin{align*}
+      \widehat{\gamma}_{1,n} &= \frac{1}{n} \operatorname{ln} \mathbb{E}\left[\norm{L^{(n)}}_{} \right] \leq \frac{1}{n} \operatorname{ln} \mathbb{E}\left[ \norm{L^{(n)}}_{p}^{q}\right]^{1/q} \\
+                             &= \frac{1}{2n} \operatorname{ln} \Norm{L^{(n)}}_{p,q}^{2} \leq \frac{1}{2n} \operatorname{ln}\left(M^{2} \cdot \operatorname{exp}\left(C_p \sum_{k=1}^{n} \frac{\sigma_k^{2}}{m_k^{2}}\right) \cdot d^{2/p}\right) \\
+                             &= \frac{1}{n} \left[ \operatorname{ln}\left(Md^{1/p}\right) + \frac{C_p}{2} \sum_{k=1}^{n} \frac{\sigma_k^{2}}{m_k^{2}}.\right]
+    \end{align*}
+  \end{proof}
+
+\subsection{Using Avalanche Principle}
+
+\begin{defn}[Avalanche principle]
+    
+\end{defn}
+
+
+\begin{thm}[Theorem 3.1 \cite{lemm2022lower}]
+    Let \( \epsilon_0, c_0,c_l, c_u >0 \). Let \( L_1,\dots, L_n \) be random matrices such that \( L_k \in \mathrm{GL}_d(\mathbb{R}^{d}) \) almost surely and \( \mathrm{AP}\left(\epsilon_0, c_0,c_l, c_u\right) \) holds almost surely. Assume there exists \( \alpha \in [0,1) \) such that 
+    \[ \norm{L_{k+1}L_k}_{} \geq (1-\alpha) \norm{ \abs{L_{k+1}^{*}} \abs{L_k}}  \quad \text{for \( k \leq n \)}. \]
+    Then, for \( 0 < \epsilon < \epsilon_0 \) and \( 0 < \kappa < c_0 \epsilon^{2} \), we have the following.
+\begin{enumerate}[1)]
+  \item If \( L_k \) is normal almost surely for \( k \leq n \), then
+    \[ \frac{1}{n} \operatorname{ln} \norm{\prod_{k=1}^{n}L_k}_{} \geq \lambda_{\text{max}}\left(\frac{1}{n} \sum_{k=1}^{n} \operatorname{ln}\left(\abs{L_k}\right)\right)-\frac{(c_l-c_u)\kappa}{\epsilon^{2}} \quad \text{almost surely}.\]
+  \item If there is \( \alpha \in [0,1) \) such that \( \norm{L_{k+1}L_k} \geq (1-\alpha) \norm{\abs{L_{k+1}^{*}} \abs{L_{k}}}_{} \) almost surely, then 
+    \[ \frac{1}{n} \operatorname{ln} \norm{\prod_{k=1}^{n} L_k}_{} \geq \lambda_{\text{max}}\left(\frac{1}{n} \sum_{k=1}^{n} \frac{\operatorname{ln} \abs{L_k}+ \operatorname{ln} \abs{L_k^{*}}}{2}\right)  - \left(c_l + \frac{c_u}{(1-\alpha)}^2\right) \frac{\kappa}{\epsilon^{2}}+ \operatorname{ln}(1-\alpha). \]
+\end{enumerate}
+
+  \end{thm}
+
+\begin{corl}[]
+    
+\end{corl}
+
+
