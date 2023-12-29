@@ -1,0 +1,16 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Concentration for an Operator Sum}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Lieb's theorem}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Self-Adjoint Dilation}{3}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Intrinsic Dimension Lemma}{3}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1}Intrinsic Chernoff Inequality}{4}{subsubsection.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.2}Intrinsic Bernstein Inequality: Bounded Case}{5}{subsubsection.1.3.2}%
+\contentsline {subsubsection}{\numberline {1.3.3}Intrinsic Hoeffding Inequality: Sub-Gaussian Case}{5}{subsubsection.1.3.3}%
+\contentsline {subsubsection}{\numberline {1.3.4}Intrinsic Bernstein Inequality: Sub-Exponential Case}{7}{subsubsection.1.3.4}%
+\contentsline {subsubsection}{\numberline {1.3.5}Intrinsic Azuma inequality}{8}{subsubsection.1.3.5}%
+\contentsline {subsubsection}{\numberline {1.3.6}Intrinsic Freedman Inequality}{11}{subsubsection.1.3.6}%
+\contentsline {section}{\numberline {2}Concentration for Products}{11}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Simple Products}{11}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Perturbation of Identity}{15}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Average-Case Concentration for Perturbation of Identity}{18}{subsubsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.3}Concentration for Products of Unitaries}{18}{subsection.2.3}%

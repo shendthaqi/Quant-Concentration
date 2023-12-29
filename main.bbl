@@ -1,0 +1,48 @@
+\begin{thebibliography}{HNWTW20}
+
+\bibitem[Che21]{chen2021otoc}
+Chi-Fang Chen.
+\newblock Concentration of otoc and lieb-robinson velocity in random hamiltonians, 2021.
+
+\bibitem[CHKT21]{chen2021product}
+Chi-Fang Chen, Hsin-Yuan Huang, Richard Kueng, and Joel~A. Tropp.
+\newblock Concentration for random product formulas.
+\newblock {\em PRX Quantum}, 2(4), October 2021.
+
+\bibitem[Gol65]{golden1965ineq}
+Sidney Golden.
+\newblock Lower bounds for the helmholtz function.
+\newblock {\em Phys. Rev.}, 137:B1127--B1128, Feb 1965.
+
+\bibitem[HNWTW20]{huang2020matrix}
+De~Huang, Jonathan Niles-Weed, Joel~A. Tropp, and Rachel Ward.
+\newblock Matrix concentration for products, 2020.
+
+\bibitem[Lie73]{lieb1973concav}
+Elliott~H Lieb.
+\newblock Convex trace functions and the wigner-yanase-dyson conjecture.
+\newblock {\em Advances in Mathematics}, 11(3):267--288, 1973.
+
+\bibitem[Pin12]{pinelis2012freedman}
+Iosif Pinelis.
+\newblock Optimum bounds for the distributions of martingales in banach spaces, 2012.
+
+\bibitem[Tho65]{thompson1965ineq}
+C.~J. Thompson.
+\newblock Inequality with applications in statistical mechanics.
+\newblock {\em Journal of Mathematical Physics}, 6:1812--1813, 1965.
+
+\bibitem[Tro11a]{tropp2011freedman}
+Joel~A. Tropp.
+\newblock Freedman's inequality for matrix martingales, 2011.
+
+\bibitem[Tro11b]{tropp2011user}
+Joel~A. Tropp.
+\newblock User-friendly tail bounds for sums of random matrices.
+\newblock {\em Foundations of Computational Mathematics}, 12(4):389–434, August 2011.
+
+\bibitem[Tro15]{tropp2015introduction}
+Joel~A. Tropp.
+\newblock An introduction to matrix concentration inequalities, 2015.
+
+\end{thebibliography}

@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2023)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: alpha.bst
+Database file #1: Operator-Concentration.bib
+You've used 10 entries,
+            2543 wiz_defined-function locations,
+            611 strings with 5640 characters,
+and the built_in function-call counts, 3319 in all, are:
+= -- 316
+> -- 126
+< -- 8
++ -- 42
+- -- 40
+* -- 221
+:= -- 543
+add.period$ -- 25
+call.type$ -- 10
+change.case$ -- 56
+chr.to.int$ -- 9
+cite$ -- 10
+duplicate$ -- 127
+empty$ -- 273
+format.name$ -- 58
+if$ -- 672
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 5
+newline$ -- 48
+num.names$ -- 30
+pop$ -- 69
+preamble$ -- 1
+purify$ -- 66
+quote$ -- 0
+skip$ -- 116
+stack$ -- 0
+substring$ -- 183
+swap$ -- 10
+text.length$ -- 8
+text.prefix$ -- 8
+top$ -- 0
+type$ -- 80
+warning$ -- 0
+while$ -- 27
+width$ -- 13
+write$ -- 117
