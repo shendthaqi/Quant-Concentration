@@ -1,0 +1,109 @@
+\section{Functional Analysis}
+
+\subsection{Banach spaces}
+
+
+\subsection{Hilbert spaces}
+
+
+\subsection{Linear Operators}
+
+
+\begin{thm}[Banach-Steinhaus]
+  Let $T_t:X \to Y$ be a continuous linear operator from $X$ Banach space to $Y$ normed space for $t \in \mathcal{T}$. Suppose that $\sup_{t\in \mathcal{T}}\norm{T_t(x)}\infty$ for all $x\in X$. Then, 
+  \[\sup_{t\in \mathcal{T}}\norm{T_t}< \infty\]
+\end{thm}
+
+
+
+\begin{defn}[Sobolev space]
+For $k \in \mathbb{N},\, p \in [0,\infty)$, we define the Sobolev space as
+\[W^{k,p} := \set*{u\in L^p(S)}; \forall \abs{\alpha}\leq k:\;\partial^\alpha u \in L^p(S)\]
+with the Sobolev norm 
+\[\norm{u}_{W^{k,p}}:= \left( \sum_{\abs{\alpha} \leq k} \norm{\partial^\alpha u}_p^p\right)^{1/p}\]
+It holds that 
+\begin{enumerate}
+  \item \(W_0^{k,p}:= \overline{C_c^\infty(S)}^{_{\norm{\cdot}_{W^{k,p}}}}\)
+  \item \((W^{k,p}(S), \norm{\cdot}_{W^{k,p}}\) is a Banach space.
+\end{enumerate}
+
+\end{defn}
+
+
+\begin{thm}[Rellich]
+    For $\Omega \ssq   \mathbb{R}^n$ open, bounded Lipschitz
+\end{thm}
+
+
+\subsection{Duality}
+
+
+\begin{thm}[Riesz-Frechet]
+    Let $\mathcal{H}$ be a Hilbert space, $f\in \mathcal{H}'$. Then, there is a unique $y_f$ such that for all $x\in \mathcal{H}$
+    \[f(x) = (x,y_f)\]
+\end{thm}
+
+
+\subsubsection{Hahn-Banach theorem}
+\begin{thm}[Hahn-Banach]
+  Let $X$ be a (complex) vector space, $p:X \to \mathbb{R}$ be a sublinear functional on $X$, and $f_W: W\to \mathbb{C}$ be a functional defined on a subspace $W \ssq  X$, such that $\abs{f_W(x)}\leq p(x)$ for $x\in W$. Then, there exists a linear extension $f$ of $f_W$ such that $\abs{f(x)}\leq p(x)$ for $x\in X$.
+\end{thm}
+
+
+\begin{thm}[Hahn-Banach corollary]
+  Let $f_W:W\to \mathbb{C}$ be a functional defined on a subspace $W \ssq   X$ of a Banach space. Then, there exists an extension $f:X\to \mathbb{C}$ with $\norm{f} = \norm{f_W}$. 
+  The following principles hold as a result:
+  \begin{description}
+    \item [Functional space separation:] For $x\in X$ such that $\delta = \inf_{w\in W}\norm{x-w}$, there is a functional $f$ such that $\norm{f}=1$, $f(x)=\delta$ and $f\vert_W=0$.
+    \item[Functional point separation:] Let $x\in X$. Then,
+      \begin{enumerate}
+        \item There is $f\in X'$ such that $\norm{f}=1$ and $f(x)=\norm{x}$.
+        \item If $y\neq x$, there is $f\in X'$ such that $f(y)\neq f(x).$
+      \end{enumerate}
+  \end{description}
+\end{thm}
+
+
+\subsubsection{Weak convergence}
+
+
+\begin{defn}[Weak and weak-$*$ convergence]
+    Let $X$ be a Banach space, $(x_n)_n\ssq X$, $(f_n)_n \ssq X'$ be sequences. We say
+    \begin{enumerate}
+      \item $(x_n)_n$ is weakly convergent to $x\in X$ if for all $f\in X'$: $\lim_{n\to\infty} f(x_n) = f(x)$. We write $x_n \myxrightharpoonup[n\to\infty]{} x$.
+      \item $(f_n)_n$ is weakly $*$-convergent to $f\in X'$ if for all $x\in X$: $\lim_{n \to \infty} f_n(x) = f(x)$. We write $f_n \myxrightharpoonup[n\to\infty]{*}f$.
+    \end{enumerate}
+\end{defn}
+
+
+\begin{thm}[Properties of weak convergence]
+    The following statements hold:
+    \begin{enumerate}
+      \item Weak(-$*$) limits are unique.
+      \item Weak(-$*$) sequences are bounded.
+      \item Norm convergence implies weak(-$*$) convergence.
+      \item If $(x_n)_n\ssq M$, where $M$ is closed and convex, then $x_n \myxrightharpoonup[n\to\infty]{*}x$ implies $x\in M$.
+      \item If $x_n \myxrightharpoonup[n\to\infty]{}x$, then \( \norm{x}_{}^{}\leq \varliminf_{n \to \infty} \norm{x_n}_{}^{}\)
+    \end{enumerate}
+\end{thm}
+
+\begin{thm}[Weak convergence in Hilbert spaces]
+    Let $\mathcal{H}$ be a Hilbert space. The following statements hold:
+    \begin{enumerate}
+      \item $x \myxrightharpoonup[n\to\infty]{*}x$ if and only if for all $y\in \mathcal{H}$, $(x_n,y) \myxrightarrow[n\to\infty]{}(x,y)$.
+      \item If $\dim \mathcal{H}= \infty$, then $e_n \myxrightharpoonup[n\to\infty]{*}0$ for orthonormal sequences $(e_n)_n \ssq \mathcal{H}$.
+      \item If $x_n \myxrightharpoonup[n\to\infty]{*}x$ and \(\norm{x_n}_{}^{} \myxrightarrow[n\to\infty]{}\norm{x}\), then \(x \myxrightarrow[n\to\infty]{}x\).
+    \end{enumerate}
+\end{thm}
+
+\begin{thm}[Existence of weak limits]
+  Let $X$ be a vector space.
+  \begin{enumerate}
+    \item If $X$ is separable and $(f_{n})_{n }\ssq X'$ bounded, then \((f_{n})_{n }\) has a weak-$*$ accumulation point. 
+    \item If $X$ is reflexive and \((x_{n})_{n }\ssq X\) is bounded, then \((x_{n})_{n }\) has a weak accumulation point.
+  \end{enumerate}
+\end{thm}
+
+
+
+

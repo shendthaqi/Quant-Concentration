@@ -1,0 +1,112 @@
+\section{Operator Theory}
+
+
+\begin{defn}[Banach algebra]
+    A complex Banach space $\mathcal{A}$ is is called Banach algebra if 
+    \begin{enumerate}
+      \item equipped with associative multiplication $\cdot: \mathcal{A} \times \mathcal{A} \to \mathcal{A}, (x,y)\mapsto x\cdot y$.
+      \item for all $x,y \in \mathcal{A}$, $\norm{x\cdot y} \leq \norm{x}\norm{y}$.
+    \end{enumerate}
+We further define for Banach algebras
+\begin{description}
+  \item [Unital Banach algebra:] There is some $e\in \mathcal{A}$ such that 
+    \begin{enumerate}
+      \item $\norm{e}=1$
+      \item $xe=ex=x$ for all $x \in \mathcal{A}$.
+    \end{enumerate} 
+  \item [Commutative Banach algebra:] $x\cdot y = y \cdot x$ for all $x,y\in \mathcal{A}$.
+  \item [C$^*$-algebra:] There is an involution $*:AAA   \to \mathcal{A}$ i.e. for all $x,y\in \mathcal{A},\, \alpha \in \mathbb{C}$
+    \begin{enumerate}
+      \item \((x^*)^* = x,\; (x+\alpha y)^*= x^* + \overline{\alpha}y^*, \; (xy)^*=y^*x^*\)
+      \item The $C^*$-identity holds, i.e. for all $x\in \mathcal{A}$: $\norm{x^*x} = \norm{x}^2$.
+    \end{enumerate} 
+\end{description}
+\end{defn}
+
+
+\begin{thm}[von Neumann series]
+  Let $\mathcal{A}$ be a unital Banach algebra. Let $x$ be invertible, and $\norm{y}< \norm{x^{-1}}^{-1}$. Then,
+  \[(x-y)^{-1} = \sum_{n=0}^\infty (x^{-1}y)^n x^{-1}\]
+\end{thm}
+
+
+\begin{thm}[Basic properties of the spectrum]
+    It holds 
+    \begin{enumerate}
+        \item $\rho(x)$ is open
+        \item The map $\psi: \rho(x) \to \mathcal{A}, \lambda \mapsto (\lambda-x)^{-1}$ is holomorphic and $\norm{(\lambda-x)^{-1}} \leq \frac{1}{\abs{\lambda}- \norm{x}}$ if $\abs{\lambda}> \norm{x}$.
+        \item $\sigma(x)$ is closed and bounded.
+        \item $\sigma(x)\neq \emptyset$.
+    \end{enumerate}
+\end{thm}
+
+
+\begin{thm}[Spectral radius formula]
+    It holds
+    \[\norm{\sigma(x)}  = \lim_{n\to\infty} \norm{x^n}^{1/n} = \inf_{n\in \mathbb{N}} \norm{x^n}^{1/n}\]
+\end{thm}
+
+
+\subsection{Functional calculus}
+
+
+\begin{thm}[Strucure of C$^*$-algebras]
+    Let $\mathcal{A}$ be $C^*$-algebra. Then the following principles hold
+    \begin{description}
+      \item[Adjointness] $x=x^*$ iff $\sigma(x)\ssq \mathbb{R}$.
+      \item[Positivity] $x\geq 0 $ iff $\sigma(x)\ssq [0,\infty)$ iff 
+      \item[Existence of roots] There is unique $z\geq0$ with $z^n=x$ (i.e. $z=x^{1/n}$) for iff $x\geq 0$.
+    \end{description}
+\end{thm}
+
+
+\begin{thm}[Continuous functional calculus]
+    
+\end{thm}
+
+
+\subsection{Operators on a Hilbert space}
+
+
+\begin{thm}[Variational bounds on spectrum]
+  Let $A\in \mathcal{L}(H)$ be self-adjoint. Then, for $a:=\inf_{\norm{x}=1} (Ax,x)$ and $b:=\sup_{\norm{x}=1} (Ax,x)$ we have 
+  \begin{enumerate}
+    \item $\sigma(A) \ssq [a,b]$ 
+    \item $a,b \in \sigma(A)$
+  \end{enumerate}
+\end{thm}
+
+
+\begin{thm}[Positivity on Hilbert spaces]
+    Let $A\in \mathcal{L}(H)$. Then $A$ is positive if and only if for all $x\in H$, we have $(Ax,x)\geq 0$.
+\end{thm}
+
+
+\begin{thm}[Borel functional calculus]
+  Let $E:\Sigma \to \mathcal{L}(H)$ be projection-valued measured supported on a compact set $K\ssq \mathbb{C}$. Then, 
+  $$\widehat{\Psi}: \mathcal{B}_\infty(K) \to \mathcal{L}^(H)\; f \mapsto \widehat{\Psi}(f):= \int_{K}^{} f \dd{E} $$
+  is a $*$-homomorphism with $\norm{\widehat{\Psi}(f)} \leq \norm{f}_\infty$.
+  \begin{description}
+    \item Let $A\in \mathcal{L}(H)$ be normal, then there is a unique projection-valued measure $E:\Sigma \to \mathcal{L}(H)$ supported on $\sigma(A)$ such that $$A= \int_{\sigma(A)}^{} t \dd{E} $$ Moreover, 
+      \begin{enumerate}
+        \item $\widehat{\Psi}: \mathcal{B}_\infty(\sigma(A))\mapsto \mathcal{L}(H), \; \widehat{\Psi}:= \int_{\sigma(A)}^{} f \dd{E}=:f(A) $ is a $*$-homomorphism which extends the inverse Gelfand transformation and it holds $\norm{f(A)} \leq \norm{f}_\infty$. 
+        \item If $C\in \mathcal{L}(H)$ commutes with $A, A^*$, then $Cf(A) = f(A)C$.
+      \end{enumerate}
+  \end{description}
+\end{thm}
+
+
+\begin{thm}[Properties of normal operators]
+    
+\end{thm}
+
+
+\begin{defn}[Singular values]
+    
+\end{defn}
+
+
+\begin{thm}[Singular value decomposition]
+  Let $A\in \mathcal{KK}(H)$. Then there is an orthonormal sequence $(\phi_n)_n\ssq H$ such that for all $x\in H$ \[ Ax = \sum_n s_n (x,\phi_n) \psi_n\]
+  where $(s_n)_n$ are the singular values, and $\psi_n=\frac{1}{s_n}\phi_n$ forms an orthonormal set. Additionally, $\norm{A}:= \max_n s_n$.
+\end{thm}

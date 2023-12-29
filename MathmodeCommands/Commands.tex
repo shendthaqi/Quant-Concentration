@@ -1,0 +1,67 @@
+% Here, we set the style for theorems, definitions, etc.
+\newtheoremstyle{note}% ⟨name ⟩ {3pt}% ⟨Space above ⟩1 {3pt}%⟨Space below ⟩1
+  {6pt}{6pt}
+  {\upshape}% ⟨Body font ⟩
+  {}% ⟨Indent amount ⟩2
+  {\bfseries}% ⟨Theorem head font⟩
+  {.}% ⟨Punctuation after theorem head ⟩
+  {\newline}% ⟨Space after theorem head ⟩3
+  {}% ⟨Theorem head spec (can be left empty, meaning ‘normal’)⟩
+
+
+%Sets, events with conditional delimiter  
+\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{\setargs{#1}}
+\NewDocumentCommand{\setargs}{>{\SplitArgument{1}{;}}m}
+{\setargsaux#1}
+\NewDocumentCommand{\setargsaux}{mm}
+{\IfNoValueTF{#2}{#1} {#1\,\delimsize|\,\mathopen{}#2}}%{#1\:;\:#2}
+
+\DeclarePairedDelimiterX{\rounded}[1]{(}{)}{\setargs{#1}}
+\DeclarePairedDelimiterX{\squared}[1]{[}{]}{\setargs{#1}}
+\DeclarePairedDelimiterX{\curled}[1]{\{}{\}}{\setargs{#1}}
+\DeclarePairedDelimiterX{\angled}[1]{<}{>}{\setargs{#1}}
+
+
+% Norm with three vertical lines
+\newcommand{\Norm}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+
+
+% symbol for "compactly contained in"
+\newcommand{\ssubset}{\subset\joinrel\subset}
+
+\setlist[description]{leftmargin=\parindent,labelindent=\parindent}
+
+
+
+\theoremstyle{note}
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{thm}[prop]{Theorem}
+\newtheorem{lem}[prop]{Lemma}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{corl}[prop]{Corollary}
+\newtheorem{exm}{Example}
+\newtheorem*{remark}{Remark}
+\newtheorem{fact}[prop]{Fact}
+\newtheorem*{nota}{Notation}
+\newtheorem*{exer}{Exercise}
+
+
+
+
+
+
+% arrows
+\newcommand\myxrightarrow[2][]{\xrightarrow[{\raisebox{1.25ex-\heightof{$\scriptstyle#1$}}[0pt]{$\scriptstyle#1$}}]{#2}}
+
+\newcommand\myxrightharpoonup[2][]{\xrightharpoonup[{\raisebox{1.25ex-\heightof{$\scriptstyle#1$}}[0pt]{$\scriptstyle#1$}}]{#2}}
+
+% integral with letter superimposed
+
+\DeclareMathOperator{\sint}{\ensurestackMath{\stackinset{c}{0pt}{c}{0pt}{\mathrm s}{\displaystyle\int}}}
+\newlength\correct
+\settowidth{\correct}{\ensuremath{\displaystyle\int}}
+
+\DeclareMathOperator{\wint}{\ensurestackMath{\stackinset{c}{0pt}{c}{0pt}{\mathrm w}{\displaystyle\int}}}
+

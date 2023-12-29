@@ -1,0 +1,46 @@
+\section{Measure Theory}
+
+
+\begin{thm}[Equality of measures]
+    Let $\mu,\nu: \sigma(\mathcal{C}) \to \mathbb{R}$ be (signed) measures such that $\mu(A)=\nu(A)$ for $A\in \mathcal{C}$. Then, $\mu=\nu$.
+\end{thm}
+
+
+
+
+\subsection{Convergence theorems}
+
+
+\begin{thm}[Monotone convergence theorem]
+    Let $(f_n)_n$ be a increasing sequence of postive functions. Then,
+    \[\int_\Omega \lim_{n\to\infty} f_n \dd{\mu} = \lim_{n\to\infty} \int_\Omega f_n \dd{\mu}\]
+\end{thm}
+\begin{proof}
+  It suffices to show the proof for $f_n \myxrightarrow[n\to\infty]{}f$, where $f\in \mathcal{L}^1$. By monotonicity, \(\int_{\Omega}^{} f_n \dd{\mu} \leq \int_{\Omega}^{} f_{n+1} \dd{\mu}  \leq \int_{\Omega}^{} f \dd{\mu} \). Hence, the sequence of these integrals in monotone and bounded and thus convergent and $\allowbreak\lim_{n \to \infty} \int_{\Omega}^{} f_n \dd{\mu}  \leq \allowbreak \int_{\Omega}^{} f \dd{\mu} $. We aim to show the other inequality. By measurability of $(f_n)_n$, we construct a sequence \((g_{n,k})_{k }\) of increasing functions such that \(\lim_{k \to \infty} g_{n,k} = \sup_{k \in \mathbb{N}}g_{n,k}= f_n\). Let \(h_n:=\max_{} \set*{g_{1,n},\dots, g_{n,n} } \). Then the following holds (easily shown):
+  \begin{enumerate}
+    \item \((h_{n})_{n }\) is increasing.
+    \item $f(x)=\lim_{n \to \infty} h_n(x)$.
+    \item \(h_n \leq f_n \)
+  \end{enumerate}
+  By the definition of measure-theoretical integrals, \(\int_{\Omega}^{} f \dd{\mu} = \lim_{n \to \infty} \int_{\Omega}^{} h_n \dd{\mu} \). We have \(h_n \leq f_n\), thus \(\int_{\Omega}^{} h_n \dd{\mu} = \int_{\Omega}^{} f_n \dd{\mu} \). Thus, \(\int_{\Omega}^{} f \dd{\mu} \leq \lim_{n \to \infty} \int_{\Omega}^{} f_n \dd{\mu} \).
+\end{proof}
+
+
+
+
+\begin{thm}[Fatou's lemma]
+    Let $(f_n)_n$ be a sequence of positive functions. Then, 
+    \[\int_\Omega \varliminf_{n\to\infty} f_n \dd{\mu} \leq \varliminf_{n\to\infty}\int_\Omega f_n \dd{\mu}\]
+\end{thm}
+\begin{proof}
+    Notice that \((\inf_{N\geq n}f_{n})_{n }\) is monotone and allows us to apply the theorem about monotone convergence.
+\end{proof}
+
+
+\begin{thm}[Dominated convergence theorem]
+    Let $(f_n)_n$ be a converging sequence of functions absolutely dominated by an integrable $g$. Then, 
+    \[\int_\Omega \lim_{n\to\infty} f_n \dd{\mu} = \lim_{n\to \infty} \int_\Omega f_n \dd{\mu}\]
+\end{thm}
+
+
+
